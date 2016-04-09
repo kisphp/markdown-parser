@@ -1,0 +1,10 @@
+machine:
+  php:
+    version: 5.5.9
+dependencies:
+  pre:
+    - composer install --no-interaction --prefer-source
+test:
+  override:
+    - vendor/bin/phpunit
+    - vendor/bin/php-cs-fixer fix --dry-run

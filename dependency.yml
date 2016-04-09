@@ -1,0 +1,9 @@
+mode: 'usage'
+source: './src'
+filePattern: '*.php'
+formatter: 'PhpDA\Writer\Strategy\Svg'
+target: 'rep.svg'
+groupLength: 1
+visitor:
+  - PhpDA\Parser\Visitor\TagCollector
+  - PhpDA\Parser\Visitor\SuperglobalCollector
