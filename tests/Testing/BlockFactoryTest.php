@@ -22,17 +22,10 @@ class BlockFactoryTest extends PHPUnit_Framework_TestCase
         $bf->create('Alfa');
     }
 
-    public function test_TypeGuesser()
-    {
-        $bf = new \Kisphp\BlockFactory();
-
-        $this->assertInstanceOf(\Kisphp\RowTypeGuesser::class, $bf->createRowTypeGuesser());
-    }
-
     public function test_BlockParagraph()
     {
         $this->assertInstanceOf(
-            \Kisphp\Blocks\BlockParagraph::class,
+            \Kisphp\Blocks\Paragraph\BlockParagraph::class,
             \Kisphp\BlockFactory::create(\Kisphp\BlockTypes::BLOCK_PARAGRAPH)
         );
     }

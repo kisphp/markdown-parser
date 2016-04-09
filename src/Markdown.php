@@ -41,9 +41,8 @@ class Markdown
         $this->rowTypeGuesser = new RowTypeGuesser($this->dataObject);
 
         $this->convertLines();
-//        dump($this->dataObject->getLines());
         $this->validateLinesType();
-//die;
+
         return $this->dataObject->parseEachLine();
     }
 
@@ -66,39 +65,15 @@ class Markdown
         for ($i = 0; $i < $max; $i++) {
             $this->dataObject->updateLine($i, $this->createLineObject($i));
         }
-
-        dump($this->dataObject->getLines());
-//        die;
-//        foreach ($this->dataObject->getLines() as $key => $value) {
-//            $this->dataObject->updateLine(
-//                $key,
-//                $this->createBlockByContent($key, $value)
-//            );
-//        }
     }
 
+    /**
+     * @param int $lineNumber
+     *
+     * @return BlockInterface
+     */
     protected function createLineObject($lineNumber)
     {
         return $this->rowTypeGuesser->getRowObjectByLineContent($lineNumber);
     }
-
-    /*
-     * @param int $lineIndex
-     * @param string $lineContent
-     *
-     * @return BlockInterface
-     */
-//    public function createBlockByContent($lineIndex, $lineContent)
-//    {
-//        $type = $this->getLineTypeByContent($lineContent, $lineIndex);
-//
-//        /** @var BlockInterface $block */
-//        $block = $this->factory
-//            ->create($type)
-//            ->setContent($lineContent)
-//            ->setLineNumber($lineIndex)
-//        ;
-//
-//        return $block;
-//    }
 }
