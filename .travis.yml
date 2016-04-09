@@ -1,5 +1,5 @@
 language: php
 php:
-  - '5.4'
+  - '5.5.9'
 install:
   - composer install --prefer-source
