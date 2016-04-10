@@ -6,12 +6,12 @@ use Kisphp\AbstractBlock;
 use Kisphp\BlockFactory;
 use Kisphp\BlockTypes;
 use Kisphp\DataObject;
-use Kisphp\Markdown;
 
 class BlockQuote extends AbstractBlock
 {
     /**
      * @param string $content
+     *
      * @return $this
      */
     public function setContent($content)
@@ -47,6 +47,7 @@ class BlockQuote extends AbstractBlock
 
     /**
      * @param DataObject $dataObject
+     *
      * @return $this
      */
     public function changeLineType(DataObject $dataObject)
@@ -89,6 +90,7 @@ class BlockQuote extends AbstractBlock
 
     /**
      * @param string $lineContent
+     *
      * @return string
      */
     protected function cleanMarkup($lineContent)
@@ -102,7 +104,7 @@ class BlockQuote extends AbstractBlock
      */
     protected function parseSubBlock(DataObject $dataObject, array $updatedLines)
     {
-        $markdown = new Markdown(new BlockFactory());
+        $markdown = BlockFactory::createMarkdown();
         $md = implode("\n", $updatedLines);
 
         $newCodeParsed = $markdown->parse($md);
