@@ -8,4 +8,5 @@ Features:
 - emphasis
 - inline code
 - strkethrough
-
+- blockquotes
+- subtree parsing
