@@ -6,6 +6,7 @@ use Kisphp\Exceptions\MethodNotFoundException;
 
 class RowTypeGuesser
 {
+    const BACKTICK_CODE = '96';
     /**
      * @var array
      */
@@ -16,6 +17,7 @@ class RowTypeGuesser
         '*' => [BlockTypes::BLOCK_HORIZONTAL_RULE],
         '_' => [BlockTypes::BLOCK_HORIZONTAL_RULE],
         '>' => [BlockTypes::BLOCK_QUOTE],
+        '`' => [BlockTypes::BLOCK_CODE],
 
 //        '|' => [self::TYPE_TABLE],
 //        '*' => [self::TYPE_HORIZONTAL_RULE, self::TYPE_LIST],
@@ -218,15 +220,21 @@ class RowTypeGuesser
         return (bool) preg_match('/^([\*|\*\s|\-|\-\s|\_|\_\s]{3,})/', $this->dataObject->getLine($lineNumber));
     }
 
-    /*
-     * @param string $lineContent
+    /**
+     * @param int $lineNumber
      *
      * @return bool
      */
-//    public function isCode($lineContent)
-//    {
-//        return (bool) preg_match('/^\`\`\`/', $lineContent);
-//    }
+    public function isBlockCode($lineNumber)
+    {
+        $lineContent = $this->dataObject->getLine($lineNumber);
+        $counter = count_chars($lineContent, 1);
+        if ($counter[self::BACKTICK_CODE] !== 3) {
+            return false;
+        }
+
+        return (bool) preg_match('/^([\`]{3})/', $lineContent);
+    }
 
     /*
      * @param string $lineContent

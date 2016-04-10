@@ -11,6 +11,7 @@ class BlockTypes
     const BLOCK_HEADER_TWO = 'BlockHeaderTwo';
     const BLOCK_HORIZONTAL_RULE = 'BlockHorizontalRule';
     const BLOCK_QUOTE = 'BlockQuote';
+    const BLOCK_CODE = 'BlockCode';
 
     const BLOCK_STRIKETHROUGH = 'BlockStrikethrough';
     const BLOCK_STRONG = 'BlockStrong';
