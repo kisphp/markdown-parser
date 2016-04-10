@@ -10,9 +10,13 @@ class BlockTypes
     const BLOCK_HEADER_ONE = 'BlockHeaderOne';
     const BLOCK_HEADER_TWO = 'BlockHeaderTwo';
     const BLOCK_HORIZONTAL_RULE = 'BlockHorizontalRule';
+    const BLOCK_QUOTE = 'BlockQuote';
 
     const BLOCK_STRIKETHROUGH = 'BlockStrikethrough';
     const BLOCK_STRONG = 'BlockStrong';
     const BLOCK_EMPHASIS = 'BlockEmphasis';
     const BLOCK_INLINE_CODE = 'BlockInlineCode';
+
+    const BLOCK_SKIP = 'BlockSkip';
+    const BLOCK_UNCHANGE = 'BlockUnchange';
 }

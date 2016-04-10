@@ -5,16 +5,16 @@ namespace Kisphp\Blocks;
 use Kisphp\AbstractBlock;
 
 /**
- * this block removes unnecessary empty lines from code
+ * returns exactly the same content without any change
  */
-class BlockSkip extends AbstractBlock
+class BlockUnchange extends AbstractBlock
 {
     /**
-     * @return null
+     * @return string
      */
     public function parse()
     {
-        return null;
+        return $this->content;
     }
 
     /**

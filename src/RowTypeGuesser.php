@@ -15,6 +15,7 @@ class RowTypeGuesser
         '#' => [BlockTypes::BLOCK_HEADER],
         '*' => [BlockTypes::BLOCK_HORIZONTAL_RULE],
         '_' => [BlockTypes::BLOCK_HORIZONTAL_RULE],
+        '>' => [BlockTypes::BLOCK_QUOTE],
 
 //        '|' => [self::TYPE_TABLE],
 //        '*' => [self::TYPE_HORIZONTAL_RULE, self::TYPE_LIST],
@@ -232,8 +233,8 @@ class RowTypeGuesser
      *
      * @return bool
      */
-//    public function isBlockquote($lineContent)
-//    {
-//        return (bool) preg_match('/^\>\s/', $lineContent);
-//    }
+    public function isBlockQuote($lineNumber)
+    {
+        return (bool) preg_match('/^\>\s/', $this->dataObject->getLine($lineNumber));
+    }
 }

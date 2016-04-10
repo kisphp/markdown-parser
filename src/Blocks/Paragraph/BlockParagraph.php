@@ -7,6 +7,9 @@ use Kisphp\BlockFactory;
 use Kisphp\DataObject;
 use Kisphp\Interfaces\BlockInterface;
 
+/**
+ * handle paragraphs and merge connected paragraphs
+ */
 class BlockParagraph extends AbstractBlock
 {
     /**

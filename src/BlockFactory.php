@@ -69,11 +69,7 @@ class BlockFactory implements BlockFactoryInterface
      */
     public function createDataObject($markdownContent)
     {
-        if (static::$dataObject === null) {
-            static::$dataObject = new DataObject($markdownContent);
-        }
-
-        return static::$dataObject;
+        return new DataObject($markdownContent);
     }
 
     /**

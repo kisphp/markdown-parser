@@ -9,7 +9,7 @@ abstract class AbstractBlock implements BlockInterface
     /**
      * @var int
      */
-    protected $lineNumber;
+    protected $lineNumber = 0;
 
     /**
      * @var string
