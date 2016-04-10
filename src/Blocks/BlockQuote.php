@@ -10,23 +10,11 @@ use Kisphp\DataObject;
 class BlockQuote extends AbstractBlock
 {
     /**
-     * @param string $content
-     *
-     * @return $this
-     */
-    public function setContent($content)
-    {
-        $this->content = $this->cleanMarkup($content);
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function parse()
     {
-        $html = $this->getStartTag() . $this->content . $this->getEndTag();
+        $html = $this->getStartTag() . $this->getContent() . $this->getEndTag();
 
         return $this->parseInlineMarkup($html);
     }
@@ -61,6 +49,12 @@ class BlockQuote extends AbstractBlock
 
         $nextLineObject = $dataObject->getLine($nextLineNumber);
         if (!is_a($nextLineObject, static::class)) {
+            $this->setContent(
+                $this->clearBlockQuoteMarkup(
+                    $this->getContent()
+                )
+            );
+
             return $this;
         }
 
@@ -71,7 +65,7 @@ class BlockQuote extends AbstractBlock
         for ($i = $this->lineNumber; $i < $max; $i++) {
             $currentLineObject = $dataObject->getLine($i);
 
-            $updatedLines[] = $this->cleanMarkup($currentLineObject->getContent());
+            $updatedLines[] = $this->clearBlockQuoteMarkup($currentLineObject->getContent());
 
             $nextLineObject = $dataObject->getLine($i + 1);
             $nextSecondLineObject = $dataObject->getLine($i + 2);
@@ -95,9 +89,13 @@ class BlockQuote extends AbstractBlock
      *
      * @return string
      */
-    protected function cleanMarkup($lineContent)
+    protected function clearBlockQuoteMarkup($lineContent)
     {
-        return preg_replace('/^\>\s/', '', $lineContent);
+        if (strpos($lineContent, '> ') === 0) {
+            $lineContent = substr($lineContent, 2);
+        }
+
+        return $lineContent;
     }
 
     /**
