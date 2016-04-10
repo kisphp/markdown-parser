@@ -77,36 +77,68 @@ abstract class AbstractBlock implements BlockInterface
     }
 
     /**
+     * @param string $lineContent
      * @return string
      */
     protected function parseInlineMarkup($lineContent)
     {
-        // inline code
-        if (strpos($lineContent, '`') !== false) {
-            $lineContent = BlockFactory::create(BlockTypes::BLOCK_INLINE_CODE)
-                ->setContent($lineContent)
-                ->parse()
-            ;
-        }
-
-        // strong
-        $lineContent = BlockFactory::create(BlockTypes::BLOCK_STRONG)
-            ->setContent($lineContent)
-            ->parse()
-        ;
-
-        // inline emphasis
-        $lineContent = BlockFactory::create(BlockTypes::BLOCK_EMPHASIS)
-            ->setContent($lineContent)
-            ->parse()
-        ;
-
-        // Strikethrough
-        $lineContent = BlockFactory::create(BlockTypes::BLOCK_STRIKETHROUGH)
-            ->setContent($lineContent)
-            ->parse()
-        ;
+        $lineContent = $this->parseInlineCode($lineContent);
+        $lineContent = $this->parseInlineStrong($lineContent);
+        $lineContent = $this->parseInlineEmphasis($lineContent);
+        $lineContent = $this->parseInlineStrikethrough($lineContent);
 
         return $lineContent;
+    }
+
+    /**
+     * @param string $lineContent
+     * @return string
+     */
+    protected function parseInlineCode($lineContent)
+    {
+        if (strpos($lineContent, '`') === false) {
+            return $lineContent;
+        }
+
+        return BlockFactory::create(BlockTypes::BLOCK_INLINE_CODE)
+            ->setContent($lineContent)
+            ->parse()
+        ;
+    }
+
+    /**
+     * @param string $lineContent
+     * @return string
+     */
+    protected function parseInlineStrong($lineContent)
+    {
+        return BlockFactory::create(BlockTypes::BLOCK_STRONG)
+            ->setContent($lineContent)
+            ->parse()
+        ;
+    }
+
+    /**
+     * @param string $lineContent
+     * @return string
+     */
+    protected function parseInlineEmphasis($lineContent)
+    {
+        return BlockFactory::create(BlockTypes::BLOCK_EMPHASIS)
+            ->setContent($lineContent)
+            ->parse()
+        ;
+    }
+
+    /**
+     * @param string $lineContent
+     * @return string
+     */
+    protected function parseInlineStrikethrough($lineContent)
+    {
+        return BlockFactory::create(BlockTypes::BLOCK_STRIKETHROUGH)
+            ->setContent($lineContent)
+            ->parse()
+        ;
     }
 }

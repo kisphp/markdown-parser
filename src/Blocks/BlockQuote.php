@@ -26,7 +26,9 @@ class BlockQuote extends AbstractBlock
      */
     public function parse()
     {
-        return $this->getStartTag() . $this->content . $this->getEndTag();
+        $html = $this->getStartTag() . $this->content . $this->getEndTag();
+
+        return $this->parseInlineMarkup($html);
     }
 
     /**
