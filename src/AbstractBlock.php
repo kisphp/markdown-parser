@@ -78,6 +78,7 @@ abstract class AbstractBlock implements BlockInterface
 
     /**
      * @param string $lineContent
+     *
      * @return string
      */
     protected function parseInlineMarkup($lineContent)
@@ -92,6 +93,7 @@ abstract class AbstractBlock implements BlockInterface
 
     /**
      * @param string $lineContent
+     *
      * @return string
      */
     protected function parseInlineCode($lineContent)
@@ -108,6 +110,7 @@ abstract class AbstractBlock implements BlockInterface
 
     /**
      * @param string $lineContent
+     *
      * @return string
      */
     protected function parseInlineStrong($lineContent)
@@ -120,6 +123,7 @@ abstract class AbstractBlock implements BlockInterface
 
     /**
      * @param string $lineContent
+     *
      * @return string
      */
     protected function parseInlineEmphasis($lineContent)
@@ -132,6 +136,7 @@ abstract class AbstractBlock implements BlockInterface
 
     /**
      * @param string $lineContent
+     *
      * @return string
      */
     protected function parseInlineStrikethrough($lineContent)
