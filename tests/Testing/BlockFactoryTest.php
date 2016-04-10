@@ -3,16 +3,6 @@
 
 class BlockFactoryTest extends PHPUnit_Framework_TestCase
 {
-    public function _test_create()
-    {
-        $bf = new \Kisphp\BlockFactory();
-
-        $this->assertInstanceOf(
-            \Kisphp\Blocks\BlockCode::class,
-            $bf->create(\Kisphp\Markdown::TYPE_CODE)
-        );
-    }
-
     /**
      * @expectedException \Kisphp\Exceptions\BlockNotFoundException
      */

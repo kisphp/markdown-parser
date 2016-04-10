@@ -6,13 +6,29 @@ class MarkdownTest extends PHPUnit_Framework_TestCase
     const DIRECTORY = '/../data/';
 
     /**
+     * @param string $filename
+     *
+     * @return string
+     */
+    protected function getFileContent($filename)
+    {
+        $filePath = __DIR__ . self::DIRECTORY . '/' . $filename;
+        if (!is_file($filePath)) {
+            return '';
+        }
+
+        return file_get_contents($filePath);
+    }
+
+    /**
      * @dataProvider dataProvider
      */
     public function test_Markup($fileMd, $fileHtml)
     {
-        $md = new \Kisphp\Markdown(new \Kisphp\BlockFactory());
-        $codeMd = file_get_contents(__DIR__ . self::DIRECTORY . '/' . $fileMd);
-        $codeHtml = file_get_contents(__DIR__ . self::DIRECTORY . '/' . $fileHtml);
+        $codeMd = $this->getFileContent($fileMd);
+        $codeHtml = $this->getFileContent($fileHtml);
+
+        $md = \Kisphp\BlockFactory::createMarkdown();
 
         $this->assertSame(
             trim($codeHtml),
