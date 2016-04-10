@@ -12,28 +12,24 @@ class RowTypeGuesser
      */
     protected $blockTypes = [
         '=' => [BlockTypes::BLOCK_HEADER_ONE],
-        '-' => [BlockTypes::BLOCK_HEADER_TWO, BlockTypes::BLOCK_HORIZONTAL_RULE],
+        '-' => [BlockTypes::BLOCK_HEADER_TWO, BlockTypes::BLOCK_HORIZONTAL_RULE, BlockTypes::BLOCK_UNORDERED_LIST],
         '#' => [BlockTypes::BLOCK_HEADER],
-        '*' => [BlockTypes::BLOCK_HORIZONTAL_RULE],
+        '*' => [BlockTypes::BLOCK_HORIZONTAL_RULE, BlockTypes::BLOCK_UNORDERED_LIST],
         '_' => [BlockTypes::BLOCK_HORIZONTAL_RULE],
         '>' => [BlockTypes::BLOCK_QUOTE],
         '`' => [BlockTypes::BLOCK_CODE],
 
 //        '|' => [self::TYPE_TABLE],
-//        '*' => [self::TYPE_HORIZONTAL_RULE, self::TYPE_LIST],
-//        '+' => [self::TYPE_LIST],
-//        '_' => [self::TYPE_HORIZONTAL_RULE],
-//        '`' => [self::TYPE_CODE, AbstractBlock::TYPE_INLINE_CODE],
-//        '>' => [AbstractBlock::TYPE_BLOCKQUOTE],
-//        '1' => [self::TYPE_ORDERED_LIST],
-//        '2' => [self::TYPE_ORDERED_LIST],
-//        '3' => [self::TYPE_ORDERED_LIST],
-//        '4' => [self::TYPE_ORDERED_LIST],
-//        '5' => [self::TYPE_ORDERED_LIST],
-//        '6' => [self::TYPE_ORDERED_LIST],
-//        '7' => [self::TYPE_ORDERED_LIST],
-//        '8' => [self::TYPE_ORDERED_LIST],
-//        '9' => [self::TYPE_ORDERED_LIST],
+        '+' => [BlockTypes::BLOCK_UNORDERED_LIST],
+        '1' => [BlockTypes::BLOCK_ORDERED_LIST],
+        '2' => [BlockTypes::BLOCK_ORDERED_LIST],
+        '3' => [BlockTypes::BLOCK_ORDERED_LIST],
+        '4' => [BlockTypes::BLOCK_ORDERED_LIST],
+        '5' => [BlockTypes::BLOCK_ORDERED_LIST],
+        '6' => [BlockTypes::BLOCK_ORDERED_LIST],
+        '7' => [BlockTypes::BLOCK_ORDERED_LIST],
+        '8' => [BlockTypes::BLOCK_ORDERED_LIST],
+        '9' => [BlockTypes::BLOCK_ORDERED_LIST],
     ];
 
     /**
@@ -138,26 +134,30 @@ class RowTypeGuesser
     }
 
     /**
-     * @param string $lineContent
+     * @param int $lineNumber
      *
      * @return bool
      */
-//    public function isInlineCode($lineContent)
-//    {
-//        return (bool) preg_match('/\`(.*)\`/', $lineContent);
-//    }
+    public function isBlockUnorderedList($lineNumber)
+    {
+        $lineContent = $this->dataObject->getLine($lineNumber);
+        $lineContent = trim($lineContent);
+
+        return (bool) preg_match('/(^\*\s|^\-\s|^\+\s)/', $lineContent) || $this->isBlockOrderedList($lineNumber);
+    }
 
     /**
-     * @param string $lineContent
+     * @param int $lineNumber
      *
      * @return bool
      */
-//    public function isList($lineContent)
-//    {
-//        $lineContent = trim($lineContent);
-//
-//        return (bool) preg_match('/(^\*\s|^\-\s|^\+\s)/', $lineContent) || $this->isOrderedList($lineContent);
-//    }
+    public function isBlockOrderedList($lineNumber)
+    {
+        $lineContent = $this->dataObject->getLine($lineNumber);
+        $lineContent = trim($lineContent);
+
+        return (bool) preg_match('/(^[0-9]\.\s)/', $lineContent);
+    }
 
     /**
      * @param int $lineNumber
@@ -199,18 +199,6 @@ class RowTypeGuesser
     }
 
     /**
-     * @param string $lineContent
-     *
-     * @return bool
-     */
-//    public function isOrderedList($lineContent)
-//    {
-//        $lineContent = trim($lineContent);
-//
-//        return (bool) preg_match('/(^[0-9]\.\s)/', $lineContent);
-//    }
-
-    /**
      * @param int $lineNumber
      *
      * @return bool
@@ -236,7 +224,7 @@ class RowTypeGuesser
         return (bool) preg_match('/^([\`]{3})/', $lineContent);
     }
 
-    /*
+    /**
      * @param string $lineContent
      *
      * @return bool

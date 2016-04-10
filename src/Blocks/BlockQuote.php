@@ -97,21 +97,4 @@ class BlockQuote extends AbstractBlock
 
         return $lineContent;
     }
-
-    /**
-     * @param DataObject $dataObject
-     * @param array $updatedLines
-     */
-    protected function parseSubBlock(DataObject $dataObject, array $updatedLines)
-    {
-        $markdown = BlockFactory::createMarkdown();
-        $md = implode("\n", $updatedLines);
-
-        $newCodeParsed = $markdown->parse($md);
-        $this->setContent($newCodeParsed);
-
-        $newContent = BlockFactory::create(BlockTypes::BLOCK_UNCHANGE)->setContent($this->parse());
-
-        $dataObject->updateLine($this->getLineNumber(), $newContent);
-    }
 }

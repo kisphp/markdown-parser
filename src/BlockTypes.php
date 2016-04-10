@@ -12,6 +12,8 @@ class BlockTypes
     const BLOCK_HORIZONTAL_RULE = 'BlockHorizontalRule';
     const BLOCK_QUOTE = 'BlockQuote';
     const BLOCK_CODE = 'BlockCode';
+    const BLOCK_UNORDERED_LIST = 'BlockUnorderedList';
+    const BLOCK_ORDERED_LIST = 'BlockOrderedList';
 
     const BLOCK_STRIKETHROUGH = 'BlockStrikethrough';
     const BLOCK_STRONG = 'BlockStrong';

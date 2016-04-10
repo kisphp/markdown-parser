@@ -37,6 +37,7 @@ class BlockFactory implements BlockFactoryInterface
             __NAMESPACE__ . '\\Blocks\\Paragraph\\',
             __NAMESPACE__ . '\\Blocks\\Headers\\',
             __NAMESPACE__ . '\\Blocks\\Inline\\',
+            __NAMESPACE__ . '\\Blocks\\Lists\\',
         ];
     }
 
