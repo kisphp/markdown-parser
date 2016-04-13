@@ -46,6 +46,9 @@ class ListTree
         $this->addItem($treeItem);
     }
 
+    /**
+     * @return string
+     */
     public function parse()
     {
         $html = '';

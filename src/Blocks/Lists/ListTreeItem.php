@@ -2,6 +2,8 @@
 
 namespace Kisphp\Blocks\Lists;
 
+use Kisphp\RowTypeGuesser;
+
 class ListTreeItem implements ListTreeInterface
 {
     const TYPE_UL = 'ul';
@@ -157,6 +159,21 @@ class ListTreeItem implements ListTreeInterface
     public function setContent($content)
     {
         $this->content = $content;
+        $this->guessListType($content);
+    }
+
+    /**
+     * @param string $content
+     *
+     * @return ListTreeItem
+     */
+    public function guessListType($content)
+    {
+        if (RowTypeGuesser::isBlockOrderedListByContent($content)) {
+            return $this->setListType(self::TYPE_OL);
+        }
+
+        return $this->setListType(self::TYPE_UL);
     }
 
     /**
@@ -189,9 +206,13 @@ class ListTreeItem implements ListTreeInterface
 
     /**
      * @param string $listType
+     *
+     * @return $this
      */
     public function setListType($listType)
     {
         $this->listType = $listType;
+
+        return $this;
     }
 }

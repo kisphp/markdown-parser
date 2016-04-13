@@ -144,7 +144,28 @@ class RowTypeGuesser
         $lineContent = $this->dataObject->getLine($lineNumber);
         $lineContent = trim($lineContent);
 
-        return (bool) preg_match('/(^\*\s|^\-\s|^\+\s|^[0-9]\.\s)/', $lineContent);
+        return (
+            static::isBlockOrderedListByContent($lineContent)
+            || static::isBlockUnorderedListByContent($lineContent)
+        );
+    }
+
+    /**
+     * @param string $lineContent
+     * @return bool
+     */
+    public static function isBlockUnorderedListByContent($lineContent)
+    {
+        return (bool) preg_match('/(^\*\s|^\-\s|^\+\s)/', $lineContent);
+    }
+
+    /**
+     * @param string $lineContent
+     * @return bool
+     */
+    public static function isBlockOrderedListByContent($lineContent)
+    {
+        return (bool) preg_match('/(^[0-9]\.\s)/', $lineContent);
     }
 
     /**

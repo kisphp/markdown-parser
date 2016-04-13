@@ -22,7 +22,7 @@ class BlockFactory implements BlockFactoryInterface
      */
     public static function create($type)
     {
-        $className = self::getClassNamespace($type);
+        $className = static::getClassNamespace($type);
 
         return new $className();
     }
