@@ -152,6 +152,7 @@ class RowTypeGuesser
 
     /**
      * @param string $lineContent
+     *
      * @return bool
      */
     public static function isBlockUnorderedListByContent($lineContent)
@@ -161,6 +162,7 @@ class RowTypeGuesser
 
     /**
      * @param string $lineContent
+     *
      * @return bool
      */
     public static function isBlockOrderedListByContent($lineContent)
