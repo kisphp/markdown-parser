@@ -44,7 +44,7 @@ class ListTreeItem implements ListTreeInterface
      */
     public function getStartTag()
     {
-        return '<' . $this->listType . '>';
+        return '<' . $this->listType . '>' . "\n";
     }
 
     /**

@@ -49,9 +49,7 @@ class BlockList extends AbstractBlock
             /** @var AbstractBlock $nextSecondLineObject */
             $nextSecondLineObject = $dataObject->getLine($i + 2);
 
-            if (!$this->lineIsObjectOf($nextLineObject, static::class)
-//                && !$this->lineIsObjectOf($nextSecondLineObject, static::class)
-            ) {
+            if (!$this->lineIsObjectOf($nextLineObject, static::class)) {
                 $changeNextLine = false;
             }
 
