@@ -159,8 +159,27 @@ abstract class AbstractBlock implements BlockInterface
         $newCodeParsed = $markdown->parse($md);
         $this->setContent($newCodeParsed);
 
-        $newContent = BlockFactory::create(BlockTypes::BLOCK_UNCHANGE)->setContent($this->parse());
+        $newContent = BlockFactory::create(BlockTypes::BLOCK_UNCHANGE)
+            ->setContent($this->parse())
+        ;
 
         $dataObject->updateLine($this->getLineNumber(), $newContent);
+    }
+
+    /**
+     * @param BlockInterface $block
+     * @param string $objectType
+     *
+     * @return bool
+     */
+    protected function lineIsObjectOf(BlockInterface $block = null, $objectType)
+    {
+        if ($block === null) {
+            return false;
+        }
+
+        return (bool) (
+            is_a($block, $objectType) || is_a($block, BlockTypes::BLOCK_CONTINUE)
+        );
     }
 }

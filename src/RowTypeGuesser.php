@@ -7,29 +7,30 @@ use Kisphp\Exceptions\MethodNotFoundException;
 class RowTypeGuesser
 {
     const BACKTICK_CODE = '96';
+
     /**
      * @var array
      */
     protected $blockTypes = [
         '=' => [BlockTypes::BLOCK_HEADER_ONE],
-        '-' => [BlockTypes::BLOCK_HEADER_TWO, BlockTypes::BLOCK_HORIZONTAL_RULE, BlockTypes::BLOCK_UNORDERED_LIST],
+        '-' => [BlockTypes::BLOCK_HEADER_TWO, BlockTypes::BLOCK_HORIZONTAL_RULE, BlockTypes::BLOCK_LIST],
         '#' => [BlockTypes::BLOCK_HEADER],
-        '*' => [BlockTypes::BLOCK_HORIZONTAL_RULE, BlockTypes::BLOCK_UNORDERED_LIST],
+        '*' => [BlockTypes::BLOCK_HORIZONTAL_RULE, BlockTypes::BLOCK_LIST],
         '_' => [BlockTypes::BLOCK_HORIZONTAL_RULE],
         '>' => [BlockTypes::BLOCK_QUOTE],
         '`' => [BlockTypes::BLOCK_CODE],
-
-//        '|' => [self::TYPE_TABLE],
-        '+' => [BlockTypes::BLOCK_UNORDERED_LIST],
-        '1' => [BlockTypes::BLOCK_ORDERED_LIST],
-        '2' => [BlockTypes::BLOCK_ORDERED_LIST],
-        '3' => [BlockTypes::BLOCK_ORDERED_LIST],
-        '4' => [BlockTypes::BLOCK_ORDERED_LIST],
-        '5' => [BlockTypes::BLOCK_ORDERED_LIST],
-        '6' => [BlockTypes::BLOCK_ORDERED_LIST],
-        '7' => [BlockTypes::BLOCK_ORDERED_LIST],
-        '8' => [BlockTypes::BLOCK_ORDERED_LIST],
-        '9' => [BlockTypes::BLOCK_ORDERED_LIST],
+        ' ' => [BlockTypes::BLOCK_CONTINUE],
+//        '|' => [BlockTypes::TYPE_TABLE],
+        '+' => [BlockTypes::BLOCK_LIST],
+        '1' => [BlockTypes::BLOCK_LIST],
+        '2' => [BlockTypes::BLOCK_LIST],
+        '3' => [BlockTypes::BLOCK_LIST],
+        '4' => [BlockTypes::BLOCK_LIST],
+        '5' => [BlockTypes::BLOCK_LIST],
+        '6' => [BlockTypes::BLOCK_LIST],
+        '7' => [BlockTypes::BLOCK_LIST],
+        '8' => [BlockTypes::BLOCK_LIST],
+        '9' => [BlockTypes::BLOCK_LIST],
     ];
 
     /**
@@ -138,25 +139,12 @@ class RowTypeGuesser
      *
      * @return bool
      */
-    public function isBlockUnorderedList($lineNumber)
+    public function isBlockList($lineNumber)
     {
         $lineContent = $this->dataObject->getLine($lineNumber);
         $lineContent = trim($lineContent);
 
-        return (bool) preg_match('/(^\*\s|^\-\s|^\+\s)/', $lineContent) || $this->isBlockOrderedList($lineNumber);
-    }
-
-    /**
-     * @param int $lineNumber
-     *
-     * @return bool
-     */
-    public function isBlockOrderedList($lineNumber)
-    {
-        $lineContent = $this->dataObject->getLine($lineNumber);
-        $lineContent = trim($lineContent);
-
-        return (bool) preg_match('/(^[0-9]\.\s)/', $lineContent);
+        return (bool) preg_match('/(^\*\s|^\-\s|^\+\s|^[0-9]\.\s)/', $lineContent);
     }
 
     /**
@@ -174,8 +162,26 @@ class RowTypeGuesser
      *
      * @return bool
      */
+    public function isBlockContinue($lineNumber)
+    {
+        return (bool) preg_match('/^([\s]{1,}|[\t]+)\s/', $this->dataObject->getLine($lineNumber));
+    }
+
+    /**
+     * @param int $lineNumber
+     *
+     * @return bool
+     */
     public function isBlockHeaderOne($lineNumber)
     {
+        if ($lineNumber < 1) {
+            return false;
+        }
+
+        if (!$this->isLineTypeOf($lineNumber - 1, BlockTypes::BLOCK_PARAGRAPH)) {
+            return false;
+        }
+
         return (bool) preg_match('/([\=]{3,})/', $this->dataObject->getLine($lineNumber));
     }
 
@@ -190,7 +196,6 @@ class RowTypeGuesser
             return false;
         }
 
-        // check if previous line is paragraph
         if (!$this->isLineTypeOf($lineNumber - 1, BlockTypes::BLOCK_PARAGRAPH)) {
             return false;
         }
@@ -225,7 +230,7 @@ class RowTypeGuesser
     }
 
     /**
-     * @param string $lineContent
+     * @param int $lineNumber
      *
      * @return bool
      */

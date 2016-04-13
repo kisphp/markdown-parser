@@ -7,9 +7,8 @@ use Kisphp\BlockFactory;
 use Kisphp\BlockTypes;
 use Kisphp\DataObject;
 
-abstract class BlockList extends AbstractBlock
+class BlockList extends AbstractBlock
 {
-    const LIST_MARKUP_PATTERNS = '/^([\*\s]{1}[\s?]|[\-\s]{1}[\s?]|[\+\s]{1}[\s?]|[\d]{1}\.[\s?])/';
 
     /**
      * @return string
@@ -21,32 +20,38 @@ abstract class BlockList extends AbstractBlock
         return $this->parseInlineMarkup($html);
     }
 
-    /**
-     * @param string $content
-     *
-     * @return string
-     */
-    protected function clearListMarkup($content)
+    public function getStartTag()
     {
-        return preg_replace(self::LIST_MARKUP_PATTERNS, '', $content);
+        // TODO: Implement getStartTag() method.
     }
 
+    public function getEndTag()
+    {
+        // TODO: Implement getEndTag() method.
+    }
+
+    /**
+     * @param DataObject $dataObject
+     */
     public function changeLineType(DataObject $dataObject)
     {
         $max = $dataObject->count();
         $changeNextLine = true;
 
-        $updatedLines = [];
+        $listTree = new ListTree();
         for ($i = $this->lineNumber; $i < $max; $i++) {
             $currentLineObject = $dataObject->getLine($i);
 
-            $updatedLines[] = $this->createLineContent($currentLineObject->getContent());
+            $listTree->createItem($currentLineObject->getContent());
 
-            //dump($currentLineObject->getContent());
-
+            /** @var AbstractBlock $nextLineObject */
             $nextLineObject = $dataObject->getLine($i + 1);
+            /** @var AbstractBlock $nextSecondLineObject */
             $nextSecondLineObject = $dataObject->getLine($i + 2);
-            if (!is_a($nextLineObject, static::class) && !is_a($nextSecondLineObject, static::class)) {
+
+            if (!$this->lineIsObjectOf($nextLineObject, static::class)
+                && !$this->lineIsObjectOf($nextSecondLineObject, static::class)
+            ) {
                 $changeNextLine = false;
             }
 
@@ -58,23 +63,33 @@ abstract class BlockList extends AbstractBlock
             }
         }
 
-        $this->parseSubBlock($dataObject, $updatedLines);
+        $this->parseListTree($dataObject, $listTree);
     }
 
-    protected function getItemStartTag()
+    /**
+     * @param DataObject $dataObject
+     * @param ListTree $listTree
+     */
+    protected function parseListTree(DataObject $dataObject, ListTree $listTree)
     {
-        return '<li>';
+        $newContent = BlockFactory::create(BlockTypes::BLOCK_UNCHANGE)
+            ->setContent($listTree->parse())
+        ;
+
+        $dataObject->updateLine($this->getLineNumber(), $newContent);
     }
 
-    protected function getItemEndTag()
-    {
-        return '</li>';
-    }
-
+    /**
+     * @param string $lineContent
+     *
+     * @return string
+     *
+     * @deprecated not needed any more
+     */
     protected function createLineContent($lineContent)
     {
         $content = $this->clearListMarkup($lineContent);
 
-        return $this->getItemStartTag() . $content . $this->getItemEndTag();
+        return $content;
     }
 }
