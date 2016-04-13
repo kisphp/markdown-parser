@@ -9,3 +9,6 @@ install:
 script:
   - phpunit
   - vendor/bin/php-cs-fixer fix --dry-run
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
