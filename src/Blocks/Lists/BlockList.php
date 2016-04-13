@@ -50,7 +50,7 @@ class BlockList extends AbstractBlock
             $nextSecondLineObject = $dataObject->getLine($i + 2);
 
             if (!$this->lineIsObjectOf($nextLineObject, static::class)
-                && !$this->lineIsObjectOf($nextSecondLineObject, static::class)
+//                && !$this->lineIsObjectOf($nextSecondLineObject, static::class)
             ) {
                 $changeNextLine = false;
             }

@@ -179,7 +179,7 @@ abstract class AbstractBlock implements BlockInterface
         }
 
         return (bool) (
-            is_a($block, $objectType) || is_a($block, BlockTypes::BLOCK_CONTINUE)
+            is_a($block, $objectType) || is_a($block, BlockFactory::getClassNamespace(BlockTypes::BLOCK_CONTINUE))
         );
     }
 }
