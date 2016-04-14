@@ -10,14 +10,4 @@ interface MarkdownInterface
      * @return string
      */
     public function parse($text);
-
-    /**
-     * @return RowTypeGuesserInterface
-     */
-    public function getRowTypeGuesser();
-
-    /**
-     * @return DataObjectInterface
-     */
-    public function getDataObject();
 }
