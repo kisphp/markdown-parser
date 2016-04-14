@@ -1,6 +1,6 @@
 <?php
 
-namespace Kisphp\Interfaces;
+namespace Kisphp;
 
 interface BlockInterface
 {

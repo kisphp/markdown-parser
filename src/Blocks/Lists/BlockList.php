@@ -3,7 +3,6 @@
 namespace Kisphp\Blocks\Lists;
 
 use Kisphp\AbstractBlock;
-use Kisphp\BlockFactory;
 use Kisphp\BlockTypes;
 use Kisphp\DataObject;
 
@@ -53,7 +52,7 @@ class BlockList extends AbstractBlock
                 $changeNextLine = false;
             }
 
-            $changedContent = BlockFactory::create(BlockTypes::BLOCK_SKIP);
+            $changedContent = $this->factory->create(BlockTypes::BLOCK_SKIP);
             $dataObject->updateLine($i, $changedContent);
 
             if ($changeNextLine === false) {
@@ -70,7 +69,7 @@ class BlockList extends AbstractBlock
      */
     protected function parseListTree(DataObject $dataObject, ListTree $listTree)
     {
-        $newContent = BlockFactory::create(BlockTypes::BLOCK_UNCHANGE)
+        $newContent = $this->factory->create(BlockTypes::BLOCK_UNCHANGE)
             ->setContent($listTree->parse())
         ;
 

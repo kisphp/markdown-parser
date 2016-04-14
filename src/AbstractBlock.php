@@ -2,10 +2,13 @@
 
 namespace Kisphp;
 
-use Kisphp\Interfaces\BlockInterface;
-
 abstract class AbstractBlock implements BlockInterface
 {
+    /**
+     * @var BlockFactory
+     */
+    protected $factory;
+
     /**
      * @var int
      */
@@ -15,6 +18,14 @@ abstract class AbstractBlock implements BlockInterface
      * @var string
      */
     protected $content;
+
+    /**
+     * @param BlockFactory $factory
+     */
+    public function __construct(BlockFactory $factory)
+    {
+        $this->factory = $factory;
+    }
 
     /**
      * @return string
@@ -68,7 +79,7 @@ abstract class AbstractBlock implements BlockInterface
      */
     public function changeObjectType($newType)
     {
-        $object = BlockFactory::create($newType)
+        $object = $this->factory->create($newType)
             ->setContent($this->getContent())
             ->setLineNumber($this->getLineNumber())
         ;
@@ -102,7 +113,7 @@ abstract class AbstractBlock implements BlockInterface
             return $lineContent;
         }
 
-        return BlockFactory::create(BlockTypes::BLOCK_INLINE_CODE)
+        return $this->factory->create(BlockTypes::BLOCK_INLINE_CODE)
             ->setContent($lineContent)
             ->parse()
         ;
@@ -115,7 +126,7 @@ abstract class AbstractBlock implements BlockInterface
      */
     protected function parseInlineStrong($lineContent)
     {
-        return BlockFactory::create(BlockTypes::BLOCK_STRONG)
+        return $this->factory->create(BlockTypes::BLOCK_STRONG)
             ->setContent($lineContent)
             ->parse()
         ;
@@ -128,7 +139,7 @@ abstract class AbstractBlock implements BlockInterface
      */
     protected function parseInlineEmphasis($lineContent)
     {
-        return BlockFactory::create(BlockTypes::BLOCK_EMPHASIS)
+        return $this->factory->create(BlockTypes::BLOCK_EMPHASIS)
             ->setContent($lineContent)
             ->parse()
         ;
@@ -141,7 +152,7 @@ abstract class AbstractBlock implements BlockInterface
      */
     protected function parseInlineStrikethrough($lineContent)
     {
-        return BlockFactory::create(BlockTypes::BLOCK_STRIKETHROUGH)
+        return $this->factory->create(BlockTypes::BLOCK_STRIKETHROUGH)
             ->setContent($lineContent)
             ->parse()
         ;
@@ -153,13 +164,13 @@ abstract class AbstractBlock implements BlockInterface
      */
     protected function parseSubBlock(DataObject $dataObject, array $updatedLines)
     {
-        $markdown = BlockFactory::createMarkdown();
+        $markdown = $this->factory->createMarkdown();
         $md = implode("\n", $updatedLines);
 
         $newCodeParsed = $markdown->parse($md);
         $this->setContent($newCodeParsed);
 
-        $newContent = BlockFactory::create(BlockTypes::BLOCK_UNCHANGE)
+        $newContent = $this->factory->create(BlockTypes::BLOCK_UNCHANGE)
             ->setContent($this->parse())
         ;
 
@@ -179,7 +190,7 @@ abstract class AbstractBlock implements BlockInterface
         }
 
         return (bool) (
-            is_a($block, $objectType) || is_a($block, BlockFactory::getClassNamespace(BlockTypes::BLOCK_CONTINUE))
+            is_a($block, $objectType) || is_a($block, $this->factory->getClassNamespace(BlockTypes::BLOCK_CONTINUE))
         );
     }
 }
