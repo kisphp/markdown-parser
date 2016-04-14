@@ -15,18 +15,18 @@ class BlockHorizontalRule extends AbstractBlock
     }
 
     /**
-     * @return string
+     * @return null
      */
     public function getStartTag()
     {
-        return '<hr />';
+        return null;
     }
 
     /**
-     * @return null
+     * @return string
      */
     public function getEndTag()
     {
-        return null;
+        return '<hr />';
     }
 }
