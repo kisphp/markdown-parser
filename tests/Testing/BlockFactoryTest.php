@@ -14,9 +14,11 @@ class BlockFactoryTest extends PHPUnit_Framework_TestCase
 
     public function test_BlockParagraph()
     {
+        $factory = new \Kisphp\BlockFactory();
+
         $this->assertInstanceOf(
             \Kisphp\Blocks\Paragraph\BlockParagraph::class,
-            \Kisphp\BlockFactory::create(\Kisphp\BlockTypes::BLOCK_PARAGRAPH)
+            $factory->create(\Kisphp\BlockTypes::BLOCK_PARAGRAPH)
         );
     }
 }

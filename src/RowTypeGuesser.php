@@ -4,9 +4,14 @@ namespace Kisphp;
 
 use Kisphp\Exceptions\MethodNotFoundException;
 
-class RowTypeGuesser
+class RowTypeGuesser implements RowTypeGuesserInterface
 {
     const BACKTICK_CODE = '96';
+
+    /**
+     * @var BlockFactoryInterface
+     */
+    protected $factory;
 
     /**
      * @var array
@@ -39,11 +44,13 @@ class RowTypeGuesser
     protected $dataObject;
 
     /**
-     * @param DataObject $dataObject
+     * @param DataObjectInterface $dataObject
+     * @param BlockFactoryInterface $factoryInterface
      */
-    public function __construct(DataObject $dataObject)
+    public function __construct(DataObjectInterface $dataObject, BlockFactoryInterface $factoryInterface)
     {
         $this->dataObject = $dataObject;
+        $this->factory = $factoryInterface;
     }
 
     /**
@@ -52,13 +59,13 @@ class RowTypeGuesser
      * @throws Exceptions\BlockNotFoundException
      * @throws MethodNotFoundException
      *
-     * @return Interfaces\BlockInterface
+     * @return BlockInterface
      */
     public function getRowObjectByLineContent($lineNumber)
     {
         $objectType = $this->getObjectTypeByLine($lineNumber);
 
-        return BlockFactory::create($objectType)
+        return $this->factory->create($objectType)
             ->setContent($this->dataObject->getLine($lineNumber))
             ->setLineNumber($lineNumber)
         ;
@@ -109,7 +116,7 @@ class RowTypeGuesser
     protected function isLineTypeOf($lineNumber, $blockName)
     {
         $previousLine = $this->dataObject->getLine($lineNumber);
-        $instance = BlockFactory::getClassNamespace($blockName);
+        $instance = $this->factory->getClassNamespace($blockName);
 
         if ($previousLine instanceof $instance) {
             return true;

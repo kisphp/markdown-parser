@@ -3,15 +3,18 @@
 namespace Kisphp;
 
 use Kisphp\Exceptions\BlockNotFoundException;
-use Kisphp\Interfaces\BlockFactoryInterface;
-use Kisphp\Interfaces\BlockInterface;
 
 class BlockFactory implements BlockFactoryInterface
 {
     /**
-     * @var DataObject
+     * @var DataObjectInterface
      */
-    private static $dataObject;
+    protected static $dataObject;
+
+    /**
+     * @var RowTypeGuesserInterface
+     */
+    protected $rowTypeGuesser;
 
     /**
      * @param string $type
@@ -20,17 +23,17 @@ class BlockFactory implements BlockFactoryInterface
      *
      * @return BlockInterface
      */
-    public static function create($type)
+    public function create($type)
     {
-        $className = static::getClassNamespace($type);
+        $className = $this->getClassNamespace($type);
 
-        return new $className();
+        return new $className($this);
     }
 
     /**
      * @return array
      */
-    protected static function getAvailableNamespaces()
+    protected function getAvailableNamespaces()
     {
         return [
             __NAMESPACE__ . '\\Blocks\\',
@@ -48,9 +51,9 @@ class BlockFactory implements BlockFactoryInterface
      *
      * @return string
      */
-    public static function getClassNamespace($type)
+    public function getClassNamespace($type)
     {
-        $classNamespaces = static::getAvailableNamespaces();
+        $classNamespaces = $this->getAvailableNamespaces();
 
         foreach ($classNamespaces as $namespace) {
             $className = $namespace . $type;
@@ -66,7 +69,7 @@ class BlockFactory implements BlockFactoryInterface
     /**
      * @param $markdownContent
      *
-     * @return DataObject
+     * @return DataObjectInterface
      */
     public function createDataObject($markdownContent)
     {
@@ -74,7 +77,7 @@ class BlockFactory implements BlockFactoryInterface
     }
 
     /**
-     * @return DataObject
+     * @return DataObjectInterface
      */
     public function getDataObject()
     {
@@ -82,12 +85,24 @@ class BlockFactory implements BlockFactoryInterface
     }
 
     /**
-     * @return Markdown
+     * @return MarkdownInterface
      */
     public static function createMarkdown()
     {
-        return new Markdown(
-            new static()
-        );
+        $factory = new static();
+
+        return new Markdown($factory);
+    }
+
+    /**
+     * @param DataObjectInterface $dataObjectInterface
+     *
+     * @return RowTypeGuesser
+     */
+    public function createRowTypeGuesser(DataObjectInterface $dataObjectInterface)
+    {
+        $this->rowTypeGuesser = new RowTypeGuesser($dataObjectInterface, $this);
+
+        return $this->rowTypeGuesser;
     }
 }

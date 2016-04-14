@@ -2,9 +2,7 @@
 
 namespace Kisphp;
 
-use Kisphp\Interfaces\BlockInterface;
-
-class DataObject
+class DataObject implements DataObjectInterface
 {
     /**
      * @var array

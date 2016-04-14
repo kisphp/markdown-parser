@@ -2,7 +2,7 @@
 
 namespace Kisphp\Blocks\Paragraph;
 
-use Kisphp\DataObject;
+use Kisphp\DataObjectInterface;
 
 class BlockParagraphContinue extends BlockParagraph
 {
@@ -23,11 +23,11 @@ class BlockParagraphContinue extends BlockParagraph
     }
 
     /**
-     * @param DataObject $dataObject
+     * @param DataObjectInterface $dataObject
      *
      * @return $this
      */
-    public function changeLineType(DataObject $dataObject)
+    public function changeLineType(DataObjectInterface $dataObject)
     {
         return $this;
     }

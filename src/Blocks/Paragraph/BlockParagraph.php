@@ -3,9 +3,8 @@
 namespace Kisphp\Blocks\Paragraph;
 
 use Kisphp\AbstractBlock;
-use Kisphp\BlockFactory;
-use Kisphp\DataObject;
-use Kisphp\Interfaces\BlockInterface;
+use Kisphp\BlockInterface;
+use Kisphp\DataObjectInterface;
 
 /**
  * handle paragraphs and merge connected paragraphs
@@ -39,11 +38,11 @@ class BlockParagraph extends AbstractBlock
     }
 
     /**
-     * @param DataObject $dataObject
+     * @param DataObjectInterface $dataObject
      *
      * @return BlockInterface
      */
-    public function changeLineType(DataObject $dataObject)
+    public function changeLineType(DataObjectInterface $dataObject)
     {
         $nextLineNumber = $this->lineNumber + 1;
         if (!$dataObject->hasLine($nextLineNumber)) {
@@ -61,15 +60,15 @@ class BlockParagraph extends AbstractBlock
 
         for ($i = $this->lineNumber; $i < $max; $i++) {
             $currentLineObject = $dataObject->getLine($i);
-            $newLineObject = BlockFactory::create('BlockParagraphContinue');
+            $newLineObject = $this->factory->create('BlockParagraphContinue');
             if ($start === false) {
                 $start = true;
-                $newLineObject = BlockFactory::create('BlockParagraphStart');
+                $newLineObject = $this->factory->create('BlockParagraphStart');
             }
 
             $nextLineObject = $dataObject->getLine($i + 1);
             if (!is_a($nextLineObject, static::class)) {
-                $newLineObject = BlockFactory::create('BlockParagraphEnd');
+                $newLineObject = $this->factory->create('BlockParagraphEnd');
                 $changeNextLine = false;
             }
 

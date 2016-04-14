@@ -2,13 +2,10 @@
 
 namespace Kisphp;
 
-use Kisphp\Interfaces\BlockFactoryInterface;
-use Kisphp\Interfaces\BlockInterface;
-
-class Markdown
+class Markdown implements MarkdownInterface
 {
     /**
-     * @var DataObject
+     * @var DataObjectInterface
      */
     protected $dataObject;
 
@@ -38,7 +35,7 @@ class Markdown
     public function parse($text)
     {
         $this->dataObject = $this->factory->createDataObject($text);
-        $this->rowTypeGuesser = new RowTypeGuesser($this->dataObject);
+        $this->rowTypeGuesser = $this->factory->createRowTypeGuesser($this->dataObject);
 
         $this->convertLines();
         $this->validateLinesType();
@@ -75,5 +72,21 @@ class Markdown
     protected function createLineObject($lineNumber)
     {
         return $this->rowTypeGuesser->getRowObjectByLineContent($lineNumber);
+    }
+
+    /**
+     * @return RowTypeGuesser
+     */
+    public function getRowTypeGuesser()
+    {
+        return $this->rowTypeGuesser;
+    }
+
+    /**
+     * @return DataObjectInterface
+     */
+    public function getDataObject()
+    {
+        return $this->dataObject;
     }
 }
