@@ -8,3 +8,7 @@ Emphasis with **type _asterisks_**.
 and _ this should not be _ emphasized
 
 and * this should not be * emphasized
+
+and ** another one ** here
+
+and __ another one __ here
