@@ -6,8 +6,9 @@ php:
   - hhvm
 install:
   - composer install --prefer-source --no-interaction
+  - pip install codecov
 script:
   - phpunit
   - vendor/bin/php-cs-fixer fix --dry-run
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - bash <(curl -s https://codecov.io/bash) -t CODECOV_TOKEN
