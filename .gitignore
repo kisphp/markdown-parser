@@ -3,3 +3,4 @@ vendor/
 *.svg
 index.php
 composer.lock
+coverage.xml
