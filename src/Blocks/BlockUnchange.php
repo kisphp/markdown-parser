@@ -14,7 +14,7 @@ class BlockUnchange extends AbstractBlock
      */
     public function parse()
     {
-        return $this->content;
+        return $this->getStartTag() . $this->content . $this->getEndTag();
     }
 
     /**
