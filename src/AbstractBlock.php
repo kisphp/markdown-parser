@@ -159,10 +159,10 @@ abstract class AbstractBlock implements BlockInterface
     }
 
     /**
-     * @param DataObject $dataObject
+     * @param DataObjectInterface $dataObject
      * @param array $updatedLines
      */
-    protected function parseSubBlock(DataObject $dataObject, array $updatedLines)
+    protected function parseSubBlock(DataObjectInterface $dataObject, array $updatedLines)
     {
         $markdown = $this->factory->createMarkdown();
         $md = implode("\n", $updatedLines);

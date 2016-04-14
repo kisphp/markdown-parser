@@ -5,7 +5,7 @@ namespace Kisphp;
 class Markdown implements MarkdownInterface
 {
     /**
-     * @var DataObject
+     * @var DataObjectInterface
      */
     protected $dataObject;
 
@@ -83,7 +83,7 @@ class Markdown implements MarkdownInterface
     }
 
     /**
-     * @return DataObject
+     * @return DataObjectInterface
      */
     public function getDataObject()
     {

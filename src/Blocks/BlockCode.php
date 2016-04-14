@@ -3,9 +3,8 @@
 namespace Kisphp\Blocks;
 
 use Kisphp\AbstractBlock;
-use Kisphp\BlockFactory;
 use Kisphp\BlockTypes;
-use Kisphp\DataObject;
+use Kisphp\DataObjectInterface;
 
 class BlockCode extends AbstractBlock
 {
@@ -57,9 +56,9 @@ class BlockCode extends AbstractBlock
     }
 
     /**
-     * @param DataObject $dataObject
+     * @param DataObjectInterface $dataObject
      */
-    public function changeLineType(DataObject $dataObject)
+    public function changeLineType(DataObjectInterface $dataObject)
     {
         $max = $dataObject->count();
         $isStart = false;
@@ -72,7 +71,7 @@ class BlockCode extends AbstractBlock
 
                 $newLineContent = $this->getStartTag($this->getCodeType($lineContent));
 
-                $newObject = BlockFactory::create(BlockTypes::BLOCK_UNCHANGE)
+                $newObject = $this->factory->create(BlockTypes::BLOCK_UNCHANGE)
                     ->setContent($newLineContent)
                     ->setLineNumber($i)
                 ;
@@ -82,7 +81,7 @@ class BlockCode extends AbstractBlock
             }
 
             if ($i >= ($max - 1) || (strpos($lineContent, '```') === 0 && $isStart === true)) {
-                $newObject = BlockFactory::create(BlockTypes::BLOCK_UNCHANGE)
+                $newObject = $this->factory->create(BlockTypes::BLOCK_UNCHANGE)
                     ->setContent($this->getEndTag() . "\n")
                     ->setLineNumber($i)
                 ;
@@ -91,7 +90,7 @@ class BlockCode extends AbstractBlock
                 break;
             }
 
-            $newObject = BlockFactory::create(BlockTypes::BLOCK_UNCHANGE)
+            $newObject = $this->factory->create(BlockTypes::BLOCK_UNCHANGE)
                 ->setContent($this->encodeContent($lineContent))
                 ->setLineNumber($i)
             ;

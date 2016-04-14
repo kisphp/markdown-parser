@@ -4,7 +4,7 @@ namespace Kisphp\Blocks\Lists;
 
 use Kisphp\AbstractBlock;
 use Kisphp\BlockTypes;
-use Kisphp\DataObject;
+use Kisphp\DataObjectInterface;
 
 class BlockList extends AbstractBlock
 {
@@ -30,9 +30,9 @@ class BlockList extends AbstractBlock
     }
 
     /**
-     * @param DataObject $dataObject
+     * @param DataObjectInterface $dataObject
      */
-    public function changeLineType(DataObject $dataObject)
+    public function changeLineType(DataObjectInterface $dataObject)
     {
         $max = $dataObject->count();
         $changeNextLine = true;
@@ -64,10 +64,10 @@ class BlockList extends AbstractBlock
     }
 
     /**
-     * @param DataObject $dataObject
+     * @param DataObjectInterface $dataObject
      * @param ListTree $listTree
      */
-    protected function parseListTree(DataObject $dataObject, ListTree $listTree)
+    protected function parseListTree(DataObjectInterface $dataObject, ListTree $listTree)
     {
         $newContent = $this->factory->create(BlockTypes::BLOCK_UNCHANGE)
             ->setContent($listTree->parse())

@@ -7,9 +7,14 @@ use Kisphp\Exceptions\BlockNotFoundException;
 class BlockFactory implements BlockFactoryInterface
 {
     /**
-     * @var DataObject
+     * @var DataObjectInterface
      */
-    private static $dataObject;
+    protected static $dataObject;
+
+    /**
+     * @var RowTypeGuesserInterface
+     */
+    protected $rowTypeGuesser;
 
     /**
      * @param string $type
@@ -64,7 +69,7 @@ class BlockFactory implements BlockFactoryInterface
     /**
      * @param $markdownContent
      *
-     * @return DataObject
+     * @return DataObjectInterface
      */
     public function createDataObject($markdownContent)
     {
@@ -72,7 +77,7 @@ class BlockFactory implements BlockFactoryInterface
     }
 
     /**
-     * @return DataObject
+     * @return DataObjectInterface
      */
     public function getDataObject()
     {
@@ -90,12 +95,14 @@ class BlockFactory implements BlockFactoryInterface
     }
 
     /**
-     * @param DataObjectInterface $dataObject
+     * @param DataObjectInterface $dataObjectInterface
      *
      * @return RowTypeGuesser
      */
-    public function createRowTypeGuesser(DataObjectInterface $dataObject)
+    public function createRowTypeGuesser(DataObjectInterface $dataObjectInterface)
     {
-        return new RowTypeGuesser($dataObject, $this);
+        $this->rowTypeGuesser = new RowTypeGuesser($dataObjectInterface, $this);
+
+        return $this->rowTypeGuesser;
     }
 }

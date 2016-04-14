@@ -3,9 +3,8 @@
 namespace Kisphp\Blocks;
 
 use Kisphp\AbstractBlock;
-use Kisphp\BlockFactory;
 use Kisphp\BlockTypes;
-use Kisphp\DataObject;
+use Kisphp\DataObjectInterface;
 
 class BlockQuote extends AbstractBlock
 {
@@ -36,11 +35,11 @@ class BlockQuote extends AbstractBlock
     }
 
     /**
-     * @param DataObject $dataObject
+     * @param DataObjectInterface $dataObject
      *
      * @return $this
      */
-    public function changeLineType(DataObject $dataObject)
+    public function changeLineType(DataObjectInterface $dataObject)
     {
         $nextLineNumber = $this->lineNumber + 1;
         if (!$dataObject->hasLine($nextLineNumber)) {
@@ -73,7 +72,7 @@ class BlockQuote extends AbstractBlock
                 $changeNextLine = false;
             }
 
-            $changedContent = BlockFactory::create(BlockTypes::BLOCK_SKIP);
+            $changedContent = $this->factory->create(BlockTypes::BLOCK_SKIP);
             $dataObject->updateLine($i, $changedContent);
 
             if ($changeNextLine === false) {

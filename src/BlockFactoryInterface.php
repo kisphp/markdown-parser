@@ -42,9 +42,7 @@ interface BlockFactoryInterface
     public static function createMarkdown();
 
     /**
-     * @param DataObjectInterface $dataObject
-     *
-     * @return mixed
+     * @return RowTypeGuesserInterface
      */
-    public function createRowTypeGuesser(DataObjectInterface $dataObject);
+    public function createRowTypeGuesser(DataObjectInterface $objectInterface);
 }

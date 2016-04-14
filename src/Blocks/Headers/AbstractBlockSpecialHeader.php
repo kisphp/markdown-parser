@@ -5,17 +5,16 @@ namespace Kisphp\Blocks\Headers;
 use Kisphp\AbstractBlock;
 use Kisphp\Blocks\Paragraph\BlockParagraph;
 use Kisphp\BlockTypes;
-use Kisphp\DataObject;
-use Kisphp\Interfaces\BlockInterface;
+use Kisphp\DataObjectInterface;
 
 abstract class AbstractBlockSpecialHeader extends AbstractBlock
 {
     /**
-     * @param DataObject $dataObject
+     * @param DataObjectInterface $dataObject
      *
      * @return BlockInterface
      */
-    public function changeLineType(DataObject $dataObject)
+    public function changeLineType(DataObjectInterface $dataObject)
     {
         $previousLine = $this->lineNumber - 1;
         if (!$dataObject->hasLine($previousLine)) {
