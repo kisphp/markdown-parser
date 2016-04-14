@@ -10,11 +10,11 @@ use Kisphp\AbstractBlock;
 class BlockSkip extends AbstractBlock
 {
     /**
-     * @return null
+     * @return string
      */
     public function parse()
     {
-        return null;
+        return $this->getStartTag() . $this->getEndTag();
     }
 
     /**
