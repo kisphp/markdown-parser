@@ -73,20 +73,4 @@ class Markdown implements MarkdownInterface
     {
         return $this->rowTypeGuesser->getRowObjectByLineContent($lineNumber);
     }
-
-    /**
-     * @return RowTypeGuesser
-     */
-    public function getRowTypeGuesser()
-    {
-        return $this->rowTypeGuesser;
-    }
-
-    /**
-     * @return DataObjectInterface
-     */
-    public function getDataObject()
-    {
-        return $this->dataObject;
-    }
 }

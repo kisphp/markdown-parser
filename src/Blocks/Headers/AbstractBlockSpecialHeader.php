@@ -24,7 +24,7 @@ abstract class AbstractBlockSpecialHeader extends AbstractBlock
 
         $previousLineObject = $dataObject->getLine($previousLine);
 
-        if (is_a($previousLineObject, BlockParagraph::class)) {
+        if ($this->lineIsObjectOf($previousLineObject, BlockParagraph::class)) {
             $previousLineNewObject = new static($this->factory);
             $previousLineNewObject->setContent($previousLineObject->getContent());
             $previousLineNewObject->setLineNumber($previousLineObject->getLineNumber());

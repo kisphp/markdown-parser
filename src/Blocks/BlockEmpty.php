@@ -11,7 +11,7 @@ class BlockEmpty extends AbstractBlock
      */
     public function parse()
     {
-        return "\n";
+        return $this->getStartTag() . $this->getEndTag();
     }
 
     /**
@@ -23,10 +23,10 @@ class BlockEmpty extends AbstractBlock
     }
 
     /**
-     * @return null
+     * @return string
      */
     public function getEndTag()
     {
-        return null;
+        return "\n";
     }
 }

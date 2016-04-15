@@ -77,14 +77,6 @@ class BlockFactory implements BlockFactoryInterface
     }
 
     /**
-     * @return DataObjectInterface
-     */
-    public function getDataObject()
-    {
-        return static::$dataObject;
-    }
-
-    /**
      * @return MarkdownInterface
      */
     public static function createMarkdown()

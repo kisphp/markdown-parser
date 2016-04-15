@@ -86,7 +86,7 @@ class RowTypeGuesser implements RowTypeGuesserInterface
             return BlockTypes::BLOCK_EMPTY;
         }
 
-        if (array_search($lineContent[0], array_keys($this->blockTypes)) === false) {
+        if ($this->getAvailableTypesByContent($lineContent) === false) {
             return BlockTypes::BLOCK_PARAGRAPH;
         }
 
@@ -129,8 +129,6 @@ class RowTypeGuesser implements RowTypeGuesserInterface
      * @param string $lineContent
      *
      * @return int|string|bool
-     *
-     * @deprecated
      */
     protected function getAvailableTypesByContent($lineContent)
     {

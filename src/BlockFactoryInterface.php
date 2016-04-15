@@ -32,11 +32,6 @@ interface BlockFactoryInterface
     public function createDataObject($markdownContent);
 
     /**
-     * @return DataObjectInterface
-     */
-    public function getDataObject();
-
-    /**
      * @return MarkdownInterface
      */
     public static function createMarkdown();
