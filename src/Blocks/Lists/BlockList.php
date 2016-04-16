@@ -21,12 +21,12 @@ class BlockList extends AbstractBlock
 
     public function getStartTag()
     {
-        // TODO: Implement getStartTag() method.
+        return null;
     }
 
     public function getEndTag()
     {
-        // TODO: Implement getEndTag() method.
+        return null;
     }
 
     /**
@@ -41,12 +41,12 @@ class BlockList extends AbstractBlock
         for ($i = $this->lineNumber; $i < $max; $i++) {
             $currentLineObject = $dataObject->getLine($i);
 
-            $listTree->createItem($currentLineObject->getContent());
+            $listTree->createItem($currentLineObject);
 
             /** @var AbstractBlock $nextLineObject */
             $nextLineObject = $dataObject->getLine($i + 1);
             /** @var AbstractBlock $nextSecondLineObject */
-            $nextSecondLineObject = $dataObject->getLine($i + 2);
+//            $nextSecondLineObject = $dataObject->getLine($i + 2);
 
             if (!$this->lineIsObjectOf($nextLineObject, static::class)) {
                 $changeNextLine = false;

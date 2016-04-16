@@ -4,7 +4,7 @@ namespace Kisphp\Blocks\Lists;
 
 use Kisphp\RowTypeGuesser;
 
-class ListTreeItem implements ListTreeInterface
+class ListTreeItem
 {
     const TYPE_UL = 'ul';
     const TYPE_OL = 'ol';
@@ -185,13 +185,13 @@ class ListTreeItem implements ListTreeInterface
     }
 
     /**
-     * @param ListTreeInterface $treeInterface
+     * @param ListTreeItem $treeItem
      *
      * @return $this
      */
-    public function addChildren(ListTreeInterface $treeInterface)
+    public function addChildren(ListTreeItem $treeItem)
     {
-        $this->children[] = $treeInterface;
+        $this->children[] = $treeItem;
 
         return $this;
     }
