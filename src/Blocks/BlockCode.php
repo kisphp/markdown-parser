@@ -40,11 +40,11 @@ class BlockCode extends AbstractBlock
     public function getStartTag($class = null)
     {
         $tagClass = '';
-        if ($class !== null && is_string($class)) {
+        if (!empty($class) && is_string($class)) {
             $tagClass = ' class="' . $class . '"';
         }
 
-        return '<pre><code' . $tagClass . '>';
+        return '<pre><code' . $tagClass . '>' . "\n";
     }
 
     /**
@@ -52,7 +52,7 @@ class BlockCode extends AbstractBlock
      */
     public function getEndTag()
     {
-        return '</code></pre>';
+        return '</code></pre>' . "\n";
     }
 
     /**
