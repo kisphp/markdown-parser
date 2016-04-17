@@ -82,7 +82,7 @@ class BlockCode extends AbstractBlock
 
             if ($i >= ($max - 1) || (strpos($lineContent, '```') === 0 && $isStart === true)) {
                 $newObject = $this->factory->create(BlockTypes::BLOCK_UNCHANGE)
-                    ->setContent($this->getEndTag() . "\n")
+                    ->setContent($this->getEndTag())
                     ->setLineNumber($i)
                 ;
                 $dataObject->updateLine($i, $newObject);
