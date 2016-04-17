@@ -6,6 +6,10 @@ use Kisphp\BlockInterface;
 
 class Builder
 {
+    const SPACES_AS_TAB = 4;
+    const TAB_CHARACTER = "\t";
+    const SPACE_CHARACTER = ' ';
+
     /**
      * @var TreeStructure
      */
@@ -23,8 +27,32 @@ class Builder
 
     public function __construct()
     {
-        $this->treeStructure = new TreeStructure($this);
-        $this->itemsRegistry = new ItemsRegistry();
+        $this->treeStructure = $this->createTreeStructure();
+        $this->itemsRegistry = $this->createItemsRegistry();
+    }
+
+    /**
+     * @return TreeStructure
+     */
+    protected function createTreeStructure()
+    {
+        return new TreeStructure($this);
+    }
+
+    /**
+     * @return ItemsRegistry
+     */
+    protected function createItemsRegistry()
+    {
+        return new ItemsRegistry();
+    }
+
+    /**
+     * @return Item
+     */
+    protected function createItem()
+    {
+        return new Item($this);
     }
 
     /**
@@ -70,7 +98,7 @@ class Builder
     {
         $lineContent = $block->getContent();
 
-        $item = new Item($this);
+        $item = $this->createItem();
         $item->setContent($lineContent);
         $item->setId($block->getLineNumber());
         $level = $this->getLevelByContent($lineContent);
@@ -90,30 +118,16 @@ class Builder
      */
     protected function getLevelByContent($lineContent)
     {
-        // transform tabs to spaces
-        $lineContent = str_replace("\t", '    ', $lineContent);
+        $levelDelimiter = str_repeat(static::SPACE_CHARACTER, static::SPACES_AS_TAB);
+
+        $lineContent = str_replace(static::TAB_CHARACTER, $levelDelimiter, $lineContent);
 
         preg_match("/\S/", $lineContent, $spacesFound, PREG_OFFSET_CAPTURE);
-
-        $levelDelimiter = '    ';
 
         $length = max(1, $spacesFound[0][1]);
         $foundLevel = substr_count($lineContent, $levelDelimiter, 0, $length);
 
         return $foundLevel;
-
-//        if ($foundLevel > $this->currentLevel) {
-//            $newLevel = min($this->currentLevel + 1, $foundLevel);
-//
-//            return $newLevel;
-//        }
-//
-//        if ($foundLevel < $this->currentLevel) {
-//
-//            return max(0, $foundLevel);
-//        }
-//
-//        return $this->currentLevel;
     }
 
     /**
