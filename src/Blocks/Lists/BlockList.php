@@ -3,32 +3,13 @@
 namespace Kisphp\Blocks\Lists;
 
 use Kisphp\AbstractBlock;
+use Kisphp\AbstractBlockNoParse;
 use Kisphp\Blocks\Lists\Tree\Builder;
 use Kisphp\BlockTypes;
 use Kisphp\DataObjectInterface;
 
-class BlockList extends AbstractBlock
+class BlockList extends AbstractBlockNoParse
 {
-    /**
-     * @return string
-     */
-    public function parse()
-    {
-        $html = $this->getStartTag() . $this->content . $this->getEndTag();
-
-        return $this->parseInlineMarkup($html);
-    }
-
-    public function getStartTag()
-    {
-        return null;
-    }
-
-    public function getEndTag()
-    {
-        return null;
-    }
-
     /**
      * @param DataObjectInterface $dataObject
      */
