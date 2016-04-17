@@ -2,20 +2,12 @@
 
 namespace Kisphp\Blocks;
 
-use Kisphp\AbstractBlock;
+use Kisphp\AbstractBlockNoParse;
 use Kisphp\BlockTypes;
 use Kisphp\DataObjectInterface;
 
-class BlockCode extends AbstractBlock
+class BlockCode extends AbstractBlockNoParse
 {
-    /**
-     * @return string
-     */
-    public function parse()
-    {
-        return '';
-    }
-
     /**
      * @param string $lineContent
      *
@@ -44,7 +36,7 @@ class BlockCode extends AbstractBlock
             $tagClass = ' class="' . $class . '"';
         }
 
-        return '<pre><code' . $tagClass . '>' . "\n";
+        return '<pre><code' . $tagClass . '>';
     }
 
     /**
