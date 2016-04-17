@@ -2,7 +2,7 @@
 
 namespace Kisphp;
 
-class AbstractBlockNoParse extends AbstractBlock
+abstract class AbstractBlockNoParse extends AbstractBlock
 {
     /**
      * @return null
