@@ -11,6 +11,12 @@ class BlockInlineCode extends AbstractBlock
      */
     public function parse()
     {
+        if (strpos($this->content, ' ') === 0) {
+            $preformatedText = true;
+
+            return $this->getStartTag($preformatedText) . trim($this->content) . $this->getEndTag($preformatedText);
+        }
+
         return preg_replace_callback('/(`+)[\s]*(.+?)[\s]*(?<!`)\1(?!`)/s', function ($found) {
 
             return $this->getStartTag() . $found[2] . $this->getEndTag();
@@ -21,16 +27,16 @@ class BlockInlineCode extends AbstractBlock
     /**
      * @return string
      */
-    public function getStartTag()
+    public function getStartTag($preformatedText = false)
     {
-        return '<code>';
+        return (($preformatedText === true) ? '<pre>' : '') . '<code>';
     }
 
     /**
      * @return string
      */
-    public function getEndTag()
+    public function getEndTag($preformatedText = false)
     {
-        return '</code>';
+        return '</code>' . (($preformatedText === true) ? '</pre>' : '');
     }
 }

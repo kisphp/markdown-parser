@@ -2,22 +2,15 @@
 
 namespace Kisphp\Blocks;
 
-use Kisphp\AbstractBlock;
+use Kisphp\AbstractBlockNoParse;
 
-class BlockContinue extends AbstractBlock
+class BlockContinue extends AbstractBlockNoParse
 {
+    /**
+     * @return string
+     */
     public function parse()
     {
-        return null;
-    }
-
-    public function getStartTag()
-    {
-        return null;
-    }
-
-    public function getEndTag()
-    {
-        return null;
+        return $this->content;
     }
 }

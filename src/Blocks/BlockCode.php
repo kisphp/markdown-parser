@@ -2,20 +2,12 @@
 
 namespace Kisphp\Blocks;
 
-use Kisphp\AbstractBlock;
+use Kisphp\AbstractBlockNoParse;
 use Kisphp\BlockTypes;
 use Kisphp\DataObjectInterface;
 
-class BlockCode extends AbstractBlock
+class BlockCode extends AbstractBlockNoParse
 {
-    /**
-     * @return string
-     */
-    public function parse()
-    {
-        return '';
-    }
-
     /**
      * @param string $lineContent
      *
@@ -40,7 +32,7 @@ class BlockCode extends AbstractBlock
     public function getStartTag($class = null)
     {
         $tagClass = '';
-        if ($class !== null && is_string($class)) {
+        if (!empty($class) && is_string($class)) {
             $tagClass = ' class="' . $class . '"';
         }
 
@@ -52,7 +44,7 @@ class BlockCode extends AbstractBlock
      */
     public function getEndTag()
     {
-        return '</code></pre>';
+        return '</code></pre>' . "\n";
     }
 
     /**
@@ -82,7 +74,7 @@ class BlockCode extends AbstractBlock
 
             if ($i >= ($max - 1) || (strpos($lineContent, '```') === 0 && $isStart === true)) {
                 $newObject = $this->factory->create(BlockTypes::BLOCK_UNCHANGE)
-                    ->setContent($this->getEndTag() . "\n")
+                    ->setContent($this->getEndTag())
                     ->setLineNumber($i)
                 ;
                 $dataObject->updateLine($i, $newObject);

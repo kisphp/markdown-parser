@@ -18,7 +18,7 @@ class BlockList extends AbstractBlockNoParse
         $max = $dataObject->count();
         $changeNextLine = true;
 
-        $builder = new Builder();
+        $builder = $this->createBuilder();
         for ($i = $this->lineNumber; $i < $max; $i++) {
             $currentLineObject = $dataObject->getLine($i);
 
@@ -45,5 +45,13 @@ class BlockList extends AbstractBlockNoParse
         ;
 
         $dataObject->updateLine($this->lineNumber, $listContent);
+    }
+
+    /**
+     * @return Builder
+     */
+    protected function createBuilder()
+    {
+        return new Builder();
     }
 }

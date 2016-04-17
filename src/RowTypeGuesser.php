@@ -24,7 +24,7 @@ class RowTypeGuesser implements RowTypeGuesserInterface
         '_' => [BlockTypes::BLOCK_HORIZONTAL_RULE],
         '>' => [BlockTypes::BLOCK_QUOTE],
         '`' => [BlockTypes::BLOCK_CODE],
-        ' ' => [BlockTypes::BLOCK_CONTINUE],
+        ' ' => [BlockTypes::BLOCK_CONTINUE, BlockTypes::BLOCK_INLINE_CODE],
 //        '|' => [BlockTypes::TYPE_TABLE],
         '+' => [BlockTypes::BLOCK_LIST],
         '1' => [BlockTypes::BLOCK_LIST],
@@ -192,6 +192,10 @@ class RowTypeGuesser implements RowTypeGuesserInterface
      */
     public function isBlockContinue($lineNumber)
     {
+        if ($lineNumber < 1) {
+            return false;
+        }
+
         return (bool) preg_match('/^([\s]{1,}|[\t]+)\s/', $this->dataObject->getLine($lineNumber));
     }
 
@@ -250,11 +254,26 @@ class RowTypeGuesser implements RowTypeGuesserInterface
     {
         $lineContent = $this->dataObject->getLine($lineNumber);
         $counter = count_chars($lineContent, 1);
-        if ($counter[self::BACKTICK_CODE] !== 3) {
+        if (!isset($counter[self::BACKTICK_CODE]) || $counter[self::BACKTICK_CODE] !== 3) {
             return false;
         }
 
         return (bool) preg_match('/^([\`]{3})/', $lineContent);
+    }
+
+    /**
+     * @param int $lineNumber
+     *
+     * @return bool
+     */
+    public function isBlockInlineCode($lineNumber)
+    {
+        $lineContent = $this->dataObject->getLine($lineNumber);
+        if (preg_match('/([\s]{4,}|[\t]{1,})/', $lineContent)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

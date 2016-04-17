@@ -5,11 +5,11 @@ namespace Kisphp;
 abstract class AbstractBlockNoParse extends AbstractBlock
 {
     /**
-     * @return null
+     * @return string
      */
     public function parse()
     {
-        return null;
+        return $this->getStartTag() . $this->getEndTag();
     }
 
     /**
