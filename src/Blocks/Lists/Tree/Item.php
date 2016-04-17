@@ -46,28 +46,12 @@ class Item
     }
 
     /**
-     * @return string
-     */
-    public function getContent()
-    {
-        return $this->content;
-    }
-
-    /**
      * @param string $content
      */
     public function setContent($content)
     {
         $this->content = $content;
         $this->setListTypeByContent();
-    }
-
-    /**
-     * @return int
-     */
-    public function getLevel()
-    {
-        return $this->level;
     }
 
     /**
@@ -100,14 +84,6 @@ class Item
     public function getChildren()
     {
         return $this->children;
-    }
-
-    /**
-     * @param array $children
-     */
-    public function setChildren($children)
-    {
-        $this->children = $children;
     }
 
     /**
