@@ -23,8 +23,44 @@ class Builder
 
     public function __construct()
     {
-        $this->treeStructure = new TreeStructure();
+        $this->treeStructure = new TreeStructure($this);
         $this->itemsRegistry = new ItemsRegistry();
+    }
+
+    /**
+     * @param Item $item
+     *
+     * @return string
+     */
+    public function createListStartTag(Item $item)
+    {
+        return '<' . $item->getListType() . '>' . "\n";
+    }
+
+    /**
+     * @param Item $item
+     *
+     * @return string
+     */
+    public function createListEndTag(Item $item)
+    {
+        return '</' . $item->getListType() . '>' . "\n";
+    }
+
+    /**
+     * @return string
+     */
+    public function createListItemStartTag()
+    {
+        return '<li>';
+    }
+
+    /**
+     * @return string
+     */
+    public function createListItemEndTag()
+    {
+        return '</li>' . "\n";
     }
 
     /**
@@ -34,7 +70,7 @@ class Builder
     {
         $lineContent = $block->getContent();
 
-        $item = new Item();
+        $item = new Item($this);
         $item->setContent($lineContent);
         $item->setId($block->getLineNumber());
         $level = $this->getLevelByContent($lineContent);

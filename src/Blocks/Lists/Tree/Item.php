@@ -33,6 +33,19 @@ class Item
     protected $children = [];
 
     /**
+     * @var Builder
+     */
+    protected $builder;
+
+    /**
+     * @param Builder $builder
+     */
+    public function __construct(Builder $builder)
+    {
+        $this->builder = $builder;
+    }
+
+    /**
      * @return string
      */
     public function getContent()
@@ -136,10 +149,10 @@ class Item
      */
     public function parse()
     {
-        $html = '<li>';
+        $html = $this->builder->createListItemStartTag();
         $html .= $this->getCleanedConent();
         $html .= $this->parseChildren();
-        $html .= '</li>' . "\n";
+        $html .= $this->builder->createListItemEndTag();
 
         return $html;
     }
@@ -153,12 +166,12 @@ class Item
         if (count($this->getChildren()) > 0) {
             /** @var Item $firstChild */
             $firstChild = $this->getFirstChild();
-            $html .= '<' . $firstChild->getListType() . '>' . "\n";
+            $html .= $this->builder->createListStartTag($firstChild);
             /** @var Item $child */
             foreach ($this->getChildren() as $child) {
                 $html .= $child->parse();
             }
-            $html .= '</' . $firstChild->getListType() . '>' . "\n";
+            $html .= $this->builder->createListEndTag($firstChild);
         }
 
         return $html;
