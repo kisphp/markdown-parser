@@ -3,6 +3,7 @@
 namespace Kisphp\Blocks\Lists;
 
 use Kisphp\AbstractBlock;
+use Kisphp\Blocks\Lists\Tree\Builder;
 use Kisphp\BlockTypes;
 use Kisphp\DataObjectInterface;
 
@@ -37,16 +38,14 @@ class BlockList extends AbstractBlock
         $max = $dataObject->count();
         $changeNextLine = true;
 
-        $listTree = new ListTree();
+        $builder = new Builder();
         for ($i = $this->lineNumber; $i < $max; $i++) {
             $currentLineObject = $dataObject->getLine($i);
 
-            $listTree->createItem($currentLineObject);
+            $builder->addItem($currentLineObject);
 
             /** @var AbstractBlock $nextLineObject */
             $nextLineObject = $dataObject->getLine($i + 1);
-            /** @var AbstractBlock $nextSecondLineObject */
-//            $nextSecondLineObject = $dataObject->getLine($i + 2);
 
             if (!$this->lineIsObjectOf($nextLineObject, static::class)) {
                 $changeNextLine = false;
@@ -60,12 +59,19 @@ class BlockList extends AbstractBlock
             }
         }
 
-        $this->parseListTree($dataObject, $listTree);
+        $listContent = $this->factory->create(BlockTypes::BLOCK_UNCHANGE)
+            ->setContent($builder->getTreeStructure()->parse())
+            ->setLineNumber($this->lineNumber)
+        ;
+
+        $dataObject->updateLine($this->lineNumber, $listContent);
     }
 
     /**
      * @param DataObjectInterface $dataObject
      * @param ListTree $listTree
+     *
+     * @deprecated not used any more
      */
     protected function parseListTree(DataObjectInterface $dataObject, ListTree $listTree)
     {

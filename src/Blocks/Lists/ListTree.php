@@ -4,6 +4,9 @@ namespace Kisphp\Blocks\Lists;
 
 use Kisphp\BlockInterface;
 
+/**
+ * @deprecated not used
+ */
 class ListTree
 {
     /**
@@ -52,7 +55,8 @@ class ListTree
         $newLevel = $this->getLevelByContent($listContent->getContent());
         $treeItem->setLevel($newLevel);
 
-        if ($newLevel !== $this->currentLevel) {//} && $newLevel > $this->currentLevel) {
+        if ($newLevel !== $this->currentLevel) {
+            //} && $newLevel > $this->currentLevel) {
             $prev = $this->itemsPosition[$this->currentLevel];
             dump($prev);
             dump($this->itemsPosition);
@@ -68,12 +72,13 @@ class ListTree
 
     /**
      * @param string $lineContent
+     *
      * @return int
      */
     protected function getLevelByContent($lineContent)
     {
         // transform tabs to spaces
-        $lineContent = str_replace("\t", "    ", $lineContent);
+        $lineContent = str_replace("\t", '    ', $lineContent);
 
         preg_match("/\S/", $lineContent, $spacesFound, PREG_OFFSET_CAPTURE);
 
@@ -89,7 +94,6 @@ class ListTree
         }
 
         if ($foundLevel < $this->currentLevel) {
-
             return $foundLevel;
         }
 

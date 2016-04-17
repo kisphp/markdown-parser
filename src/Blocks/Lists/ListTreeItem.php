@@ -4,6 +4,9 @@ namespace Kisphp\Blocks\Lists;
 
 use Kisphp\RowTypeGuesser;
 
+/**
+ * @deprecated not used
+ */
 class ListTreeItem
 {
     const TYPE_UL = 'ul';
