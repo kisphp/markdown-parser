@@ -9,13 +9,12 @@ use Kisphp\DataObjectInterface;
 
 class BlockList extends AbstractBlock
 {
-
     /**
      * @return string
      */
     public function parse()
     {
-        $html = $this->getStartTag() . $this->clearListMarkup($this->content) . $this->getEndTag();
+        $html = $this->getStartTag() . $this->content . $this->getEndTag();
 
         return $this->parseInlineMarkup($html);
     }
@@ -65,34 +64,5 @@ class BlockList extends AbstractBlock
         ;
 
         $dataObject->updateLine($this->lineNumber, $listContent);
-    }
-
-    /**
-     * @param DataObjectInterface $dataObject
-     * @param ListTree $listTree
-     *
-     * @deprecated not used any more
-     */
-    protected function parseListTree(DataObjectInterface $dataObject, ListTree $listTree)
-    {
-        $newContent = $this->factory->create(BlockTypes::BLOCK_UNCHANGE)
-            ->setContent($listTree->parse())
-        ;
-
-        $dataObject->updateLine($this->getLineNumber(), $newContent);
-    }
-
-    /**
-     * @param string $lineContent
-     *
-     * @return string
-     *
-     * @deprecated not needed any more
-     */
-    protected function createLineContent($lineContent)
-    {
-        $content = $this->clearListMarkup($lineContent);
-
-        return $content;
     }
 }

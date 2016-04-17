@@ -4,6 +4,9 @@ namespace Kisphp\Blocks\Lists\Tree;
 
 class Item
 {
+    const LIST_TYPE_UNORDERED = 'ul';
+    const LIST_TYPE_ORDERED = 'ol';
+
     /**
      * @var string
      */
@@ -18,6 +21,11 @@ class Item
      * @var int
      */
     protected $id;
+
+    /**
+     * @var
+     */
+    protected $listType;
 
     /**
      * @var array
@@ -38,6 +46,7 @@ class Item
     public function setContent($content)
     {
         $this->content = $content;
+        $this->setListTypeByContent();
     }
 
     /**
@@ -97,6 +106,32 @@ class Item
     }
 
     /**
+     * @return mixed
+     */
+    public function getListType()
+    {
+        return $this->listType;
+    }
+
+    /**
+     * @return string
+     */
+    protected function setListTypeByContent()
+    {
+        $content = trim($this->content);
+
+        if (preg_match('/^[0-9]\.\s/', $content)) {
+            $this->listType = self::LIST_TYPE_ORDERED;
+
+            return $this->listType;
+        }
+
+        $this->listType = self::LIST_TYPE_UNORDERED;
+
+        return $this->listType;
+    }
+
+    /**
      * @return string
      */
     public function parse()
@@ -116,15 +151,25 @@ class Item
     {
         $html = '';
         if (count($this->getChildren()) > 0) {
-            $html .= '<ul>';
+            /** @var Item $firstChild */
+            $firstChild = $this->getFirstChild();
+            $html .= '<' . $firstChild->getListType() . '>' . "\n";
             /** @var Item $child */
             foreach ($this->getChildren() as $child) {
                 $html .= $child->parse();
             }
-            $html .= '</ul>';
+            $html .= '</' . $firstChild->getListType() . '>' . "\n";
         }
 
         return $html;
+    }
+
+    /**
+     * @return Item
+     */
+    protected function getFirstChild()
+    {
+        return reset($this->children);
     }
 
     /**

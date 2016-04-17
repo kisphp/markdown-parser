@@ -18,16 +18,30 @@ class TreeStructure
     }
 
     /**
+     * @return Item
+     */
+    protected function getFirstChild()
+    {
+        return reset($this->items);
+    }
+
+    /**
      * @return string
      */
     public function parse()
     {
-        $html = '<ul>';
-        /** @var Item $item */
-        foreach ($this->items as $item) {
-            $html .= $item->parse();
+        $html = '';
+
+        if (count($this->items) > 0) {
+            /** @var Item $firstChild */
+            $firstChild = $this->getFirstChild();
+            $html .= '<' . $firstChild->getListType() . '>' . "\n";
+            /** @var Item $item */
+            foreach ($this->items as $item) {
+                $html .= $item->parse();
+            }
+            $html .= '</' . $firstChild->getListType() . '>' . "\n";
         }
-        $html .= '</ul>';
 
         return $html;
     }
