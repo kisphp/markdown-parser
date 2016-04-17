@@ -13,6 +13,7 @@ class BlockInlineCode extends AbstractBlock
     {
         if (strpos($this->content, ' ') === 0) {
             $preformatedText = true;
+
             return $this->getStartTag($preformatedText) . trim($this->content) . $this->getEndTag($preformatedText);
         }
 
