@@ -27,6 +27,6 @@ class BlockHorizontalRule extends AbstractBlock
      */
     public function getEndTag()
     {
-        return '<hr />';
+        return '<hr />' . "\n";
     }
 }
