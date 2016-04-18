@@ -4,17 +4,17 @@ namespace Kisphp\Blocks;
 
 use Kisphp\AbstractBlock;
 
-class BlockImage extends AbstractBlock
+class BlockUrls extends AbstractBlock
 {
     /**
      * @return string
      */
     public function parse()
     {
-        return preg_replace_callback('/\!\[(.*)\]\((.*)\)/', function ($found) {
+        return preg_replace_callback('/\[(.*)\]\((.*)\)/', function ($found) {
             $dictionary = [
-                '{alt}' => htmlentities($found[1]),
-                '{src}' => urlencode($found[2]),
+                '{title}' => htmlentities($found[1]),
+                '{url}' => urlencode($found[2]),
             ];
 
             $content = $this->getStartTag() . $this->getEndTag();
@@ -32,7 +32,7 @@ class BlockImage extends AbstractBlock
      */
     public function getStartTag()
     {
-        return '<img src="{src}" alt="{alt}"';
+        return '<a href="{url}" title="{title}">';
     }
 
     /**
@@ -40,6 +40,6 @@ class BlockImage extends AbstractBlock
      */
     public function getEndTag()
     {
-        return ' />';
+        return '</a>';
     }
 }
