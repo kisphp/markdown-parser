@@ -16,11 +16,12 @@ class BlockUrls extends AbstractBlock
 
             $dictionary = [
                 '{title}' => htmlentities($found[1]),
-                '{url}' => urlencode($found[2]),
+                '{url}' => $found[2],
                 '{text}' => $text,
             ];
 
-            $content = $this->getStartTag() . $this->getEndTag();
+            $isTargetBlank = $this->isTargetBlank($found[0]);
+            $content = $this->getStartTag($isTargetBlank) . $this->getEndTag();
 
             return str_replace(
                 array_keys($dictionary),
@@ -33,9 +34,15 @@ class BlockUrls extends AbstractBlock
     /**
      * @return string
      */
-    public function getStartTag()
+    public function getStartTag($targetBlank = false)
     {
-        return '<a href="{url}" title="{title}">{text}';
+        $htmlUrl = '<a href="{url}" title="{title}"';
+        if ($targetBlank === true) {
+            $htmlUrl .= ' target="_blank"';
+        }
+        $htmlUrl .= '>{text}';
+
+        return $htmlUrl;
     }
 
     /**
@@ -44,5 +51,15 @@ class BlockUrls extends AbstractBlock
     public function getEndTag()
     {
         return '</a>';
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return bool
+     */
+    protected function isTargetBlank($url)
+    {
+        return (bool) strpos($url, 'http');
     }
 }
