@@ -33,10 +33,10 @@ class BlockCode extends AbstractBlockNoParse
     {
         $tagClass = '';
         if (!empty($class) && is_string($class)) {
-            $tagClass = ' class="' . $class . '"';
+            $tagClass = ' class="language-' . $class . '"';
         }
 
-        return '<pre><code' . $tagClass . '>';
+        return '<pre' . $tagClass . '><code>';
     }
 
     /**
