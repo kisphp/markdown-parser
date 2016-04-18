@@ -54,14 +54,6 @@ class DataObject implements DataObjectInterface
     }
 
     /**
-     * @return mixed
-     */
-    public function getLines()
-    {
-        return $this->lines;
-    }
-
-    /**
      * @param int $lineNumber
      *
      * @return bool

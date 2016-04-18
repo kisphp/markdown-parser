@@ -15,11 +15,6 @@ interface DataObjectInterface
     public function parseEachLine();
 
     /**
-     * @return mixed
-     */
-    public function getLines();
-
-    /**
      * @param int $lineNumber
      *
      * @return bool
