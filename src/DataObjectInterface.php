@@ -15,11 +15,6 @@ interface DataObjectInterface
     public function parseEachLine();
 
     /**
-     * @return mixed
-     */
-    public function getLines();
-
-    /**
      * @param int $lineNumber
      *
      * @return bool
@@ -40,24 +35,4 @@ interface DataObjectInterface
      * @return $this
      */
     public function updateLine($key, BlockInterface $value);
-
-    /**
-     * @return array
-     */
-    public function getUrls();
-
-    /**
-     * @param array $urls
-     */
-    public function setUrls($urls);
-
-    /**
-     * @return array
-     */
-    public function getImages();
-
-    /**
-     * @param array $images
-     */
-    public function setImages($images);
 }
