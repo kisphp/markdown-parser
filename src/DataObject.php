@@ -10,16 +10,6 @@ class DataObject implements DataObjectInterface
     protected $lines = [];
 
     /**
-     * @var array
-     */
-    protected $urls = [];
-
-    /**
-     * @var array
-     */
-    protected $images = [];
-
-    /**
      * @param $markdownContent
      */
     public function __construct($markdownContent)
@@ -106,37 +96,5 @@ class DataObject implements DataObjectInterface
         $this->lines[$key] = $value;
 
         return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getUrls()
-    {
-        return $this->urls;
-    }
-
-    /**
-     * @param array $urls
-     */
-    public function setUrls($urls)
-    {
-        $this->urls = $urls;
-    }
-
-    /**
-     * @return array
-     */
-    public function getImages()
-    {
-        return $this->images;
-    }
-
-    /**
-     * @param array $images
-     */
-    public function setImages($images)
-    {
-        $this->images = $images;
     }
 }

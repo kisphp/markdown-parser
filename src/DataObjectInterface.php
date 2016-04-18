@@ -40,24 +40,4 @@ interface DataObjectInterface
      * @return $this
      */
     public function updateLine($key, BlockInterface $value);
-
-    /**
-     * @return array
-     */
-    public function getUrls();
-
-    /**
-     * @param array $urls
-     */
-    public function setUrls($urls);
-
-    /**
-     * @return array
-     */
-    public function getImages();
-
-    /**
-     * @param array $images
-     */
-    public function setImages($images);
 }

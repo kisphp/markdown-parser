@@ -2,7 +2,7 @@
 
 namespace Kisphp;
 
-class BlockTypes
+abstract class BlockTypes
 {
     const BLOCK_CONTINUE = 'BlockContinue';
 
@@ -15,6 +15,7 @@ class BlockTypes
     const BLOCK_QUOTE = 'BlockQuote';
     const BLOCK_CODE = 'BlockCode';
     const BLOCK_LIST = 'BlockList';
+    const BLOCK_IMAGE = 'BlockImage';
 
     const BLOCK_STRIKETHROUGH = 'BlockStrikethrough';
     const BLOCK_STRONG = 'BlockStrong';

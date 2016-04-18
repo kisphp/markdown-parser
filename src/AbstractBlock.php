@@ -98,6 +98,7 @@ abstract class AbstractBlock implements BlockInterface
         $lineContent = $this->parseInlineStrong($lineContent);
         $lineContent = $this->parseInlineEmphasis($lineContent);
         $lineContent = $this->parseInlineStrikethrough($lineContent);
+        $lineContent = $this->parseInlineImages($lineContent);
 
         return $lineContent;
     }
@@ -153,6 +154,19 @@ abstract class AbstractBlock implements BlockInterface
     protected function parseInlineStrikethrough($lineContent)
     {
         return $this->factory->create(BlockTypes::BLOCK_STRIKETHROUGH)
+            ->setContent($lineContent)
+            ->parse()
+        ;
+    }
+
+    /**
+     * @param string $lineContent
+     *
+     * @return string
+     */
+    protected function parseInlineImages($lineContent)
+    {
+        return $this->factory->create(BlockTypes::BLOCK_IMAGE)
             ->setContent($lineContent)
             ->parse()
         ;
