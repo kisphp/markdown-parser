@@ -12,9 +12,12 @@ class BlockUrls extends AbstractBlock
     public function parse()
     {
         return preg_replace_callback('/\[(.*)\]\((.*)\)/', function ($found) {
+            $text = (empty($found[1])) ? $found[2] : $found[1];
+
             $dictionary = [
                 '{title}' => htmlentities($found[1]),
                 '{url}' => urlencode($found[2]),
+                '{text}' => $text,
             ];
 
             $content = $this->getStartTag() . $this->getEndTag();
@@ -32,7 +35,7 @@ class BlockUrls extends AbstractBlock
      */
     public function getStartTag()
     {
-        return '<a href="{url}" title="{title}">';
+        return '<a href="{url}" title="{title}">{text}';
     }
 
     /**
