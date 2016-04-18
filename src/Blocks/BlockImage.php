@@ -13,8 +13,8 @@ class BlockImage extends AbstractBlock
     {
         return preg_replace_callback('/\!\[(.*)\]\((.*)\)/', function ($found) {
             $dictionary = [
-                '{1}' => htmlentities($found[1]),
-                '{2}' => urlencode($found[2]),
+                '{alt}' => htmlentities($found[1]),
+                '{src}' => urlencode($found[2]),
             ];
 
             $content = $this->getStartTag() . $this->getEndTag();
@@ -32,7 +32,7 @@ class BlockImage extends AbstractBlock
      */
     public function getStartTag()
     {
-        return '<img src="{2}" alt="{1}"';
+        return '<img src="{src}" alt="{alt}"';
     }
 
     /**
