@@ -32,6 +32,58 @@ class BlockTable extends AbstractBlockNoParse
     }
 
     /**
+     * @return string
+     */
+    protected function getTableRowStartTag()
+    {
+        return '<tr>' . "\n";
+    }
+
+    /**
+     * @return string
+     */
+    protected function getTableRowEndTag()
+    {
+        return '</tr>' . "\n";
+    }
+
+    /**
+     * @param int $rowIndex
+     * @param bool|false $isTableHeader
+     *
+     * @return string
+     */
+    protected function getTableColumnStartTag($rowIndex, $isTableHeader = false)
+    {
+        $rowMetaData = '';
+        if (!empty($this->tableMetaData[$rowIndex])) {
+            foreach ($this->tableMetaData[$rowIndex] as $attributeName => $attributeValue) {
+                $rowMetaData .= sprintf(' %s="%s"', $attributeName, $attributeValue);
+            }
+        }
+
+        if ($isTableHeader === true) {
+            return '<th' . $rowMetaData . '>';
+        }
+
+        return '<td' . $rowMetaData . '>';
+    }
+
+    /**
+     * @param bool|false $isTableHeader
+     *
+     * @return string
+     */
+    protected function getTableColumnEndTag($isTableHeader = false)
+    {
+        if ($isTableHeader === true) {
+            return '</th>' . "\n";
+        }
+
+        return '</td>' . "\n";
+    }
+
+    /**
      * @param DataObjectInterface $dataObject
      */
     public function changeLineType(DataObjectInterface $dataObject)
@@ -97,17 +149,20 @@ class BlockTable extends AbstractBlockNoParse
     protected function createTableRow(BlockInterface $block, $isHeader = false)
     {
         $lineContent = trim($block->getContent(), '|');
+        $tableRow = explode('|', $lineContent);
 
         if (strpos($lineContent, '---') !== false) {
+            foreach ($tableRow as $rowIndex => $row) {
+                $this->setColumnMetadata($rowIndex, $row);
+            }
+
             return '';
         }
-
-        $tableRow = explode('|', $lineContent);
 
         $rowHtml = $this->getTableRowStartTag();
 
         foreach ($tableRow as $rowIndex => $row) {
-            $rowHtml .= $this->getTableColumnStartTag($isHeader);
+            $rowHtml .= $this->getTableColumnStartTag($rowIndex, $isHeader);
             $rowHtml .= trim($row);
             $rowHtml .= $this->getTableColumnEndTag($isHeader);
         }
@@ -118,47 +173,36 @@ class BlockTable extends AbstractBlockNoParse
     }
 
     /**
-     * @return string
+     * @param int $rowIndex
+     * @param string $rowContent
      */
-    protected function getTableRowStartTag()
+    protected function setColumnMetadata($rowIndex, $rowContent)
     {
-        return '<tr>';
-    }
+        if (strpos($rowContent, ':-') !== false && strpos($rowContent, '-:') !== false) {
+            $this->tableMetaData[$rowIndex] = [
+                'style' => 'text-align: center',
+            ];
 
-    /**
-     * @return string
-     */
-    protected function getTableRowEndTag()
-    {
-        return '</tr>' . "\n";
-    }
-
-    /**
-     * @param bool|false $isTableHeader
-     *
-     * @return string
-     */
-    protected function getTableColumnStartTag($isTableHeader = false)
-    {
-        if ($isTableHeader === true) {
-            return '<th>';
+            return;
         }
 
-        return '<td>';
-    }
+        if (strpos($rowContent, ':-') !== false) {
+            $this->tableMetaData[$rowIndex] = [
+                'style' => 'text-align: left',
+            ];
 
-    /**
-     * @param bool|false $isTableHeader
-     *
-     * @return string
-     */
-    protected function getTableColumnEndTag($isTableHeader = false)
-    {
-        if ($isTableHeader === true) {
-            return '</th>' . "\n";
+            return;
         }
 
-        return '</td>' . "\n";
+        if (strpos($rowContent, '-:') !== false) {
+            $this->tableMetaData[$rowIndex] = [
+                'style' => 'text-align: right',
+            ];
+
+            return;
+        }
+
+        return;
     }
 
     /**
