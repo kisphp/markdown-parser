@@ -17,15 +17,15 @@ class RowTypeGuesser implements RowTypeGuesserInterface
      * @var array
      */
     protected $blockTypes = [
+        '|' => [BlockTypes::BLOCK_TABLE],
         '=' => [BlockTypes::BLOCK_HEADER_ONE],
-        '-' => [BlockTypes::BLOCK_HEADER_TWO, BlockTypes::BLOCK_HORIZONTAL_RULE, BlockTypes::BLOCK_LIST],
+        '-' => [BlockTypes::BLOCK_TABLE, BlockTypes::BLOCK_HEADER_TWO, BlockTypes::BLOCK_HORIZONTAL_RULE, BlockTypes::BLOCK_LIST],
         '#' => [BlockTypes::BLOCK_HEADER],
         '*' => [BlockTypes::BLOCK_HORIZONTAL_RULE, BlockTypes::BLOCK_LIST],
         '_' => [BlockTypes::BLOCK_HORIZONTAL_RULE],
         '>' => [BlockTypes::BLOCK_QUOTE],
         '`' => [BlockTypes::BLOCK_CODE],
         ' ' => [BlockTypes::BLOCK_CONTINUE, BlockTypes::BLOCK_INLINE_CODE],
-//        '|' => [BlockTypes::TYPE_TABLE],
         '+' => [BlockTypes::BLOCK_LIST],
         '1' => [BlockTypes::BLOCK_LIST],
         '2' => [BlockTypes::BLOCK_LIST],
@@ -153,6 +153,23 @@ class RowTypeGuesser implements RowTypeGuesserInterface
             static::isBlockOrderedListByContent($lineContent)
             || static::isBlockUnorderedListByContent($lineContent)
         );
+    }
+
+    /**
+     * @param int $lineNumber
+     *
+     * @return bool
+     */
+    public function isBlockTable($lineNumber)
+    {
+        $lineContent = $this->dataObject->getLine($lineNumber);
+        $lineContent = trim($lineContent);
+
+        if (strpos($lineContent, '|') !== false && strpos($lineContent, '---') !== false) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

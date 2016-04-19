@@ -26,7 +26,6 @@ class BlockList extends AbstractBlockNoParse
 
             /** @var AbstractBlock $nextLineObject */
             $nextLineObject = $dataObject->getLine($i + 1);
-
             if (!$this->lineIsObjectOf($nextLineObject, static::class)) {
                 $changeNextLine = false;
             }
