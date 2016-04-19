@@ -11,11 +11,16 @@ use Kisphp\DataObjectInterface;
 class BlockTable extends AbstractBlockNoParse
 {
     /**
+     * @var array
+     */
+    protected $tableMetaData = [];
+
+    /**
      * @return string
      */
     public function getStartTableTag()
     {
-        return '<table>';
+        return '<table>' . "\n";
     }
 
     /**
@@ -35,21 +40,21 @@ class BlockTable extends AbstractBlockNoParse
         $changeNextLine = true;
         $firstLineCompiled = false;
 
-        $htmlTable = $this->getStartTableTag();
+        $htmlTable = '';
 
         for ($i = $this->lineNumber; $i < $max; $i++) {
+            $currentLine = $dataObject->getLine($i);
+
+            $htmlTable .= $this->createTableRow($currentLine);
+
             if ($firstLineCompiled === false) {
                 $firstLineCompiled = true;
                 $previousLineIndex = $i - 1;
                 $previousLine = $dataObject->getLine($previousLineIndex);
-                $htmlTable .= $this->createTableRow($previousLine, true);
+                $htmlTable = $this->createTableRow($previousLine, true) . $htmlTable;
                 $this->createSkipLine($dataObject, $previousLineIndex);
                 unset($previousLineIndex);
             }
-
-            $currentLine = $dataObject->getLine($i);
-
-            $htmlTable .= $this->createTableRow($currentLine);
 
             $this->createSkipLine($dataObject, $i);
 
@@ -64,12 +69,10 @@ class BlockTable extends AbstractBlockNoParse
             }
         }
 
-        $htmlTable .= $this->getEndTableTag();
-
         $htmlTable = $this->parseInlineMarkup($htmlTable);
 
         $listContent = $this->factory->create(BlockTypes::BLOCK_UNCHANGE)
-            ->setContent($htmlTable)
+            ->setContent($this->getStartTableTag() . $htmlTable . $this->getEndTableTag())
             ->setLineNumber($this->lineNumber)
         ;
 
@@ -127,7 +130,7 @@ class BlockTable extends AbstractBlockNoParse
      */
     protected function getTableRowEndTag()
     {
-        return '</tr>';
+        return '</tr>' . "\n";
     }
 
     /**
@@ -152,10 +155,10 @@ class BlockTable extends AbstractBlockNoParse
     protected function getTableColumnEndTag($isTableHeader = false)
     {
         if ($isTableHeader === true) {
-            return '</th>';
+            return '</th>' . "\n";
         }
 
-        return '</td>';
+        return '</td>' . "\n";
     }
 
     /**
@@ -163,8 +166,12 @@ class BlockTable extends AbstractBlockNoParse
      *
      * @return bool
      */
-    protected function isTableLineType(BlockInterface $block)
+    protected function isTableLineType(BlockInterface $block = null)
     {
+        if ($block === null) {
+            return false;
+        }
+
         return ($this->lineIsObjectOf($block, static::class) || strpos($block->getContent(), '|') !== false);
     }
 }
