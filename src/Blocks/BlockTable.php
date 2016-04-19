@@ -174,35 +174,41 @@ class BlockTable extends AbstractBlockNoParse
 
     /**
      * @param int $rowIndex
-     * @param string $rowContent
+     * @param string $columnContent
      */
-    protected function setColumnMetadata($rowIndex, $rowContent)
+    protected function setColumnMetadata($rowIndex, $columnContent)
     {
-        if (strpos($rowContent, ':-') !== false && strpos($rowContent, '-:') !== false) {
-            $this->tableMetaData[$rowIndex] = [
-                'style' => 'text-align: center',
-            ];
+        if (strpos($columnContent, ':-') !== false && strpos($columnContent, '-:') !== false) {
+            $this->tableMetaData[$rowIndex] = $this->createColumnMetaDataArray('center');
 
             return;
         }
 
-        if (strpos($rowContent, ':-') !== false) {
-            $this->tableMetaData[$rowIndex] = [
-                'style' => 'text-align: left',
-            ];
+        if (strpos($columnContent, ':-') !== false) {
+            $this->tableMetaData[$rowIndex] = $this->createColumnMetaDataArray('left');
 
             return;
         }
 
-        if (strpos($rowContent, '-:') !== false) {
-            $this->tableMetaData[$rowIndex] = [
-                'style' => 'text-align: right',
-            ];
+        if (strpos($columnContent, '-:') !== false) {
+            $this->tableMetaData[$rowIndex] = $this->createColumnMetaDataArray('right');
 
             return;
         }
 
         return;
+    }
+
+    /**
+     * @param string $alignment
+     *
+     * @return array
+     */
+    protected function createColumnMetaDataArray($alignment)
+    {
+        return [
+            'style' => 'text-align: ' . $alignment,
+        ];
     }
 
     /**
