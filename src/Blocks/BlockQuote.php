@@ -84,6 +84,25 @@ class BlockQuote extends AbstractBlock
     }
 
     /**
+     * @param DataObjectInterface $dataObject
+     * @param array $updatedLines
+     */
+    protected function parseSubBlock(DataObjectInterface $dataObject, array $updatedLines)
+    {
+        $markdown = $this->factory->createMarkdown();
+        $md = implode("\n", $updatedLines);
+
+        $newCodeParsed = $markdown->parse($md);
+        $this->setContent($newCodeParsed);
+
+        $newContent = $this->factory->create(BlockTypes::BLOCK_UNCHANGE)
+            ->setContent($this->parse())
+        ;
+
+        $dataObject->updateLine($this->getLineNumber(), $newContent);
+    }
+
+    /**
      * @param string $lineContent
      *
      * @return string
@@ -95,5 +114,16 @@ class BlockQuote extends AbstractBlock
         }
 
         return $lineContent;
+    }
+
+    /**
+     * @param int $lineNumber
+     * @param DataObjectInterface $dataObject
+     *
+     * @return bool
+     */
+    public static function validateLineType($lineNumber, DataObjectInterface $dataObject)
+    {
+        return (bool) preg_match('/^\>\s/', $dataObject->getLine($lineNumber));
     }
 }

@@ -6,7 +6,7 @@ use Kisphp\Exceptions\MethodNotFoundException;
 
 class RowTypeGuesser implements RowTypeGuesserInterface
 {
-    const BACKTICK_CODE = '96';
+
 
     /**
      * @var MarkdownFactoryInterface
@@ -69,13 +69,9 @@ class RowTypeGuesser implements RowTypeGuesserInterface
         $possibleTypes = $blockPlugins[$lineContent[0]];
 
         foreach ($possibleTypes as $type) {
-            $methodName = 'is' . $type;
-
-            if (!method_exists($this, $methodName)) {
-                throw new MethodNotFoundException($methodName);
-            }
-
-            if (call_user_func([$this, $methodName], $lineNumber) === true) {
+            /** @var BlockInterface $pluginBlock */
+            $pluginBlock = $this->factory->getClassNamespace($type);
+            if ($pluginBlock::validateLineType($lineNumber, $this->dataObject) === true) {
                 return $type;
             }
         }
@@ -233,49 +229,49 @@ class RowTypeGuesser implements RowTypeGuesserInterface
      *
      * @return bool
      */
-    public function isBlockHorizontalRule($lineNumber)
-    {
-        return (bool) preg_match('/^([\*|\*\s|\-|\-\s|\_|\_\s]{3,})/', $this->dataObject->getLine($lineNumber));
-    }
+//    public function isBlockHorizontalRule($lineNumber)
+//    {
+//        return (bool) preg_match('/^([\*|\*\s|\-|\-\s|\_|\_\s]{3,})/', $this->dataObject->getLine($lineNumber));
+//    }
 
     /**
      * @param int $lineNumber
      *
      * @return bool
      */
-    public function isBlockCode($lineNumber)
-    {
-        $lineContent = $this->dataObject->getLine($lineNumber);
-        $counter = count_chars($lineContent, 1);
-        if (!isset($counter[self::BACKTICK_CODE]) || $counter[self::BACKTICK_CODE] !== 3) {
-            return false;
-        }
-
-        return (bool) preg_match('/^([\`]{3})/', $lineContent);
-    }
-
-    /**
-     * @param int $lineNumber
-     *
-     * @return bool
-     */
-    public function isBlockInlineCode($lineNumber)
-    {
-        $lineContent = $this->dataObject->getLine($lineNumber);
-        if (preg_match('/([\s]{4,}|[\t]{1,})/', $lineContent)) {
-            return true;
-        }
-
-        return false;
-    }
+//    public function isBlockCode($lineNumber)
+//    {
+//        $lineContent = $this->dataObject->getLine($lineNumber);
+//        $counter = count_chars($lineContent, 1);
+//        if (!isset($counter[self::BACKTICK_CODE]) || $counter[self::BACKTICK_CODE] !== 3) {
+//            return false;
+//        }
+//
+//        return (bool) preg_match('/^([\`]{3})/', $lineContent);
+//    }
 
     /**
      * @param int $lineNumber
      *
      * @return bool
      */
-    public function isBlockQuote($lineNumber)
-    {
-        return (bool) preg_match('/^\>\s/', $this->dataObject->getLine($lineNumber));
-    }
+//    public function isBlockInlineCode($lineNumber)
+//    {
+//        $lineContent = $this->dataObject->getLine($lineNumber);
+//        if (preg_match('/([\s]{4,}|[\t]{1,})/', $lineContent)) {
+//            return true;
+//        }
+//
+//        return false;
+//    }
+
+    /**
+     * @param int $lineNumber
+     *
+     * @return bool
+     */
+//    public function isBlockQuote($lineNumber)
+//    {
+//        return (bool) preg_match('/^\>\s/', $this->dataObject->getLine($lineNumber));
+//    }
 }

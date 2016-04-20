@@ -3,6 +3,7 @@
 namespace Kisphp\Blocks\Inline;
 
 use Kisphp\AbstractBlock;
+use Kisphp\DataObjectInterface;
 
 class BlockInlineCode extends AbstractBlock
 {
@@ -38,5 +39,20 @@ class BlockInlineCode extends AbstractBlock
     public function getEndTag($preformatedText = false)
     {
         return '</code>' . (($preformatedText === true) ? '</pre>' : '');
+    }
+
+    /**
+     * @param int $lineNumber
+     * @param DataObjectInterface $dataObject
+     * @return bool
+     */
+    public static function validateLineType($lineNumber, DataObjectInterface $dataObject)
+    {
+        $lineContent = $dataObject->getLine($lineNumber);
+        if (preg_match('/([\s]{4,}|[\t]{1,})/', $lineContent)) {
+            return true;
+        }
+
+        return false;
     }
 }

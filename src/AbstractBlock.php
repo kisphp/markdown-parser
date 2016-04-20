@@ -187,25 +187,6 @@ abstract class AbstractBlock implements BlockInterface
     }
 
     /**
-     * @param DataObjectInterface $dataObject
-     * @param array $updatedLines
-     */
-    protected function parseSubBlock(DataObjectInterface $dataObject, array $updatedLines)
-    {
-        $markdown = $this->factory->createMarkdown();
-        $md = implode("\n", $updatedLines);
-
-        $newCodeParsed = $markdown->parse($md);
-        $this->setContent($newCodeParsed);
-
-        $newContent = $this->factory->create(BlockTypes::BLOCK_UNCHANGE)
-            ->setContent($this->parse())
-        ;
-
-        $dataObject->updateLine($this->getLineNumber(), $newContent);
-    }
-
-    /**
      * @param BlockInterface $block
      * @param string $objectType
      *
@@ -220,5 +201,18 @@ abstract class AbstractBlock implements BlockInterface
         return (bool) (
             is_a($block, $objectType) || is_a($block, $this->factory->getClassNamespace(BlockTypes::BLOCK_CONTINUE))
         );
+    }
+
+    /**
+     * do not validate type by default
+     *
+     * @param int $lineNumber
+     * @param DataObjectInterface $dataObject
+     *
+     * @return bool
+     */
+    public static function validateLineType($lineNumber, DataObjectInterface $dataObject)
+    {
+        return false;
     }
 }
