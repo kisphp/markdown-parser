@@ -10,9 +10,9 @@ class ItemsRegistry
     protected $items = [];
 
     /**
-     * @param Item $item
+     * @param ItemInterface $item
      */
-    public function addItem(Item $item)
+    public function addItem(ItemInterface $item)
     {
         $this->items[$item->getId()] = $item;
     }
@@ -20,7 +20,7 @@ class ItemsRegistry
     /**
      * @param int $id
      *
-     * @return Item|null
+     * @return ItemInterface|null
      */
     public function getItemById($id)
     {
