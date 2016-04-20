@@ -2,8 +2,8 @@
 
 namespace Kisphp\Blocks\Lists;
 
-use Kisphp\AbstractBlock;
 use Kisphp\AbstractBlockNoParse;
+use Kisphp\BlockInterface;
 use Kisphp\Blocks\Lists\Tree\Builder;
 use Kisphp\BlockTypes;
 use Kisphp\DataObjectInterface;
@@ -24,7 +24,7 @@ class BlockList extends AbstractBlockNoParse
 
             $builder->addItem($currentLineObject);
 
-            /** @var AbstractBlock $nextLineObject */
+            /** @var BlockInterface $nextLineObject */
             $nextLineObject = $dataObject->getLine($i + 1);
             if (!$this->lineIsObjectOf($nextLineObject, static::class)) {
                 $changeNextLine = false;

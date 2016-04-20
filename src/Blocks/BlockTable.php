@@ -2,7 +2,6 @@
 
 namespace Kisphp\Blocks;
 
-use Kisphp\AbstractBlock;
 use Kisphp\AbstractBlockNoParse;
 use Kisphp\BlockInterface;
 use Kisphp\BlockTypes;
@@ -110,7 +109,7 @@ class BlockTable extends AbstractBlockNoParse
 
             $this->createSkipLine($dataObject, $i);
 
-            /** @var AbstractBlock $nextLineObject */
+            /** @var BlockInterface $nextLineObject */
             $nextLineObject = $dataObject->getLine($i + 1);
             if (!$this->isTableLineType($nextLineObject)) {
                 $changeNextLine = false;
