@@ -4,7 +4,7 @@ namespace Kisphp\Blocks\Lists\Tree;
 
 use Kisphp\BlockInterface;
 
-class Builder
+class Builder implements BuilderInterface
 {
     const SPACES_AS_TAB = 4;
     const TAB_CHARACTER = "\t";
@@ -48,7 +48,7 @@ class Builder
     }
 
     /**
-     * @return Item
+     * @return ItemInterface
      */
     protected function createItem()
     {
@@ -56,21 +56,21 @@ class Builder
     }
 
     /**
-     * @param Item $item
+     * @param ItemInterface $item
      *
      * @return string
      */
-    public function createListStartTag(Item $item)
+    public function createListStartTag(ItemInterface $item)
     {
         return '<' . $item->getListType() . '>' . "\n";
     }
 
     /**
-     * @param Item $item
+     * @param ItemInterface $item
      *
      * @return string
      */
-    public function createListEndTag(Item $item)
+    public function createListEndTag(ItemInterface $item)
     {
         return '</' . $item->getListType() . '>' . "\n";
     }
@@ -139,14 +139,14 @@ class Builder
     }
 
     /**
-     * @param Item $item
+     * @param ItemInterface $item
      * @param int $level
      */
-    protected function addToTreeSTructure(Item $item, $level)
+    protected function addToTreeSTructure(ItemInterface $item, $level)
     {
         if ($level > 0) {
             $previousItemId = $this->levelLastItem[$level - 1];
-            /** @var Item $previousItem */
+            /** @var ItemInterface $previousItem */
             $previousItem = $this->itemsRegistry->getItemById($previousItemId);
 
             if ($previousItem) {

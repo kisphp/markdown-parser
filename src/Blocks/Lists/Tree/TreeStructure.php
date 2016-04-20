@@ -2,7 +2,7 @@
 
 namespace Kisphp\Blocks\Lists\Tree;
 
-class TreeStructure
+class TreeStructure implements TreeStructureInterface
 {
     /**
      * @var array
@@ -10,28 +10,28 @@ class TreeStructure
     protected $items = [];
 
     /**
-     * @var Builder
+     * @var BuilderInterface
      */
     protected $builder;
 
     /**
-     * @param Builder $builder
+     * @param BuilderInterface $builder
      */
-    public function __construct(Builder $builder)
+    public function __construct(BuilderInterface $builder)
     {
         $this->builder = $builder;
     }
 
     /**
-     * @param Item $item
+     * @param ItemInterface $item
      */
-    public function addItem(Item $item)
+    public function addItem(ItemInterface $item)
     {
         $this->items[$item->getId()] = $item;
     }
 
     /**
-     * @return Item
+     * @return ItemInterface
      */
     protected function getFirstChild()
     {
@@ -46,10 +46,10 @@ class TreeStructure
         $html = '';
 
         if (count($this->items) > 0) {
-            /** @var Item $firstChild */
+            /** @var ItemInterface $firstChild */
             $firstChild = $this->getFirstChild();
             $html .= $this->builder->createListStartTag($firstChild);
-            /** @var Item $item */
+            /** @var ItemInterface $item */
             foreach ($this->items as $item) {
                 $html .= $item->parse();
             }

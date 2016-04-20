@@ -2,7 +2,7 @@
 
 namespace Kisphp\Blocks\Lists\Tree;
 
-class Item
+class Item implements ItemInterface
 {
     const LIST_TYPE_UNORDERED = 'ul';
     const LIST_TYPE_ORDERED = 'ol';
@@ -23,7 +23,7 @@ class Item
     protected $id;
 
     /**
-     * @var
+     * @var string
      */
     protected $listType;
 
@@ -33,14 +33,14 @@ class Item
     protected $children = [];
 
     /**
-     * @var Builder
+     * @var BuilderInterface
      */
     protected $builder;
 
     /**
-     * @param Builder $builder
+     * @param BuilderInterface $builder
      */
-    public function __construct(Builder $builder)
+    public function __construct(BuilderInterface $builder)
     {
         $this->builder = $builder;
     }
@@ -87,15 +87,15 @@ class Item
     }
 
     /**
-     * @param Item $item
+     * @param ItemInterface $item
      */
-    public function addClild(Item $item)
+    public function addClild(ItemInterface $item)
     {
         $this->children[] = $item;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getListType()
     {
@@ -140,10 +140,10 @@ class Item
     {
         $html = '';
         if (count($this->getChildren()) > 0) {
-            /** @var Item $firstChild */
+            /** @var ItemInterface $firstChild */
             $firstChild = $this->getFirstChild();
             $html .= $this->builder->createListStartTag($firstChild);
-            /** @var Item $child */
+            /** @var ItemInterface $child */
             foreach ($this->getChildren() as $child) {
                 $html .= $child->parse();
             }
@@ -154,7 +154,7 @@ class Item
     }
 
     /**
-     * @return Item
+     * @return ItemInterface
      */
     protected function getFirstChild()
     {

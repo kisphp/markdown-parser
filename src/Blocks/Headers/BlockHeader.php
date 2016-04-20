@@ -20,7 +20,7 @@ class BlockHeader extends AbstractBlock
             }, $this->content);
         }
 
-        return $text;
+        return $this->parseInlineMarkup($text);
     }
 
     /**

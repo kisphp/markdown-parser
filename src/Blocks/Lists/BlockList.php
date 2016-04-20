@@ -38,8 +38,9 @@ class BlockList extends AbstractBlockNoParse
             }
         }
 
+        $listHtmlContent = $this->parseInlineMarkup($builder->getTreeStructure()->parse());
         $listContent = $this->factory->create(BlockTypes::BLOCK_UNCHANGE)
-            ->setContent($builder->getTreeStructure()->parse())
+            ->setContent($listHtmlContent)
             ->setLineNumber($this->lineNumber)
         ;
 

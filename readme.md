@@ -17,3 +17,5 @@ Features:
 - blockquotes
 - subtree parsing
 - code line if content starts with space or tab
+
+[Please read documentation here](https://github.com/kisphp/markdown-parser/wiki)
