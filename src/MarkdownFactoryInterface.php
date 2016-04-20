@@ -4,7 +4,7 @@ namespace Kisphp;
 
 use Kisphp\Exceptions\BlockNotFoundException;
 
-interface BlockFactoryInterface
+interface MarkdownFactoryInterface
 {
     /**
      * @param string $type

@@ -4,7 +4,7 @@ namespace Kisphp;
 
 use Kisphp\Exceptions\BlockNotFoundException;
 
-class BlockFactory implements BlockFactoryInterface
+class MarkdownFactory implements MarkdownFactoryInterface
 {
     /**
      * @var DataObjectInterface
@@ -89,7 +89,7 @@ class BlockFactory implements BlockFactoryInterface
     /**
      * @param DataObjectInterface $dataObjectInterface
      *
-     * @return RowTypeGuesser
+     * @return RowTypeGuesserInterface
      */
     public function createRowTypeGuesser(DataObjectInterface $dataObjectInterface)
     {

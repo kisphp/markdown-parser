@@ -5,7 +5,7 @@ namespace Kisphp;
 abstract class AbstractBlock implements BlockInterface
 {
     /**
-     * @var BlockFactory
+     * @var MarkdownFactory
      */
     protected $factory;
 
@@ -20,9 +20,9 @@ abstract class AbstractBlock implements BlockInterface
     protected $content;
 
     /**
-     * @param BlockFactory $factory
+     * @param MarkdownFactoryInterface $factory
      */
-    public function __construct(BlockFactory $factory)
+    public function __construct(MarkdownFactoryInterface $factory)
     {
         $this->factory = $factory;
     }

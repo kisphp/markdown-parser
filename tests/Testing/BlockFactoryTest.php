@@ -8,13 +8,13 @@ class BlockFactoryTest extends PHPUnit_Framework_TestCase
      */
     public function test_create_no_existing_block()
     {
-        $bf = new \Kisphp\BlockFactory();
+        $bf = new \Kisphp\MarkdownFactory();
         $bf->create('Alfa');
     }
 
     public function test_BlockParagraph()
     {
-        $factory = new \Kisphp\BlockFactory();
+        $factory = new \Kisphp\MarkdownFactory();
 
         $this->assertInstanceOf(
             \Kisphp\Blocks\Paragraph\BlockParagraph::class,
