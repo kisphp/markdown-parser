@@ -14,31 +14,6 @@ class RowTypeGuesser implements RowTypeGuesserInterface
     protected $factory;
 
     /**
-     * @var array
-     */
-    protected $blockTypes = [
-        '|' => [BlockTypes::BLOCK_TABLE],
-        '=' => [BlockTypes::BLOCK_HEADER_ONE],
-        '-' => [BlockTypes::BLOCK_TABLE, BlockTypes::BLOCK_HEADER_TWO, BlockTypes::BLOCK_HORIZONTAL_RULE, BlockTypes::BLOCK_LIST],
-        '#' => [BlockTypes::BLOCK_HEADER],
-        '*' => [BlockTypes::BLOCK_HORIZONTAL_RULE, BlockTypes::BLOCK_LIST],
-        '_' => [BlockTypes::BLOCK_HORIZONTAL_RULE],
-        '>' => [BlockTypes::BLOCK_QUOTE],
-        '`' => [BlockTypes::BLOCK_CODE],
-        ' ' => [BlockTypes::BLOCK_CONTINUE, BlockTypes::BLOCK_INLINE_CODE],
-        '+' => [BlockTypes::BLOCK_LIST],
-        '1' => [BlockTypes::BLOCK_LIST],
-        '2' => [BlockTypes::BLOCK_LIST],
-        '3' => [BlockTypes::BLOCK_LIST],
-        '4' => [BlockTypes::BLOCK_LIST],
-        '5' => [BlockTypes::BLOCK_LIST],
-        '6' => [BlockTypes::BLOCK_LIST],
-        '7' => [BlockTypes::BLOCK_LIST],
-        '8' => [BlockTypes::BLOCK_LIST],
-        '9' => [BlockTypes::BLOCK_LIST],
-    ];
-
-    /**
      * @var DataObject
      */
     protected $dataObject;
@@ -90,7 +65,8 @@ class RowTypeGuesser implements RowTypeGuesserInterface
             return BlockTypes::BLOCK_PARAGRAPH;
         }
 
-        $possibleTypes = $this->blockTypes[$lineContent[0]];
+        $blockPlugins = $this->factory->getBlockPlugins();
+        $possibleTypes = $blockPlugins[$lineContent[0]];
 
         foreach ($possibleTypes as $type) {
             $methodName = 'is' . $type;
@@ -136,7 +112,7 @@ class RowTypeGuesser implements RowTypeGuesserInterface
             return false;
         }
 
-        return array_search($lineContent[0], array_keys($this->blockTypes));
+        return array_search($lineContent[0], array_keys($this->factory->getBlockPlugins()));
     }
 
     /**

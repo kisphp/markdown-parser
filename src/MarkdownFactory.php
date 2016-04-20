@@ -3,6 +3,7 @@
 namespace Kisphp;
 
 use Kisphp\Exceptions\BlockNotFoundException;
+use Kisphp\Exceptions\ParameterNotAllowedException;
 
 class MarkdownFactory implements MarkdownFactoryInterface
 {
@@ -17,6 +18,11 @@ class MarkdownFactory implements MarkdownFactoryInterface
     protected $rowTypeGuesser;
 
     /**
+     * @var array
+     */
+    protected $blockPlugins = [];
+
+    /**
      * @param string $type
      *
      * @throws BlockNotFoundException
@@ -28,6 +34,55 @@ class MarkdownFactory implements MarkdownFactoryInterface
         $className = $this->getClassNamespace($type);
 
         return new $className($this);
+    }
+
+    /**
+     * @return array
+     */
+    public function getBlockPlugins()
+    {
+        return $this->blockPlugins;
+    }
+
+    /**
+     * @param string $firstLetter
+     * @param string $blockName
+     *
+     * @throws ParameterNotAllowedException
+     *
+     * @return $this
+     */
+    public function addBlockPlugin($firstLetter, $blockName)
+    {
+        if (!is_string($blockName)) {
+            throw new ParameterNotAllowedException('$blockName should be type of string');
+        }
+
+        $this->blockPlugins[$firstLetter][] = $blockName;
+
+        return $this;
+    }
+
+    /**
+     * @param string $firstLetter
+     * @param array $blockNameCollection
+     *
+     * @return $this
+     */
+    public function addBlockPlugins($firstLetter, array $blockNameCollection)
+    {
+        if (isset($this->blockPlugins[$firstLetter])) {
+            $this->blockPlugins[$firstLetter] = array_merge(
+                $this->blockPlugins[$firstLetter],
+                $blockNameCollection
+            );
+
+            return $this;
+        }
+
+        $this->blockPlugins[$firstLetter] = $blockNameCollection;
+
+        return $this;
     }
 
     /**

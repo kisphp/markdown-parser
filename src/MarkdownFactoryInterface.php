@@ -25,6 +25,27 @@ interface MarkdownFactoryInterface
     public function getClassNamespace($type);
 
     /**
+     * @return array
+     */
+    public function getBlockPlugins();
+
+    /**
+     * @param string $firstLetter
+     * @param string $blockName
+     *
+     * @return $this
+     */
+    public function addBlockPlugin($firstLetter, $blockName);
+
+    /**
+     * @param string $firstLetter
+     * @param array $blockNameCollection
+     *
+     * @return $this
+     */
+    public function addBlockPlugins($firstLetter, array $blockNameCollection);
+
+    /**
      * @param $markdownContent
      *
      * @return DataObjectInterface
