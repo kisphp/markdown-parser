@@ -10,7 +10,7 @@ class Markdown implements MarkdownInterface
     protected $dataObject;
 
     /**
-     * @var BlockFactoryInterface
+     * @var MarkdownFactoryInterface
      */
     protected $factory;
 
@@ -20,9 +20,9 @@ class Markdown implements MarkdownInterface
     protected $rowTypeGuesser;
 
     /**
-     * @param BlockFactoryInterface $factory
+     * @param MarkdownFactoryInterface $factory
      */
-    public function __construct(BlockFactoryInterface $factory)
+    public function __construct(MarkdownFactoryInterface $factory)
     {
         $this->factory = $factory;
     }

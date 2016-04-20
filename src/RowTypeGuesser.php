@@ -9,7 +9,7 @@ class RowTypeGuesser implements RowTypeGuesserInterface
     const BACKTICK_CODE = '96';
 
     /**
-     * @var BlockFactoryInterface
+     * @var MarkdownFactoryInterface
      */
     protected $factory;
 
@@ -45,16 +45,16 @@ class RowTypeGuesser implements RowTypeGuesserInterface
 
     /**
      * @param DataObjectInterface $dataObject
-     * @param BlockFactoryInterface $factoryInterface
+     * @param MarkdownFactoryInterface $factoryInterface
      */
-    public function __construct(DataObjectInterface $dataObject, BlockFactoryInterface $factoryInterface)
+    public function __construct(DataObjectInterface $dataObject, MarkdownFactoryInterface $factoryInterface)
     {
         $this->dataObject = $dataObject;
         $this->factory = $factoryInterface;
     }
 
     /**
-     * @param $lineNumber
+     * @param int $lineNumber
      *
      * @throws Exceptions\BlockNotFoundException
      * @throws MethodNotFoundException
@@ -72,7 +72,7 @@ class RowTypeGuesser implements RowTypeGuesserInterface
     }
 
     /**
-     * @param $lineNumber
+     * @param int $lineNumber
      *
      * @throws MethodNotFoundException
      *

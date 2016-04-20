@@ -28,7 +28,7 @@ class MarkdownTest extends PHPUnit_Framework_TestCase
         $codeMd = $this->getFileContent($fileMd);
         $codeHtml = $this->getFileContent($fileHtml);
 
-        $md = \Kisphp\BlockFactory::createMarkdown();
+        $md = \Kisphp\MarkdownFactory::createMarkdown();
 
         $this->assertSame(
             trim($codeHtml),
