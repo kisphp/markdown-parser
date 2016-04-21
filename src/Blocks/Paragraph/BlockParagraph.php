@@ -13,6 +13,11 @@ use Kisphp\DataObjectInterface;
 class BlockParagraph extends AbstractBlock
 {
     /**
+     * @var bool
+     */
+    protected $parsed = false;
+
+    /**
      * @return string
      */
     public function parse()
@@ -45,6 +50,10 @@ class BlockParagraph extends AbstractBlock
      */
     public function changeLineType(DataObjectInterface $dataObject)
     {
+        if ($this->parsed === true) {
+            return this;
+        }
+        $this->parsed = true;
         $nextLineNumber = $this->lineNumber + 1;
         if (!$dataObject->hasLine($nextLineNumber)) {
             return $this;
@@ -63,7 +72,6 @@ class BlockParagraph extends AbstractBlock
         $paragraphContent = [];
         for ($i = $this->lineNumber; $i < $max; $i++) {
             $currentLineObject = $dataObject->getLine($i);
-            dump($currentLineObject->getContent());
             $paragraphContent[] = trim($currentLineObject->getContent());
 
             $nextLineObject = $dataObject->getLine($i + 1);
@@ -71,7 +79,9 @@ class BlockParagraph extends AbstractBlock
                 $changeNextLine = false;
             }
 
-//            $this->createSkipLine($dataObject, $currentLineObject->getLineNumber());
+            if ($i !== $this->lineNumber) {
+                $this->createSkipLine($dataObject, $currentLineObject->getLineNumber());
+            }
 
             if ($changeNextLine === false) {
                 break;
