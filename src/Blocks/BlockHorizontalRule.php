@@ -3,7 +3,6 @@
 namespace Kisphp\Blocks;
 
 use Kisphp\AbstractBlock;
-use Kisphp\DataObjectInterface;
 
 class BlockHorizontalRule extends AbstractBlock
 {
@@ -31,8 +30,18 @@ class BlockHorizontalRule extends AbstractBlock
         return '<hr />' . "\n";
     }
 
-    public static function validateLineType($lineNumber, DataObjectInterface $dataObject)
+    /**
+     * @param int $lineNumber
+     *
+     * @return bool
+     */
+    public function validateLineType($lineNumber)
     {
+        $dataObject = $this->factory->getDataObject();
+        if ($dataObject === null) {
+            return false;
+        }
+
         return (bool) preg_match('/^([\*|\*\s|\-|\-\s|\_|\_\s]{3,})/', $dataObject->getLine($lineNumber));
     }
 }

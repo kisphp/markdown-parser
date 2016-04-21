@@ -30,6 +30,18 @@ interface MarkdownFactoryInterface
     public function getBlockPlugins();
 
     /**
+     * @return DataObjectInterface
+     */
+    public function getDataObject();
+
+    /**
+     * @param DataObjectInterface $dataObject
+     *
+     * @return $this
+     */
+    public function setDataObject(DataObjectInterface $dataObject);
+
+    /**
      * @param string $firstLetter
      * @param string $blockName
      *

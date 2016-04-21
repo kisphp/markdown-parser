@@ -3,7 +3,6 @@
 namespace Kisphp\Blocks\Headers;
 
 use Kisphp\BlockTypes;
-use Kisphp\DataObjectInterface;
 
 class BlockHeaderTwo extends AbstractBlockSpecialHeader
 {
@@ -31,20 +30,26 @@ class BlockHeaderTwo extends AbstractBlockSpecialHeader
         return '</h2>';
     }
 
-    public static function validateLineType($lineNumber, DataObjectInterface $dataObject)
+    /**
+     * @param int $lineNumber
+     *
+     * @return bool
+     */
+    public function validateLineType($lineNumber)
     {
-        if ($lineNumber < 1) {
+        $dataObject = $this->factory->getDataObject();
+        $currentLineObject = $dataObject->getLine($lineNumber);
+        if ($lineNumber < 1 || strpos($currentLineObject, '|') !== false) {
             return false;
         }
 
         $previousLineObject = $dataObject->getLine($lineNumber - 1);
-//        if (!$this->isLineTypeOf($lineNumber - 1, BlockTypes::BLOCK_PARAGRAPH)) {
-        if ($previousLineObject instanceof BlockTypes::BLOCK_PARAGRAPHS) {
+        $paragraphNamespace = $this->factory->getClassNamespace(BlockTypes::BLOCK_PARAGRAPH);
+
+        if (!$this->lineIsObjectOf($previousLineObject, $paragraphNamespace)) {
             return false;
         }
 
-        return (bool) preg_match('/([\-]{3,})/', $dataObject->getLine($lineNumber));
+        return (bool) preg_match('/([\-]{3,})/', $currentLineObject);
     }
-
-
 }

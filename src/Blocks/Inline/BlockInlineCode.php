@@ -3,7 +3,6 @@
 namespace Kisphp\Blocks\Inline;
 
 use Kisphp\AbstractBlock;
-use Kisphp\DataObjectInterface;
 
 class BlockInlineCode extends AbstractBlock
 {
@@ -43,11 +42,12 @@ class BlockInlineCode extends AbstractBlock
 
     /**
      * @param int $lineNumber
-     * @param DataObjectInterface $dataObject
+     *
      * @return bool
      */
-    public static function validateLineType($lineNumber, DataObjectInterface $dataObject)
+    public function validateLineType($lineNumber)
     {
+        $dataObject = $this->factory->getDataObject();
         $lineContent = $dataObject->getLine($lineNumber);
         if (preg_match('/([\s]{4,}|[\t]{1,})/', $lineContent)) {
             return true;

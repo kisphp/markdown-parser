@@ -45,9 +45,8 @@ interface BlockInterface
 
     /**
      * @param int $lineNumber
-     * @param DataObjectInterface $dataObject
      *
      * @return bool
      */
-    public static function validateLineType($lineNumber, DataObjectInterface $dataObject);
+    public function validateLineType($lineNumber);
 }

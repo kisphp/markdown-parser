@@ -6,8 +6,6 @@ use Kisphp\Exceptions\MethodNotFoundException;
 
 class RowTypeGuesser implements RowTypeGuesserInterface
 {
-
-
     /**
      * @var MarkdownFactoryInterface
      */
@@ -69,9 +67,8 @@ class RowTypeGuesser implements RowTypeGuesserInterface
         $possibleTypes = $blockPlugins[$lineContent[0]];
 
         foreach ($possibleTypes as $type) {
-            /** @var BlockInterface $pluginBlock */
-            $pluginBlock = $this->factory->getClassNamespace($type);
-            if ($pluginBlock::validateLineType($lineNumber, $this->dataObject) === true) {
+            $blockObject = $this->factory->create($type);
+            if ($blockObject->validateLineType($lineNumber) === true) {
                 return $type;
             }
         }
@@ -84,6 +81,8 @@ class RowTypeGuesser implements RowTypeGuesserInterface
      * @param string $blockName
      *
      * @return bool
+     *
+     * @deprecated use method from AbstractBlock
      */
     protected function isLineTypeOf($lineNumber, $blockName)
     {
@@ -111,120 +110,120 @@ class RowTypeGuesser implements RowTypeGuesserInterface
         return array_search($lineContent[0], array_keys($this->factory->getBlockPlugins()));
     }
 
-    /**
+    /*
      * @param int $lineNumber
      *
      * @return bool
      */
-    public function isBlockList($lineNumber)
-    {
-        $lineContent = $this->dataObject->getLine($lineNumber);
-        $lineContent = trim($lineContent);
+//    public function isBlockTable($lineNumber)
+//    {
+//        $lineContent = $this->dataObject->getLine($lineNumber);
+//        $lineContent = trim($lineContent);
+//
+//        if (strpos($lineContent, '|') !== false && strpos($lineContent, '---') !== false) {
+//            return true;
+//        }
+//
+//        return false;
+//    }
 
-        return (
-            static::isBlockOrderedListByContent($lineContent)
-            || static::isBlockUnorderedListByContent($lineContent)
-        );
-    }
-
-    /**
+    /*
      * @param int $lineNumber
      *
      * @return bool
      */
-    public function isBlockTable($lineNumber)
-    {
-        $lineContent = $this->dataObject->getLine($lineNumber);
-        $lineContent = trim($lineContent);
+//    public function isBlockList($lineNumber)
+//    {
+//        $lineContent = $this->dataObject->getLine($lineNumber);
+//        $lineContent = trim($lineContent);
+//
+//        return (
+//            static::isBlockOrderedListByContent($lineContent)
+//            || static::isBlockUnorderedListByContent($lineContent)
+//        );
+//    }
 
-        if (strpos($lineContent, '|') !== false && strpos($lineContent, '---') !== false) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
+    /*
      * @param string $lineContent
      *
      * @return bool
      */
-    public static function isBlockUnorderedListByContent($lineContent)
-    {
-        return (bool) preg_match('/(^\*\s|^\-\s|^\+\s)/', $lineContent);
-    }
+//    public static function isBlockUnorderedListByContent($lineContent)
+//    {
+//        return (bool) preg_match('/(^\*\s|^\-\s|^\+\s)/', $lineContent);
+//    }
 
-    /**
+    /*
      * @param string $lineContent
      *
      * @return bool
      */
-    public static function isBlockOrderedListByContent($lineContent)
-    {
-        return (bool) preg_match('/(^[0-9]\.\s)/', $lineContent);
-    }
+//    public static function isBlockOrderedListByContent($lineContent)
+//    {
+//        return (bool) preg_match('/(^[0-9]\.\s)/', $lineContent);
+//    }
 
-    /**
+    /*
      * @param int $lineNumber
      *
      * @return bool
      */
-    public function isBlockHeader($lineNumber)
-    {
-        return (bool) preg_match('/^([#]{1,6})\s/', $this->dataObject->getLine($lineNumber));
-    }
+//    public function isBlockHeader($lineNumber)
+//    {
+//        return (bool) preg_match('/^([#]{1,6})\s/', $this->dataObject->getLine($lineNumber));
+//    }
 
-    /**
+    /*
      * @param int $lineNumber
      *
      * @return bool
      */
-    public function isBlockContinue($lineNumber)
-    {
-        if ($lineNumber < 1) {
-            return false;
-        }
+//    public function isBlockContinue($lineNumber)
+//    {
+//        if ($lineNumber < 1) {
+//            return false;
+//        }
+//
+//        return (bool) preg_match('/^([\s]{1,}|[\t]+)\s/', $this->dataObject->getLine($lineNumber));
+//    }
 
-        return (bool) preg_match('/^([\s]{1,}|[\t]+)\s/', $this->dataObject->getLine($lineNumber));
-    }
-
-    /**
+    /*
      * @param int $lineNumber
      *
      * @return bool
      */
-    public function isBlockHeaderOne($lineNumber)
-    {
-        if ($lineNumber < 1) {
-            return false;
-        }
+//    public function isBlockHeaderOne($lineNumber)
+//    {
+//        if ($lineNumber < 1) {
+//            return false;
+//        }
+//
+//        if (!$this->isLineTypeOf($lineNumber - 1, BlockTypes::BLOCK_PARAGRAPH)) {
+//            return false;
+//        }
+//
+//        return (bool) preg_match('/([\=]{3,})/', $this->dataObject->getLine($lineNumber));
+//    }
 
-        if (!$this->isLineTypeOf($lineNumber - 1, BlockTypes::BLOCK_PARAGRAPH)) {
-            return false;
-        }
-
-        return (bool) preg_match('/([\=]{3,})/', $this->dataObject->getLine($lineNumber));
-    }
-
-    /**
+    /*
      * @param int $lineNumber
      *
      * @return bool
      */
-    public function isBlockHeaderTwo($lineNumber)
-    {
-        if ($lineNumber < 1) {
-            return false;
-        }
+//    public function isBlockHeaderTwo($lineNumber)
+//    {
+//        if ($lineNumber < 1) {
+//            return false;
+//        }
+//
+//        if (!$this->isLineTypeOf($lineNumber - 1, BlockTypes::BLOCK_PARAGRAPH)) {
+//            return false;
+//        }
+//
+//        return (bool) preg_match('/([\-]{3,})/', $this->dataObject->getLine($lineNumber));
+//    }
 
-        if (!$this->isLineTypeOf($lineNumber - 1, BlockTypes::BLOCK_PARAGRAPH)) {
-            return false;
-        }
-
-        return (bool) preg_match('/([\-]{3,})/', $this->dataObject->getLine($lineNumber));
-    }
-
-    /**
+    /*
      * @param int $lineNumber
      *
      * @return bool
@@ -234,7 +233,7 @@ class RowTypeGuesser implements RowTypeGuesserInterface
 //        return (bool) preg_match('/^([\*|\*\s|\-|\-\s|\_|\_\s]{3,})/', $this->dataObject->getLine($lineNumber));
 //    }
 
-    /**
+    /*
      * @param int $lineNumber
      *
      * @return bool
@@ -250,7 +249,7 @@ class RowTypeGuesser implements RowTypeGuesserInterface
 //        return (bool) preg_match('/^([\`]{3})/', $lineContent);
 //    }
 
-    /**
+    /*
      * @param int $lineNumber
      *
      * @return bool
@@ -265,7 +264,7 @@ class RowTypeGuesser implements RowTypeGuesserInterface
 //        return false;
 //    }
 
-    /**
+    /*
      * @param int $lineNumber
      *
      * @return bool

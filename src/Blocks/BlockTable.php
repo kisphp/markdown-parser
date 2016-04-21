@@ -223,4 +223,25 @@ class BlockTable extends AbstractBlockNoParse
 
         return ($this->lineIsObjectOf($block, static::class) || strpos($block->getContent(), '|') !== false);
     }
+
+    /**
+     * @param int $lineNumber
+     *
+     * @return bool
+     */
+    public function validateLineType($lineNumber)
+    {
+        $dataObject = $this->factory->getDataObject();
+        if ($dataObject === null) {
+            return false;
+        }
+        $lineContent = $dataObject->getLine($lineNumber);
+        $lineContent = trim($lineContent);
+
+        if (strpos($lineContent, '|') !== false && strpos($lineContent, '---') !== false) {
+            return true;
+        }
+
+        return false;
+    }
 }

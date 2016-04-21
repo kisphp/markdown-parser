@@ -10,7 +10,7 @@ class MarkdownFactory implements MarkdownFactoryInterface
     /**
      * @var DataObjectInterface
      */
-    protected static $dataObject;
+    protected $dataObject;
 
     /**
      * @var RowTypeGuesserInterface
@@ -34,6 +34,26 @@ class MarkdownFactory implements MarkdownFactoryInterface
         $className = $this->getClassNamespace($type);
 
         return new $className($this);
+    }
+
+    /**
+     * @return DataObjectInterface
+     */
+    public function getDataObject()
+    {
+        return $this->dataObject;
+    }
+
+    /**
+     * @param DataObjectInterface $dataObject
+     *
+     * @return $this
+     */
+    public function setDataObject(DataObjectInterface $dataObject)
+    {
+        $this->dataObject = $dataObject;
+
+        return $this;
     }
 
     /**
@@ -151,5 +171,19 @@ class MarkdownFactory implements MarkdownFactoryInterface
         $this->rowTypeGuesser = new RowTypeGuesser($dataObjectInterface, $this);
 
         return $this->rowTypeGuesser;
+    }
+
+    /**
+     * @todo create separate plugin to be loaded in the project
+     *
+     * extend this method to add your own custom inline markup
+     *
+     * @param string $lineContent
+     *
+     * @return string
+     */
+    public function parseCustomInlineMarkup($lineContent)
+    {
+        return $lineContent;
     }
 }

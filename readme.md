@@ -14,8 +14,10 @@ Features:
 - emphasis
 - inline code
 - strkethrough
-- blockquotes
+- blockquotes on multiple levels
 - subtree parsing
 - code line if content starts with space or tab
+- tables
+- lists on multiple level
 
 [Please read documentation here](https://github.com/kisphp/markdown-parser/wiki)

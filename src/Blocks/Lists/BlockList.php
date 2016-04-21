@@ -54,4 +54,44 @@ class BlockList extends AbstractBlockNoParse
     {
         return new Builder();
     }
+
+    /**
+     * @param int $lineNumber
+     *
+     * @return bool
+     */
+    public function validateLineType($lineNumber)
+    {
+        $dataObject = $this->factory->getDataObject();
+        if ($dataObject === null) {
+            return false;
+        }
+        $lineContent = $dataObject->getLine($lineNumber);
+        $lineContent = trim($lineContent);
+
+        return (
+            $this->isBlockOrderedListByContent($lineContent)
+            || $this->isBlockUnorderedListByContent($lineContent)
+        );
+    }
+
+    /**
+     * @param string $lineContent
+     *
+     * @return bool
+     */
+    protected function isBlockOrderedListByContent($lineContent)
+    {
+        return (bool) preg_match('/(^\*\s|^\-\s|^\+\s)/', $lineContent);
+    }
+
+    /**
+     * @param string $lineContent
+     *
+     * @return bool
+     */
+    protected function isBlockUnorderedListByContent($lineContent)
+    {
+        return (bool) preg_match('/(^[0-9]\.\s)/', $lineContent);
+    }
 }

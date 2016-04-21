@@ -118,12 +118,11 @@ class BlockQuote extends AbstractBlock
 
     /**
      * @param int $lineNumber
-     * @param DataObjectInterface $dataObject
      *
      * @return bool
      */
-    public static function validateLineType($lineNumber, DataObjectInterface $dataObject)
+    public function validateLineType($lineNumber)
     {
-        return (bool) preg_match('/^\>\s/', $dataObject->getLine($lineNumber));
+        return (bool) preg_match('/^\>\s/', $this->factory->getDataObject()->getLine($lineNumber));
     }
 }

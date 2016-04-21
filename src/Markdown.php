@@ -39,6 +39,8 @@ class Markdown implements MarkdownInterface
         $this->dataObject = $this->factory->createDataObject($text);
         $this->rowTypeGuesser = $this->factory->createRowTypeGuesser($this->dataObject);
 
+        $this->factory->setDataObject($this->dataObject);
+
         $this->convertLines();
         $this->validateLinesType();
 

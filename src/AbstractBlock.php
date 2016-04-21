@@ -94,6 +94,9 @@ abstract class AbstractBlock implements BlockInterface
      */
     protected function parseInlineMarkup($lineContent)
     {
+        $lineContent = $this->factory
+            ->parseCustomInlineMarkup($lineContent)
+        ;
         $lineContent = $this->parseInlineCode($lineContent);
         $lineContent = $this->parseInlineStrong($lineContent);
         $lineContent = $this->parseInlineEmphasis($lineContent);
@@ -204,14 +207,13 @@ abstract class AbstractBlock implements BlockInterface
     }
 
     /**
-     * do not validate type by default
+     * do not validate type by default, inline block don't need this method
      *
      * @param int $lineNumber
-     * @param DataObjectInterface $dataObject
      *
      * @return bool
      */
-    public static function validateLineType($lineNumber, DataObjectInterface $dataObject)
+    public function validateLineType($lineNumber)
     {
         return false;
     }

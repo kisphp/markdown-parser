@@ -103,8 +103,14 @@ class BlockCode extends AbstractBlockNoParse
         return htmlentities($lineContent) . "\n";
     }
 
-    public static function validateLineType($lineNumber, DataObjectInterface $dataObject)
+    /**
+     * @param int $lineNumber
+     *
+     * @return bool
+     */
+    public function validateLineType($lineNumber)
     {
+        $dataObject = $this->factory->getDataObject();
         $lineContent = $dataObject->getLine($lineNumber);
         $counter = count_chars($lineContent, 1);
         if (!isset($counter[self::BACKTICK_CODE]) || $counter[self::BACKTICK_CODE] !== 3) {
