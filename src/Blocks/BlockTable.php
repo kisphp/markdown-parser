@@ -131,16 +131,6 @@ class BlockTable extends AbstractBlockNoParse
     }
 
     /**
-     * @param DataObjectInterface $dataObject
-     * @param int $lineNumber
-     */
-    protected function createSkipLine(DataObjectInterface $dataObject, $lineNumber)
-    {
-        $changedContent = $this->factory->create(BlockTypes::BLOCK_SKIP);
-        $dataObject->updateLine($lineNumber, $changedContent);
-    }
-
-    /**
      * @param BlockInterface $block
      *
      * @return string

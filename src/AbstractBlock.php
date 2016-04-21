@@ -88,6 +88,16 @@ abstract class AbstractBlock implements BlockInterface
     }
 
     /**
+     * @param DataObjectInterface $dataObject
+     * @param int $lineNumber
+     */
+    protected function createSkipLine(DataObjectInterface $dataObject, $lineNumber)
+    {
+        $changedContent = $this->factory->create(BlockTypes::BLOCK_SKIP);
+        $dataObject->updateLine($lineNumber, $changedContent);
+    }
+
+    /**
      * @param string $lineContent
      *
      * @return string

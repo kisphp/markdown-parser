@@ -4,6 +4,7 @@ namespace Kisphp\Blocks\Paragraph;
 
 use Kisphp\AbstractBlock;
 use Kisphp\BlockInterface;
+use Kisphp\BlockTypes;
 use Kisphp\DataObjectInterface;
 
 /**
@@ -49,39 +50,40 @@ class BlockParagraph extends AbstractBlock
             return $this;
         }
 
+        $paragraphNamespace = $this->factory->getClassNamespace(BlockTypes::BLOCK_PARAGRAPH);
+
         $nextLineObject = $dataObject->getLine($nextLineNumber);
-        if (!is_a($nextLineObject, static::class)) {
+        if ($this->lineIsObjectOf($nextLineObject, $paragraphNamespace) === false) {
             return $this;
         }
 
-        $start = false;
         $changeNextLine = true;
         $max = $dataObject->count();
 
+        $paragraphContent = [];
         for ($i = $this->lineNumber; $i < $max; $i++) {
             $currentLineObject = $dataObject->getLine($i);
-            $newLineObject = $this->factory->create('BlockParagraphContinue');
-            if ($start === false) {
-                $start = true;
-                $newLineObject = $this->factory->create('BlockParagraphStart');
-            }
+            dump($currentLineObject->getContent());
+            $paragraphContent[] = trim($currentLineObject->getContent());
 
             $nextLineObject = $dataObject->getLine($i + 1);
-            if (!is_a($nextLineObject, static::class)) {
-                $newLineObject = $this->factory->create('BlockParagraphEnd');
+            if ($this->lineIsObjectOf($nextLineObject, $paragraphNamespace) === false) {
                 $changeNextLine = false;
             }
 
-            $newLineObject
-                ->setContent($currentLineObject->getContent())
-                ->setLineNumber($currentLineObject->getLineNumber())
-            ;
-            $dataObject->updateLine($i, $newLineObject);
+//            $this->createSkipLine($dataObject, $currentLineObject->getLineNumber());
 
             if ($changeNextLine === false) {
                 break;
             }
         }
+
+        $newLineObject = $this->factory->create(BlockTypes::BLOCK_PARAGRAPH);
+        $newLineObject
+            ->setContent(implode(' ', $paragraphContent))
+            ->setLineNumber($this->lineNumber)
+        ;
+        $dataObject->updateLine($i, $newLineObject);
 
         return $this;
     }

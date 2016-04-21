@@ -37,7 +37,6 @@ class Markdown implements MarkdownInterface
     public function parse($text)
     {
         $this->setupDependencies($text);
-
         $this->convertLines();
         $this->validateLinesType();
 

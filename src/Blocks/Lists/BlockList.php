@@ -48,14 +48,6 @@ class BlockList extends AbstractBlockNoParse
     }
 
     /**
-     * @return Builder
-     */
-    protected function createBuilder()
-    {
-        return new Builder();
-    }
-
-    /**
      * @param int $lineNumber
      *
      * @return bool
@@ -73,6 +65,14 @@ class BlockList extends AbstractBlockNoParse
             $this->isBlockOrderedListByContent($lineContent)
             || $this->isBlockUnorderedListByContent($lineContent)
         );
+    }
+
+    /**
+     * @return Builder
+     */
+    protected function createBuilder()
+    {
+        return new Builder();
     }
 
     /**
