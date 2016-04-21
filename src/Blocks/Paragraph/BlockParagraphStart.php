@@ -13,14 +13,4 @@ class BlockParagraphStart extends BlockParagraph
     {
         return ' ';
     }
-
-    /**
-     * @param DataObjectInterface $dataObject
-     *
-     * @return $this
-     */
-    public function changeLineType(DataObjectInterface $dataObject)
-    {
-        return $this;
-    }
 }

@@ -36,10 +36,7 @@ class Markdown implements MarkdownInterface
      */
     public function parse($text)
     {
-        $this->dataObject = $this->factory->createDataObject($text);
-        $this->rowTypeGuesser = $this->factory->createRowTypeGuesser($this->dataObject);
-
-        $this->factory->setDataObject($this->dataObject);
+        $this->setupDependencies($text);
 
         $this->convertLines();
         $this->validateLinesType();
@@ -125,5 +122,16 @@ class Markdown implements MarkdownInterface
     protected function createLineObject($lineNumber)
     {
         return $this->rowTypeGuesser->getRowObjectByLineContent($lineNumber);
+    }
+
+    /**
+     * @param string $text
+     */
+    protected function setupDependencies($text)
+    {
+        $this->dataObject = $this->factory->createDataObject($text);
+        $this->rowTypeGuesser = $this->factory->createRowTypeGuesser($this->dataObject);
+
+        $this->factory->setDataObject($this->dataObject);
     }
 }
