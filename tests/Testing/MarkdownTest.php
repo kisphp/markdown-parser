@@ -47,10 +47,16 @@ class MarkdownTest extends PHPUnit_Framework_TestCase
         $md = \Kisphp\Testing\Dummy\DummyFactory::createMarkdown();
 
         $factory = $md->getFactory();
-
         $factory->addBlockPlugin('^', 'BlockDummy');
-
         $factory->addBlockPlugins('^', ['BlockDummy', 'BlockParagraph']);
+
+        $this->assertEquals(2, count($factory->getBlockPlugins()['^']));
+    }
+
+    public function test_AddPluginsFromMarkdown()
+    {
+        $md = \Kisphp\Testing\Dummy\DummyFactory::createMarkdown();
+        $md->addRules('^', ['BlockDummy', 'BlockParagraph']);
 
         $this->assertEquals(2, count($md->getFactory()->getBlockPlugins()['^']));
     }
