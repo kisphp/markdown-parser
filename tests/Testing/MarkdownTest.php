@@ -31,6 +31,31 @@ class MarkdownTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @expectedException Kisphp\Exceptions\ParameterNotAllowedException
+     */
+    public function test_WrongPlugin()
+    {
+        $md = \Kisphp\Testing\Dummy\DummyFactory::createMarkdown();
+
+        $factory = $md->getFactory();
+
+        $factory->addBlockPlugin('^', new stdClass());
+    }
+
+    public function test_AddSameBlockType()
+    {
+        $md = \Kisphp\Testing\Dummy\DummyFactory::createMarkdown();
+
+        $factory = $md->getFactory();
+
+        $factory->addBlockPlugin('^', 'BlockDummy');
+
+        $factory->addBlockPlugins('^', ['BlockDummy', 'BlockParagraph']);
+
+        $this->assertEquals(2, count($md->getFactory()->getBlockPlugins()['^']));
+    }
+
+    /**
      * @dataProvider dataProvider
      */
     public function test_Markup($fileMd, $fileHtml)

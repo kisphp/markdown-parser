@@ -27,4 +27,14 @@ class DummyFactory extends MarkdownFactory
     {
         return new DummyMarkdown(new self());
     }
+
+    /**
+     * @param string $markdownContent
+     *
+     * @return DummyDataObject
+     */
+    public function createDataObject($markdownContent)
+    {
+        return new DummyDataObject($markdownContent);
+    }
 }

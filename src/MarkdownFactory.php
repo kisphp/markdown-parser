@@ -78,7 +78,11 @@ class MarkdownFactory implements MarkdownFactoryInterface
             throw new ParameterNotAllowedException('$blockName should be type of string');
         }
 
-        $this->blockPlugins[$firstLetter][] = $blockName;
+//        dump($this->blockPlugins);die;
+
+        if (!isset($this->blockPlugins[$firstLetter]) || !in_array($blockName, $this->blockPlugins[$firstLetter])) {
+            $this->blockPlugins[$firstLetter][] = $blockName;
+        }
 
         return $this;
     }
@@ -92,10 +96,12 @@ class MarkdownFactory implements MarkdownFactoryInterface
     public function addBlockPlugins($firstLetter, array $blockNameCollection)
     {
         if (isset($this->blockPlugins[$firstLetter])) {
-            $this->blockPlugins[$firstLetter] = array_merge(
+            $mergedPlugins = array_merge(
                 $this->blockPlugins[$firstLetter],
                 $blockNameCollection
             );
+
+            $this->blockPlugins[$firstLetter] = array_unique($mergedPlugins);
 
             return $this;
         }

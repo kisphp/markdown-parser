@@ -51,7 +51,10 @@ class BlockDummy extends AbstractBlock
      */
     public function validateLineType($lineNumber)
     {
-        $content = $this->factory->getDataObject()->getLine($lineNumber);
+        $content = $this->factory
+            ->getDataObject()
+            ->getLine($lineNumber)
+        ;
 
         return (bool) (strpos($content, '^') === 0);
     }

@@ -16,4 +16,12 @@ class DummyMarkdown extends Markdown
             ->addBlockPlugin('^', self::BLOCK_DUMMY)
         ;
     }
+
+    /**
+     * @return \Kisphp\MarkdownFactoryInterface
+     */
+    public function getFactory()
+    {
+        return $this->factory;
+    }
 }
