@@ -34,6 +34,5 @@
     <logging>
         <log type="coverage-html" target="./coverage" lowUpperBound="35" highLowerBound="70" />
         <log type="coverage-clover" target="./coverage/coverage.xml"/>
-        <log type="coverage-text" target="./coverage/coverage.txt" showUncoveredFiles="true"/>
     </logging>
 </phpunit>
