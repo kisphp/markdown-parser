@@ -43,57 +43,41 @@ class BlockParagraph extends AbstractBlock
         return '</p>';
     }
 
-    /**
-     * @param DataObjectInterface $dataObject
-     *
-     * @return BlockInterface
-     */
     public function changeLineType(DataObjectInterface $dataObject)
     {
-        if ($this->parsed === true) {
-            return this;
-        }
-        $this->parsed = true;
         $nextLineNumber = $this->lineNumber + 1;
         if (!$dataObject->hasLine($nextLineNumber)) {
             return $this;
         }
 
-        $paragraphNamespace = $this->factory->getClassNamespace(BlockTypes::BLOCK_PARAGRAPH);
-
-        $nextLineObject = $dataObject->getLine($nextLineNumber);
-        if ($this->lineIsObjectOf($nextLineObject, $paragraphNamespace) === false) {
-            return $this;
-        }
-
-        $changeNextLine = true;
         $max = $dataObject->count();
+        $changeNextLine = true;
 
-        $paragraphContent = [];
+        $htmlCotent = [];
         for ($i = $this->lineNumber; $i < $max; $i++) {
             $currentLineObject = $dataObject->getLine($i);
-            $paragraphContent[] = trim($currentLineObject->getContent());
+            $htmlCotent[] = $currentLineObject->getContent();
 
             $nextLineObject = $dataObject->getLine($i + 1);
-            if ($this->lineIsObjectOf($nextLineObject, $paragraphNamespace) === false) {
+            $paragraphType = $this->factory->getClassNamespace(BlockTypes::BLOCK_PARAGRAPH);
+            if (!$this->lineIsObjectOf($nextLineObject, $paragraphType)) {
                 $changeNextLine = false;
             }
 
-            if ($i !== $this->lineNumber) {
-                $this->createSkipLine($dataObject, $currentLineObject->getLineNumber());
-            }
+            $this->createSkipLine($dataObject, $i);
 
             if ($changeNextLine === false) {
                 break;
             }
+
         }
 
         $newLineObject = $this->factory->create(BlockTypes::BLOCK_PARAGRAPH);
         $newLineObject
-            ->setContent(implode(' ', $paragraphContent))
+            ->setContent(implode(' ', $htmlCotent))
             ->setLineNumber($this->lineNumber)
         ;
-        $dataObject->updateLine($i, $newLineObject);
+        $dataObject->updateLine($this->lineNumber, $newLineObject);
 
         return $this;
     }
