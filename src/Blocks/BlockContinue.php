@@ -7,14 +7,6 @@ use Kisphp\AbstractBlockNoParse;
 class BlockContinue extends AbstractBlockNoParse
 {
     /**
-     * @return string
-     */
-    public function parse()
-    {
-        return $this->content;
-    }
-
-    /**
      * @param int $lineNumber
      *
      * @return bool
