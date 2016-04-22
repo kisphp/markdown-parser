@@ -3,7 +3,6 @@
 namespace Kisphp\Blocks\Paragraph;
 
 use Kisphp\AbstractBlock;
-use Kisphp\BlockInterface;
 use Kisphp\BlockTypes;
 use Kisphp\DataObjectInterface;
 
@@ -69,7 +68,6 @@ class BlockParagraph extends AbstractBlock
             if ($changeNextLine === false) {
                 break;
             }
-
         }
 
         $newLineObject = $this->factory->create(BlockTypes::BLOCK_PARAGRAPH);
