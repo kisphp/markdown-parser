@@ -32,6 +32,11 @@ class BlockDummy extends AbstractBlock
         return '</span>';
     }
 
+    /**
+     * @param string $text
+     * 
+     * @return string
+     */
     protected function cleanupMarkup($text)
     {
         $text = preg_replace('/^\^/', '', $text);
@@ -41,7 +46,7 @@ class BlockDummy extends AbstractBlock
 
     /**
      * @param int $lineNumber
-     * 
+     *
      * @return bool
      */
     public function validateLineType($lineNumber)
