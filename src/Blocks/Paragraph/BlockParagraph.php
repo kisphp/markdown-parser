@@ -58,8 +58,7 @@ class BlockParagraph extends AbstractBlock
             $htmlCotent[] = $currentLineObject->getContent();
 
             $nextLineObject = $dataObject->getLine($i + 1);
-            $paragraphType = $this->factory->getClassNamespace(BlockTypes::BLOCK_PARAGRAPH);
-            if (!$this->lineIsObjectOf($nextLineObject, $paragraphType)) {
+            if (!$this->lineIsObjectOf($nextLineObject, BlockTypes::BLOCK_PARAGRAPH)) {
                 $changeNextLine = false;
             }
 

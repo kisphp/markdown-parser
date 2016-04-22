@@ -55,9 +55,6 @@ class BlockList extends AbstractBlockNoParse
     public function validateLineType($lineNumber)
     {
         $dataObject = $this->factory->getDataObject();
-        if ($dataObject === null) {
-            return false;
-        }
         $lineContent = $dataObject->getLine($lineNumber);
         $lineContent = trim($lineContent);
 

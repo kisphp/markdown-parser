@@ -212,8 +212,22 @@ abstract class AbstractBlock implements BlockInterface
         }
 
         return (bool) (
-            is_a($block, $objectType) || is_a($block, $this->factory->getClassNamespace(BlockTypes::BLOCK_CONTINUE))
+            is_a($block, $this->getFullClassNamespace($objectType)) || is_a($block, $this->getFullClassNamespace(BlockTypes::BLOCK_CONTINUE))
         );
+    }
+
+    /**
+     * @param string $className
+     *
+     * @return string
+     */
+    protected function getFullClassNamespace($className)
+    {
+        if (strpos($className, '\\') !== false) {
+            return $className;
+        }
+
+        return $this->factory->getClassNamespace($className);
     }
 
     /**

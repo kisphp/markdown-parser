@@ -44,9 +44,8 @@ class BlockHeaderTwo extends AbstractBlockSpecialHeader
         }
 
         $previousLineObject = $dataObject->getLine($lineNumber - 1);
-        $paragraphNamespace = $this->factory->getClassNamespace(BlockTypes::BLOCK_PARAGRAPH);
 
-        if (!$this->lineIsObjectOf($previousLineObject, $paragraphNamespace)) {
+        if (!$this->lineIsObjectOf($previousLineObject, BlockTypes::BLOCK_PARAGRAPH)) {
             return false;
         }
 

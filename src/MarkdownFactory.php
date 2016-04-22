@@ -138,7 +138,7 @@ class MarkdownFactory implements MarkdownFactoryInterface
             }
         }
 
-        throw new BlockNotFoundException($type);
+        throw new BlockNotFoundException('Block ' . $type . ' not found');
     }
 
     /**

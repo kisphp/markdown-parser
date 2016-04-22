@@ -56,6 +56,9 @@ class Markdown implements MarkdownInterface
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     protected function createRules()
     {
         $this->factory
@@ -90,6 +93,8 @@ class Markdown implements MarkdownInterface
             ->addBlockPlugin('8', BlockTypes::BLOCK_LIST)
             ->addBlockPlugin('9', BlockTypes::BLOCK_LIST)
         ;
+
+        return $this;
     }
 
     protected function validateLinesType()

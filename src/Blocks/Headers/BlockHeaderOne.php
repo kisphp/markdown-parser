@@ -37,7 +37,7 @@ class BlockHeaderOne extends AbstractBlockSpecialHeader
         }
         $dataObject = $this->factory->getDataObject();
         $previousLineType = $dataObject->getLine($lineNumber - 1);
-        if (!$this->lineIsObjectOf($previousLineType, $this->factory->getClassNamespace(BlockTypes::BLOCK_PARAGRAPH))) {
+        if (!$this->lineIsObjectOf($previousLineType, BlockTypes::BLOCK_PARAGRAPH)) {
             return false;
         }
 

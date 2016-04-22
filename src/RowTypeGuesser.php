@@ -2,8 +2,6 @@
 
 namespace Kisphp;
 
-use Kisphp\Exceptions\MethodNotFoundException;
-
 class RowTypeGuesser implements RowTypeGuesserInterface
 {
     /**
@@ -30,7 +28,6 @@ class RowTypeGuesser implements RowTypeGuesserInterface
      * @param int $lineNumber
      *
      * @throws Exceptions\BlockNotFoundException
-     * @throws MethodNotFoundException
      *
      * @return BlockInterface
      */
@@ -46,8 +43,6 @@ class RowTypeGuesser implements RowTypeGuesserInterface
 
     /**
      * @param int $lineNumber
-     *
-     * @throws MethodNotFoundException
      *
      * @return string
      */
@@ -84,17 +79,17 @@ class RowTypeGuesser implements RowTypeGuesserInterface
      *
      * @deprecated use method from AbstractBlock
      */
-    protected function isLineTypeOf($lineNumber, $blockName)
-    {
-        $previousLine = $this->dataObject->getLine($lineNumber);
-        $instance = $this->factory->getClassNamespace($blockName);
-
-        if ($previousLine instanceof $instance) {
-            return true;
-        }
-
-        return false;
-    }
+//    protected function isLineTypeOf($lineNumber, $blockName)
+//    {
+//        $previousLine = $this->dataObject->getLine($lineNumber);
+//        $instance = $this->factory->getClassNamespace($blockName);
+//
+//        if ($previousLine instanceof $instance) {
+//            return true;
+//        }
+//
+//        return false;
+//    }
 
     /**
      * @param string $lineContent
