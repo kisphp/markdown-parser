@@ -21,6 +21,16 @@ class MarkdownTest extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @group Dummy
+     */
+    public function test_AddedCustomBlock()
+    {
+        $md = \Kisphp\Testing\Dummy\DummyFactory::createMarkdown();
+
+        $this->assertSame('<span>custom block</span>', $md->parse('^ custom block'));
+    }
+
+    /**
      * @dataProvider dataProvider
      */
     public function test_Markup($fileMd, $fileHtml)
