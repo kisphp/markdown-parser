@@ -42,4 +42,14 @@ class BlockHeader extends AbstractBlock
     {
         return '</h' . (int) $number . '>' . "\n";
     }
+
+    /**
+     * @param int $lineNumber
+     *
+     * @return bool
+     */
+    public function validateLineType($lineNumber)
+    {
+        return (bool) preg_match('/^([#]{1,6})\s/', $this->factory->getDataObject()->getLine($lineNumber));
+    }
 }

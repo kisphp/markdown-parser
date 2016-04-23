@@ -42,4 +42,11 @@ interface BlockInterface
      * @return BlockInterface
      */
     public function setContent($content);
+
+    /**
+     * @param int $lineNumber
+     *
+     * @return bool
+     */
+    public function validateLineType($lineNumber);
 }

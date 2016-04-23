@@ -66,7 +66,7 @@ class DataObject implements DataObjectInterface
     /**
      * @param int $lineNumber
      *
-     * @return BlockInterface|null
+     * @return BlockInterface|string|null
      */
     public function getLine($lineNumber)
     {

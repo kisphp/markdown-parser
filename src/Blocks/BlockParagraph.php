@@ -1,9 +1,9 @@
 <?php
 
-namespace Kisphp\Blocks\Paragraph;
+namespace Kisphp\Blocks;
 
 use Kisphp\AbstractBlock;
-use Kisphp\BlockInterface;
+use Kisphp\BlockTypes;
 use Kisphp\DataObjectInterface;
 
 /**
@@ -11,6 +11,11 @@ use Kisphp\DataObjectInterface;
  */
 class BlockParagraph extends AbstractBlock
 {
+    /**
+     * @var bool
+     */
+    protected $parsed = false;
+
     /**
      * @return string
      */
@@ -37,11 +42,6 @@ class BlockParagraph extends AbstractBlock
         return '</p>';
     }
 
-    /**
-     * @param DataObjectInterface $dataObject
-     *
-     * @return BlockInterface
-     */
     public function changeLineType(DataObjectInterface $dataObject)
     {
         $nextLineNumber = $this->lineNumber + 1;
@@ -49,39 +49,32 @@ class BlockParagraph extends AbstractBlock
             return $this;
         }
 
-        $nextLineObject = $dataObject->getLine($nextLineNumber);
-        if (!is_a($nextLineObject, static::class)) {
-            return $this;
-        }
-
-        $start = false;
-        $changeNextLine = true;
         $max = $dataObject->count();
+        $changeNextLine = true;
 
+        $htmlCotent = [];
         for ($i = $this->lineNumber; $i < $max; $i++) {
             $currentLineObject = $dataObject->getLine($i);
-            $newLineObject = $this->factory->create('BlockParagraphContinue');
-            if ($start === false) {
-                $start = true;
-                $newLineObject = $this->factory->create('BlockParagraphStart');
-            }
+            $htmlCotent[] = $currentLineObject->getContent();
 
             $nextLineObject = $dataObject->getLine($i + 1);
-            if (!is_a($nextLineObject, static::class)) {
-                $newLineObject = $this->factory->create('BlockParagraphEnd');
+            if (!$this->lineIsObjectOf($nextLineObject, BlockTypes::BLOCK_PARAGRAPH)) {
                 $changeNextLine = false;
             }
 
-            $newLineObject
-                ->setContent($currentLineObject->getContent())
-                ->setLineNumber($currentLineObject->getLineNumber())
-            ;
-            $dataObject->updateLine($i, $newLineObject);
+            $this->createSkipLine($dataObject, $i);
 
             if ($changeNextLine === false) {
                 break;
             }
         }
+
+        $newLineObject = $this->factory->create(BlockTypes::BLOCK_PARAGRAPH);
+        $newLineObject
+            ->setContent(implode(' ', $htmlCotent))
+            ->setLineNumber($this->lineNumber)
+        ;
+        $dataObject->updateLine($this->lineNumber, $newLineObject);
 
         return $this;
     }

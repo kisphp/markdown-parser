@@ -2,7 +2,6 @@
 
 namespace Kisphp\Blocks;
 
-use Kisphp\AbstractBlock;
 use Kisphp\AbstractBlockNoParse;
 use Kisphp\BlockInterface;
 use Kisphp\BlockTypes;
@@ -110,7 +109,7 @@ class BlockTable extends AbstractBlockNoParse
 
             $this->createSkipLine($dataObject, $i);
 
-            /** @var AbstractBlock $nextLineObject */
+            /** @var BlockInterface $nextLineObject */
             $nextLineObject = $dataObject->getLine($i + 1);
             if (!$this->isTableLineType($nextLineObject)) {
                 $changeNextLine = false;
@@ -129,16 +128,6 @@ class BlockTable extends AbstractBlockNoParse
         ;
 
         $dataObject->updateLine($this->lineNumber, $listContent);
-    }
-
-    /**
-     * @param DataObjectInterface $dataObject
-     * @param int $lineNumber
-     */
-    protected function createSkipLine(DataObjectInterface $dataObject, $lineNumber)
-    {
-        $changedContent = $this->factory->create(BlockTypes::BLOCK_SKIP);
-        $dataObject->updateLine($lineNumber, $changedContent);
     }
 
     /**
@@ -223,5 +212,23 @@ class BlockTable extends AbstractBlockNoParse
         }
 
         return ($this->lineIsObjectOf($block, static::class) || strpos($block->getContent(), '|') !== false);
+    }
+
+    /**
+     * @param int $lineNumber
+     *
+     * @return bool
+     */
+    public function validateLineType($lineNumber)
+    {
+        $dataObject = $this->factory->getDataObject();
+        $lineContent = $dataObject->getLine($lineNumber);
+        $lineContent = trim($lineContent);
+
+        if (strpos($lineContent, '|') !== false && strpos($lineContent, '---') !== false) {
+            return true;
+        }
+
+        return false;
     }
 }

@@ -5,7 +5,7 @@ namespace Kisphp;
 abstract class AbstractBlock implements BlockInterface
 {
     /**
-     * @var MarkdownFactory
+     * @var MarkdownFactoryInterface
      */
     protected $factory;
 
@@ -88,12 +88,25 @@ abstract class AbstractBlock implements BlockInterface
     }
 
     /**
+     * @param DataObjectInterface $dataObject
+     * @param int $lineNumber
+     */
+    protected function createSkipLine(DataObjectInterface $dataObject, $lineNumber)
+    {
+        $changedContent = $this->factory->create(BlockTypes::BLOCK_SKIP);
+        $dataObject->updateLine($lineNumber, $changedContent);
+    }
+
+    /**
      * @param string $lineContent
      *
      * @return string
      */
     protected function parseInlineMarkup($lineContent)
     {
+        $lineContent = $this->factory
+            ->parseCustomInlineMarkup($lineContent)
+        ;
         $lineContent = $this->parseInlineCode($lineContent);
         $lineContent = $this->parseInlineStrong($lineContent);
         $lineContent = $this->parseInlineEmphasis($lineContent);
@@ -187,25 +200,6 @@ abstract class AbstractBlock implements BlockInterface
     }
 
     /**
-     * @param DataObjectInterface $dataObject
-     * @param array $updatedLines
-     */
-    protected function parseSubBlock(DataObjectInterface $dataObject, array $updatedLines)
-    {
-        $markdown = $this->factory->createMarkdown();
-        $md = implode("\n", $updatedLines);
-
-        $newCodeParsed = $markdown->parse($md);
-        $this->setContent($newCodeParsed);
-
-        $newContent = $this->factory->create(BlockTypes::BLOCK_UNCHANGE)
-            ->setContent($this->parse())
-        ;
-
-        $dataObject->updateLine($this->getLineNumber(), $newContent);
-    }
-
-    /**
      * @param BlockInterface $block
      * @param string $objectType
      *
@@ -217,8 +211,37 @@ abstract class AbstractBlock implements BlockInterface
             return false;
         }
 
+        $requiredTypeNamespace = $this->getFullClassNamespace($objectType);
+        $blockContinueType = $this->getFullClassNamespace(BlockTypes::BLOCK_CONTINUE);
+
         return (bool) (
-            is_a($block, $objectType) || is_a($block, $this->factory->getClassNamespace(BlockTypes::BLOCK_CONTINUE))
+            ($block instanceof $requiredTypeNamespace) || ($block instanceof $blockContinueType)
         );
+    }
+
+    /**
+     * @param string $className
+     *
+     * @return string
+     */
+    protected function getFullClassNamespace($className)
+    {
+        if (strpos($className, '\\') !== false) {
+            return $className;
+        }
+
+        return $this->factory->getClassNamespace($className);
+    }
+
+    /**
+     * do not validate type by default, inline block don't need this method
+     *
+     * @param int $lineNumber
+     *
+     * @return bool
+     */
+    public function validateLineType($lineNumber)
+    {
+        return false;
     }
 }

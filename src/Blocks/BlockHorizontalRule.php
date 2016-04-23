@@ -29,4 +29,16 @@ class BlockHorizontalRule extends AbstractBlock
     {
         return '<hr />' . "\n";
     }
+
+    /**
+     * @param int $lineNumber
+     *
+     * @return bool
+     */
+    public function validateLineType($lineNumber)
+    {
+        $dataObject = $this->factory->getDataObject();
+
+        return (bool) preg_match('/^([\*|\*\s|\-|\-\s|\_|\_\s]{3,})/', $dataObject->getLine($lineNumber));
+    }
 }

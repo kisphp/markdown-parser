@@ -39,4 +39,20 @@ class BlockInlineCode extends AbstractBlock
     {
         return '</code>' . (($preformatedText === true) ? '</pre>' : '');
     }
+
+    /**
+     * @param int $lineNumber
+     *
+     * @return bool
+     */
+    public function validateLineType($lineNumber)
+    {
+        $dataObject = $this->factory->getDataObject();
+        $lineContent = $dataObject->getLine($lineNumber);
+        if (preg_match('/([\s]{4,}|[\t]{1,})/', $lineContent)) {
+            return true;
+        }
+
+        return false;
+    }
 }

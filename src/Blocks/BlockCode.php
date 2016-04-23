@@ -8,6 +8,8 @@ use Kisphp\DataObjectInterface;
 
 class BlockCode extends AbstractBlockNoParse
 {
+    const BACKTICK_CODE = '96';
+
     /**
      * @param string $lineContent
      *
@@ -99,5 +101,22 @@ class BlockCode extends AbstractBlockNoParse
     protected function encodeContent($lineContent)
     {
         return htmlentities($lineContent) . "\n";
+    }
+
+    /**
+     * @param int $lineNumber
+     *
+     * @return bool
+     */
+    public function validateLineType($lineNumber)
+    {
+        $dataObject = $this->factory->getDataObject();
+        $lineContent = $dataObject->getLine($lineNumber);
+        $counter = count_chars($lineContent, 1);
+        if (!isset($counter[self::BACKTICK_CODE]) || $counter[self::BACKTICK_CODE] !== 3) {
+            return false;
+        }
+
+        return (bool) preg_match('/^([\`]{3})/', $lineContent);
     }
 }

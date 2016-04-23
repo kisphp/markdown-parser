@@ -7,10 +7,16 @@ use Kisphp\AbstractBlockNoParse;
 class BlockContinue extends AbstractBlockNoParse
 {
     /**
-     * @return string
+     * @param int $lineNumber
+     *
+     * @return bool
      */
-    public function parse()
+    public function validateLineType($lineNumber)
     {
-        return $this->content;
+        if ($lineNumber < 1) {
+            return false;
+        }
+
+        return (bool) preg_match('/^([\s]{1,}|[\t]+)\s/', $this->factory->getDataObject()->getLine($lineNumber));
     }
 }

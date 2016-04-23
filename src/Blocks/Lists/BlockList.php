@@ -2,8 +2,8 @@
 
 namespace Kisphp\Blocks\Lists;
 
-use Kisphp\AbstractBlock;
 use Kisphp\AbstractBlockNoParse;
+use Kisphp\BlockInterface;
 use Kisphp\Blocks\Lists\Tree\Builder;
 use Kisphp\BlockTypes;
 use Kisphp\DataObjectInterface;
@@ -24,7 +24,7 @@ class BlockList extends AbstractBlockNoParse
 
             $builder->addItem($currentLineObject);
 
-            /** @var AbstractBlock $nextLineObject */
+            /** @var BlockInterface $nextLineObject */
             $nextLineObject = $dataObject->getLine($i + 1);
             if (!$this->lineIsObjectOf($nextLineObject, static::class)) {
                 $changeNextLine = false;
@@ -48,10 +48,47 @@ class BlockList extends AbstractBlockNoParse
     }
 
     /**
+     * @param int $lineNumber
+     *
+     * @return bool
+     */
+    public function validateLineType($lineNumber)
+    {
+        $dataObject = $this->factory->getDataObject();
+        $lineContent = $dataObject->getLine($lineNumber);
+        $lineContent = trim($lineContent);
+
+        return (
+            $this->isBlockOrderedListByContent($lineContent)
+            || $this->isBlockUnorderedListByContent($lineContent)
+        );
+    }
+
+    /**
      * @return Builder
      */
     protected function createBuilder()
     {
         return new Builder();
+    }
+
+    /**
+     * @param string $lineContent
+     *
+     * @return bool
+     */
+    protected function isBlockOrderedListByContent($lineContent)
+    {
+        return (bool) preg_match('/(^\*\s|^\-\s|^\+\s)/', $lineContent);
+    }
+
+    /**
+     * @param string $lineContent
+     *
+     * @return bool
+     */
+    protected function isBlockUnorderedListByContent($lineContent)
+    {
+        return (bool) preg_match('/(^[0-9]\.\s)/', $lineContent);
     }
 }
