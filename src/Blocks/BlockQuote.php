@@ -13,7 +13,7 @@ class BlockQuote extends AbstractBlock
      */
     public function parse()
     {
-        $html = $this->getStartTag() . $this->getContent() . $this->getEndTag();
+        $html = $this->getStartTag() . $this->clearBlockQuoteMarkup($this->getContent()) . $this->getEndTag();
 
         return $this->parseInlineMarkup($html);
     }
@@ -109,11 +109,9 @@ class BlockQuote extends AbstractBlock
      */
     protected function clearBlockQuoteMarkup($lineContent)
     {
-        if (strpos($lineContent, '> ') === 0) {
-            $lineContent = substr($lineContent, 2);
-        }
+        $lineContent = preg_replace('/^\>\s?/', '', $lineContent);
 
-        return $lineContent;
+        return trim($lineContent);
     }
 
     /**
@@ -123,6 +121,6 @@ class BlockQuote extends AbstractBlock
      */
     public function validateLineType($lineNumber)
     {
-        return (bool) preg_match('/^\>\s/', $this->factory->getDataObject()->getLine($lineNumber));
+        return (bool) preg_match('/^\>\s?/', $this->factory->getDataObject()->getLine($lineNumber));
     }
 }
