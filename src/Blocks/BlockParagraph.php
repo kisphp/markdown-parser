@@ -1,6 +1,6 @@
 <?php
 
-namespace Kisphp\Blocks\Paragraph;
+namespace Kisphp\Blocks;
 
 use Kisphp\AbstractBlock;
 use Kisphp\BlockTypes;

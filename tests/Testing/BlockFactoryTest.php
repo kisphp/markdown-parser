@@ -1,5 +1,7 @@
 <?php
 
+use Kisphp\BlockTypes;
+use Kisphp\MarkdownFactory;
 
 class BlockFactoryTest extends PHPUnit_Framework_TestCase
 {
@@ -8,17 +10,17 @@ class BlockFactoryTest extends PHPUnit_Framework_TestCase
      */
     public function test_create_no_existing_block()
     {
-        $bf = new \Kisphp\MarkdownFactory();
+        $bf = new MarkdownFactory();
         $bf->create('Alfa');
     }
 
     public function test_BlockParagraph()
     {
-        $factory = new \Kisphp\MarkdownFactory();
+        $factory = new MarkdownFactory();
 
         $this->assertInstanceOf(
-            \Kisphp\Blocks\Paragraph\BlockParagraph::class,
-            $factory->create(\Kisphp\BlockTypes::BLOCK_PARAGRAPH)
+            $factory->getClassNamespace(BlockTypes::BLOCK_PARAGRAPH),
+            $factory->create(BlockTypes::BLOCK_PARAGRAPH)
         );
     }
 }

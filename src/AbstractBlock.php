@@ -211,8 +211,11 @@ abstract class AbstractBlock implements BlockInterface
             return false;
         }
 
+        $requiredTypeNamespace = $this->getFullClassNamespace($objectType);
+        $blockContinueType = $this->getFullClassNamespace(BlockTypes::BLOCK_CONTINUE);
+
         return (bool) (
-            is_a($block, $this->getFullClassNamespace($objectType)) || is_a($block, $this->getFullClassNamespace(BlockTypes::BLOCK_CONTINUE))
+            ($block instanceof $requiredTypeNamespace) || ($block instanceof $blockContinueType)
         );
     }
 

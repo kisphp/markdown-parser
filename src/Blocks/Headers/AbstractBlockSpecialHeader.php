@@ -4,7 +4,6 @@ namespace Kisphp\Blocks\Headers;
 
 use Kisphp\AbstractBlock;
 use Kisphp\BlockInterface;
-use Kisphp\Blocks\Paragraph\BlockParagraph;
 use Kisphp\BlockTypes;
 use Kisphp\DataObjectInterface;
 
@@ -24,7 +23,7 @@ abstract class AbstractBlockSpecialHeader extends AbstractBlock
 
         $previousLineObject = $dataObject->getLine($previousLine);
 
-        if ($this->lineIsObjectOf($previousLineObject, BlockParagraph::class)) {
+        if ($this->lineIsObjectOf($previousLineObject, BlockTypes::BLOCK_PARAGRAPH)) {
             $previousLineNewObject = new static($this->factory);
             $previousLineNewObject->setContent($previousLineObject->getContent());
             $previousLineNewObject->setLineNumber($previousLineObject->getLineNumber());

@@ -118,7 +118,6 @@ class MarkdownFactory implements MarkdownFactoryInterface
     {
         return [
             __NAMESPACE__ . '\\Blocks\\',
-            __NAMESPACE__ . '\\Blocks\\Paragraph\\',
             __NAMESPACE__ . '\\Blocks\\Headers\\',
             __NAMESPACE__ . '\\Blocks\\Inline\\',
             __NAMESPACE__ . '\\Blocks\\Lists\\',
