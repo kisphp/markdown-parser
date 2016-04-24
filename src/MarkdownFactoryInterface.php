@@ -68,9 +68,4 @@ interface MarkdownFactoryInterface
      * @return MarkdownInterface
      */
     public static function createMarkdown();
-
-    /**
-     * @return RowTypeGuesserInterface
-     */
-    public function createRowTypeGuesser(DataObjectInterface $objectInterface);
 }
