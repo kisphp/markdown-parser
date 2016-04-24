@@ -11,7 +11,7 @@ class BlockUrls extends AbstractBlock
      */
     public function parse()
     {
-        return preg_replace_callback('/\[(.*)\]\((.*)\)/', function ($found) {
+        return preg_replace_callback('/\[(.*)\]\((.*)\)/U', function ($found) {
             $text = (empty($found[1])) ? $found[2] : $found[1];
 
             $dictionary = [
