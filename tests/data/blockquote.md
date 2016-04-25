@@ -10,3 +10,7 @@ normal paragraph
 > blockquote start
 > > blockquote child
 > blockquote end
+
+normal paragraph
+
+> blockquote
