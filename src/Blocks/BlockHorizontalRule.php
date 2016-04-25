@@ -38,7 +38,13 @@ class BlockHorizontalRule extends AbstractBlock
     public function validateLineType($lineNumber)
     {
         $dataObject = $this->factory->getDataObject();
+        $lineContent = $dataObject->getLine($lineNumber);
 
-        return (bool) preg_match('/^([\*|\*\s|\-|\-\s|\_|\_\s]{3,})/', $dataObject->getLine($lineNumber));
+        $contentTrimmed = str_replace(['*', '-', '_'], '', $lineContent);
+        if (!empty($contentTrimmed)) {
+            return false;
+        }
+
+        return (bool) preg_match('/^([\*|\*\s|\-|\-\s|\_|\_\s]{3,})/', $lineContent);
     }
 }
