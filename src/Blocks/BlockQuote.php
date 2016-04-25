@@ -68,7 +68,7 @@ class BlockQuote extends AbstractBlock
 
             $nextLineObject = $dataObject->getLine($i + 1);
             $nextSecondLineObject = $dataObject->getLine($i + 2);
-            if (!is_a($nextLineObject, static::class) && !is_a($nextSecondLineObject, static::class)) {
+            if (!$this->lineIsObjectOf($nextLineObject, static::class) && !$this->lineIsObjectOf($nextSecondLineObject, static::class)) {
                 $changeNextLine = false;
             }
 

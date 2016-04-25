@@ -57,16 +57,19 @@ class BlockCode extends AbstractBlockNoParse
         $max = $dataObject->count();
         $isStart = false;
 
+        $blockContent = [];
+        $codeClass = '';
+
         for ($i = $this->lineNumber; $i < $max; $i++) {
             $lineObject = $dataObject->getLine($i);
             $lineContent = $lineObject->getContent();
             if (strpos($lineContent, '```') === 0 && $isStart === false) {
                 $isStart = true;
 
-                $newLineContent = $this->getStartTag($this->getCodeType($lineContent));
+                $codeClass = $this->getCodeType($lineContent);
 
-                $newObject = $this->factory->create(BlockTypes::BLOCK_UNCHANGE)
-                    ->setContent($newLineContent)
+                $newObject = $this->factory->create(BlockTypes::BLOCK_SKIP)
+                    ->setContent('')
                     ->setLineNumber($i)
                 ;
                 $dataObject->updateLine($i, $newObject);
@@ -74,9 +77,13 @@ class BlockCode extends AbstractBlockNoParse
                 continue;
             }
 
+            if (strpos($lineContent, '```') === false) {
+                $blockContent[] = $this->encodeContent($lineContent);
+            }
+
             if ($i >= ($max - 1) || (strpos($lineContent, '```') === 0 && $isStart === true)) {
-                $newObject = $this->factory->create(BlockTypes::BLOCK_UNCHANGE)
-                    ->setContent($this->getEndTag())
+                $newObject = $this->factory->create(BlockTypes::BLOCK_SKIP)
+                    ->setContent('')
                     ->setLineNumber($i)
                 ;
                 $dataObject->updateLine($i, $newObject);
@@ -84,13 +91,21 @@ class BlockCode extends AbstractBlockNoParse
                 break;
             }
 
-            $newObject = $this->factory->create(BlockTypes::BLOCK_UNCHANGE)
-                ->setContent($this->encodeContent($lineContent))
+            $newObject = $this->factory->create(BlockTypes::BLOCK_SKIP)
+                ->setContent('')
                 ->setLineNumber($i)
             ;
 
             $dataObject->updateLine($i, $newObject);
         }
+
+        $lineContent = $this->getStartTag($codeClass) . implode('', $blockContent) . $this->getEndTag();
+
+        $currectLineObject = $this->factory->create(BlockTypes::BLOCK_UNCHANGE)
+            ->setContent($lineContent)
+            ->setLineNumber($this->lineNumber)
+        ;
+        $dataObject->updateLine($this->lineNumber, $currectLineObject);
     }
 
     /**
