@@ -248,6 +248,7 @@ abstract class AbstractBlock implements BlockInterface
 
     /**
      * @param $lineContent
+     *
      * @return string
      */
     private function parseInlineStrongItalic($lineContent)
