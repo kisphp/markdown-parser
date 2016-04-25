@@ -13,11 +13,6 @@ class MarkdownFactory implements MarkdownFactoryInterface
     protected $dataObject;
 
     /**
-     * @var RowTypeGuesserInterface
-     */
-    protected $rowTypeGuesser;
-
-    /**
      * @var array
      */
     protected $blockPlugins = [];
@@ -164,18 +159,6 @@ class MarkdownFactory implements MarkdownFactoryInterface
         $factory = new static();
 
         return new Markdown($factory);
-    }
-
-    /**
-     * @param DataObjectInterface $dataObjectInterface
-     *
-     * @return RowTypeGuesserInterface
-     */
-    public function createRowTypeGuesser(DataObjectInterface $dataObjectInterface)
-    {
-        $this->rowTypeGuesser = new RowTypeGuesser($dataObjectInterface, $this);
-
-        return $this->rowTypeGuesser;
     }
 
     /**

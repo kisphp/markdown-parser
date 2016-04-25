@@ -15,11 +15,6 @@ class Markdown implements MarkdownInterface
     protected $factory;
 
     /**
-     * @var RowTypeGuesser
-     */
-    protected $rowTypeGuesser;
-
-    /**
      * @param MarkdownFactoryInterface $factory
      */
     public function __construct(MarkdownFactoryInterface $factory)
@@ -126,7 +121,7 @@ class Markdown implements MarkdownInterface
      */
     protected function createLineObject($lineNumber)
     {
-        return $this->rowTypeGuesser->getRowObjectByLineContent($lineNumber);
+        return $this->createRowObjectByLineContent($lineNumber);
     }
 
     /**
@@ -135,8 +130,68 @@ class Markdown implements MarkdownInterface
     protected function setupDependencies($text)
     {
         $this->dataObject = $this->factory->createDataObject($text);
-        $this->rowTypeGuesser = $this->factory->createRowTypeGuesser($this->dataObject);
 
         $this->factory->setDataObject($this->dataObject);
+    }
+
+    /**
+     * @param int $lineNumber
+     *
+     * @throws Exceptions\BlockNotFoundException
+     *
+     * @return BlockInterface
+     */
+    public function createRowObjectByLineContent($lineNumber)
+    {
+        $objectType = $this->getObjectTypeByLine($lineNumber);
+
+        return $this->factory->create($objectType)
+            ->setContent($this->dataObject->getLine($lineNumber))
+            ->setLineNumber($lineNumber)
+        ;
+    }
+
+    /**
+     * @param int $lineNumber
+     *
+     * @return string
+     */
+    protected function getObjectTypeByLine($lineNumber)
+    {
+        $lineContent = $this->dataObject->getLine($lineNumber);
+
+        if (empty($lineContent)) {
+            return BlockTypes::BLOCK_EMPTY;
+        }
+
+        if ($this->getAvailableTypesByContent($lineContent) === false) {
+            return BlockTypes::BLOCK_PARAGRAPH;
+        }
+
+        $blockPlugins = $this->factory->getBlockPlugins();
+        $possibleTypes = $blockPlugins[$lineContent[0]];
+
+        foreach ($possibleTypes as $type) {
+            $blockObject = $this->factory->create($type);
+            if ($blockObject->validateLineType($lineNumber) === true) {
+                return $type;
+            }
+        }
+
+        return BlockTypes::BLOCK_PARAGRAPH;
+    }
+
+    /**
+     * @param string $lineContent
+     *
+     * @return int|string|bool
+     */
+    protected function getAvailableTypesByContent($lineContent)
+    {
+        if (empty($lineContent)) {
+            return false;
+        }
+
+        return array_search($lineContent[0], array_keys($this->factory->getBlockPlugins()));
     }
 }
