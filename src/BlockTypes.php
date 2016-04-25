@@ -19,6 +19,7 @@ abstract class BlockTypes
     const BLOCK_URLS = 'BlockUrls';
     const BLOCK_TABLE = 'BlockTable';
 
+    const BLOCK_STRONG_ITALIC = 'BlockStrongItalic';
     const BLOCK_STRIKETHROUGH = 'BlockStrikethrough';
     const BLOCK_STRONG = 'BlockStrong';
     const BLOCK_EMPHASIS = 'BlockEmphasis';
