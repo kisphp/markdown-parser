@@ -73,8 +73,6 @@ class MarkdownFactory implements MarkdownFactoryInterface
             throw new ParameterNotAllowedException('$blockName should be type of string');
         }
 
-//        dump($this->blockPlugins);die;
-
         if (!isset($this->blockPlugins[$firstLetter]) || !in_array($blockName, $this->blockPlugins[$firstLetter])) {
             $this->blockPlugins[$firstLetter][] = $blockName;
         }

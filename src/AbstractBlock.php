@@ -105,7 +105,11 @@ abstract class AbstractBlock implements BlockInterface
      */
     protected function createSkipLine(DataObjectInterface $dataObject, $lineNumber)
     {
+        $lineContent = $dataObject->getLine($lineNumber);
+
         $changedContent = $this->factory->create(BlockTypes::BLOCK_SKIP);
+        $changedContent->setContent($lineContent->getContent());
+
         $dataObject->updateLine($lineNumber, $changedContent);
     }
 
@@ -126,6 +130,7 @@ abstract class AbstractBlock implements BlockInterface
         $lineContent = $this->parseInlineStrikethrough($lineContent);
         $lineContent = $this->parseInlineImages($lineContent);
         $lineContent = $this->parseInlineUrls($lineContent);
+        $lineContent = $this->parseInlineBlockTemplates($lineContent);
 
         return $lineContent;
     }
@@ -251,11 +256,37 @@ abstract class AbstractBlock implements BlockInterface
      *
      * @return string
      */
-    private function parseInlineStrongItalic($lineContent)
+    protected function parseInlineStrongItalic($lineContent)
     {
         return $this->factory->create(BlockTypes::BLOCK_STRONG_ITALIC)
             ->setContent($lineContent)
             ->parse()
         ;
+    }
+
+    /**
+     * @param string $lineContent
+     *
+     * @return string
+     */
+    protected function parseInlineBlockTemplates($lineContent)
+    {
+        return $this->factory->create(BlockTypes::BLOCK_CODE_INJECTOR)
+            ->setContent($lineContent)
+            ->parse()
+        ;
+    }
+
+    /**
+     * @param array $updatedLines
+     *
+     * @return string
+     */
+    protected function getSubBlockParsedContent(array $updatedLines)
+    {
+        $markdown = $this->factory->createMarkdown();
+        $markdownContent = implode("\n", $updatedLines);
+
+        return $markdown->parse($markdownContent);
     }
 }

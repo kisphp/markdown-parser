@@ -18,12 +18,14 @@ abstract class BlockTypes
     const BLOCK_IMAGE = 'BlockImage';
     const BLOCK_URLS = 'BlockUrls';
     const BLOCK_TABLE = 'BlockTable';
+    const BLOCK_CONTENT_BLOCKS = 'BlockContentBlocks';
 
     const BLOCK_STRONG_ITALIC = 'BlockStrongItalic';
     const BLOCK_STRIKETHROUGH = 'BlockStrikethrough';
     const BLOCK_STRONG = 'BlockStrong';
     const BLOCK_EMPHASIS = 'BlockEmphasis';
     const BLOCK_INLINE_CODE = 'BlockInlineCode';
+    const BLOCK_CODE_INJECTOR = 'BlockCodeInjector';
 
     const BLOCK_SKIP = 'BlockSkip';
     const BLOCK_UNCHANGE = 'BlockUnchange';

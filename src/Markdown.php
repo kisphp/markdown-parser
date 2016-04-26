@@ -58,7 +58,10 @@ class Markdown implements MarkdownInterface
     {
         $this->factory
             ->addBlockPlugin('|', BlockTypes::BLOCK_TABLE)
-            ->addBlockPlugin(':', BlockTypes::BLOCK_TABLE)
+            ->addBlockPlugins(':', [
+                BlockTypes::BLOCK_CONTENT_BLOCKS,
+                BlockTypes::BLOCK_TABLE,
+            ])
             ->addBlockPlugin('=', BlockTypes::BLOCK_HEADER_ONE)
             ->addBlockPlugins('-', [
                 BlockTypes::BLOCK_TABLE,
