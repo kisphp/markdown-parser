@@ -2,6 +2,8 @@
 
 namespace Kisphp;
 
+use Kisphp\Exceptions\DataObjectBlockAlreadyExists;
+
 interface DataObjectInterface
 {
     /**
@@ -35,4 +37,21 @@ interface DataObjectInterface
      * @return $this
      */
     public function updateLine($key, BlockInterface $value);
+
+    /**
+     * @param string $blockUniqueKey
+     * @param string $renderedBlockContent
+     *
+     * @throws DataObjectBlockAlreadyExists
+     *
+     * @return $this
+     */
+    public function saveAvailableBlock($blockUniqueKey, $renderedBlockContent);
+
+    /**
+     * @param string $blockKey
+     *
+     * @return string
+     */
+    public function getBlockByKey($blockKey);
 }

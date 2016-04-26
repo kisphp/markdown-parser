@@ -89,13 +89,12 @@ class BlockQuote extends AbstractBlock
      */
     protected function parseSubBlock(DataObjectInterface $dataObject, array $updatedLines)
     {
-        $markdown = $this->factory->createMarkdown();
-        $md = implode("\n", $updatedLines);
+        $newCodeParsed = $this->getSubBlockParsedContent($updatedLines);
 
-        $newCodeParsed = $markdown->parse($md);
         $this->setContent($newCodeParsed);
 
-        $newContent = $this->factory->create(BlockTypes::BLOCK_UNCHANGE)
+        $newContent = $this->factory
+            ->create(BlockTypes::BLOCK_UNCHANGE)
             ->setContent($this->parse())
         ;
 

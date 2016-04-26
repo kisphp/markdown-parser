@@ -12,11 +12,6 @@ use Kisphp\DataObjectInterface;
 class BlockParagraph extends AbstractBlock
 {
     /**
-     * @var bool
-     */
-    protected $parsed = false;
-
-    /**
      * @return string
      */
     public function parse()
