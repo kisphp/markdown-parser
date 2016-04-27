@@ -12,13 +12,7 @@ class BlockUrls extends AbstractBlock
     public function parse()
     {
         return preg_replace_callback('/\[(.*)\]\((.*)\)/U', function ($found) {
-            $text = (empty($found[1])) ? $found[2] : $found[1];
-
-            $dictionary = [
-                '{title}' => htmlentities($found[1]),
-                '{url}' => $found[2],
-                '{text}' => $text,
-            ];
+            $dictionary = $this->getDictionary($found);
 
             $isTargetBlank = $this->isTargetBlank($found[0]);
             $content = $this->getStartTag($isTargetBlank) . $this->getEndTag();
@@ -61,5 +55,27 @@ class BlockUrls extends AbstractBlock
     protected function isTargetBlank($url)
     {
         return (bool) strpos($url, 'http');
+    }
+
+    /**
+     * @param array $foundMatches
+     *
+     * @return array
+     */
+    protected function getDictionary(array $foundMatches)
+    {
+        $text = (empty($foundMatches[1])) ? $foundMatches[2] : $foundMatches[1];
+
+        $dictionary = [
+            '{title}' => htmlentities($foundMatches[1]),
+            '{url}' => $foundMatches[2],
+            '{text}' => $text,
+        ];
+
+        if (strpos($foundMatches[1], '<') === 0) {
+            $dictionary['{title}'] = '';
+        }
+
+        return $dictionary;
     }
 }

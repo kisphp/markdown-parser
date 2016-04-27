@@ -11,11 +11,9 @@ class BlockImage extends AbstractBlock
      */
     public function parse()
     {
-        return preg_replace_callback('/\!\[(.*)\]\((.*)\)/', function ($found) {
-            $dictionary = [
-                '{alt}' => htmlentities($found[1]),
-                '{src}' => urlencode($found[2]),
-            ];
+        return preg_replace_callback('/\!\[(.*)\]\((.*)\)/U', function ($found) {
+
+            $dictionary = $this->getDictionary($found);
 
             $content = $this->getStartTag() . $this->getEndTag();
 
@@ -41,5 +39,20 @@ class BlockImage extends AbstractBlock
     public function getEndTag()
     {
         return ' />';
+    }
+
+    /**
+     * @param array $foundMatches
+     *
+     * @return array
+     */
+    protected function getDictionary(array $foundMatches)
+    {
+        $dictionary = [
+            '{alt}' => htmlentities($foundMatches[1]),
+            '{src}' => urlencode($foundMatches[2]),
+        ];
+
+        return $dictionary;
     }
 }
