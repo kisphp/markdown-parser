@@ -96,6 +96,9 @@ class Markdown implements MarkdownInterface
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     protected function validateLinesType()
     {
         $max = $this->dataObject->count();
@@ -106,8 +109,13 @@ class Markdown implements MarkdownInterface
                 $lineObject->changeLineType($this->dataObject);
             }
         }
+
+        return $this;
     }
 
+    /**
+     * @return $this
+     */
     protected function convertLines()
     {
         $max = $this->dataObject->count();
@@ -115,6 +123,8 @@ class Markdown implements MarkdownInterface
         for ($i = 0; $i < $max; $i++) {
             $this->dataObject->updateLine($i, $this->createLineObject($i));
         }
+
+        return $this;
     }
 
     /**

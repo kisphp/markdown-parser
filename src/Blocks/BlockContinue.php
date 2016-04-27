@@ -3,6 +3,7 @@
 namespace Kisphp\Blocks;
 
 use Kisphp\AbstractBlockNoParse;
+use Kisphp\BlockTypes;
 
 class BlockContinue extends AbstractBlockNoParse
 {
@@ -17,6 +18,19 @@ class BlockContinue extends AbstractBlockNoParse
             return false;
         }
 
-        return (bool) preg_match('/^([\s]{1,}|[\t]+)\s/', $this->factory->getDataObject()->getLine($lineNumber));
+        $previousLineObject = $this->factory
+            ->getDataObject()
+            ->getLine($lineNumber - 1)
+        ;
+        if ($this->lineIsObjectOf($previousLineObject, BlockTypes::BLOCK_EMPTY)) {
+            return false;
+        }
+
+        $lineContent = $this->factory
+            ->getDataObject()
+            ->getLine($lineNumber)
+        ;
+
+        return (bool) preg_match('/^([\s]{1,}|[\t]+)\s/', $lineContent);
     }
 }

@@ -18,11 +18,17 @@ class BlockStrikethrough extends AbstractBlock
         }, $this->content);
     }
 
+    /**
+     * @return string
+     */
     public function getStartTag()
     {
         return '<del>';
     }
 
+    /**
+     * @return string
+     */
     public function getEndTag()
     {
         return '</del>';

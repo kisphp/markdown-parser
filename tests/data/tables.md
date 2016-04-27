@@ -10,3 +10,8 @@ Markdown | Less | Pretty
 --- | --- | ---
 *Still* | `renders` | **nicely**
 1 | 2 | 3
+
+headless table
+
+| --- | --- |
+| column 1 | column 2 |

@@ -13,7 +13,12 @@ class BlockCodeInjector extends AbstractBlock
     {
         return preg_replace_callback('/::(.*)::/U', function ($found) {
 
-            return $this->getStartTag() . $this->factory->getDataObject()->getBlockByKey($found[1]) . $this->getEndTag();
+            $content = $this->factory
+                ->getDataObject()
+                ->getBlockByKey($found[1])
+            ;
+
+            return $this->getStartTag() . $content . $this->getEndTag();
 
         }, $this->content);
     }

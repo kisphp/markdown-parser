@@ -110,12 +110,12 @@ class Item implements ItemInterface
         $content = trim($this->content);
 
         if (preg_match('/^[0-9]\.\s/', $content)) {
-            $this->listType = self::LIST_TYPE_ORDERED;
+            $this->listType = static::LIST_TYPE_ORDERED;
 
             return $this->listType;
         }
 
-        $this->listType = self::LIST_TYPE_UNORDERED;
+        $this->listType = static::LIST_TYPE_UNORDERED;
 
         return $this->listType;
     }

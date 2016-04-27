@@ -37,6 +37,11 @@ class BlockParagraph extends AbstractBlock
         return '</p>';
     }
 
+    /**
+     * @param DataObjectInterface $dataObject
+     *
+     * @return $this
+     */
     public function changeLineType(DataObjectInterface $dataObject)
     {
         $nextLineNumber = $this->lineNumber + 1;
