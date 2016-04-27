@@ -19,7 +19,7 @@ class BlockInlineCode extends AbstractBlock
 
         return preg_replace_callback('/(`+)[\s]*(.+?)[\s]*(?<!`)\1(?!`)/s', function ($found) {
 
-            return $this->getStartTag() . $found[2] . $this->getEndTag();
+            return $this->getStartTag() . htmlentities($found[2]) . $this->getEndTag();
 
         }, $this->content);
     }
@@ -27,9 +27,41 @@ class BlockInlineCode extends AbstractBlock
     /**
      * @return string
      */
+    protected function getStartPreTag()
+    {
+        return '<pre>';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getStartCodeTag()
+    {
+        return '<code>';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getEndPreTag()
+    {
+        return '</pre>';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getEndCodeTag()
+    {
+        return '</code>';
+    }
+
+    /**
+     * @return string
+     */
     public function getStartTag($preformatedText = false)
     {
-        return (($preformatedText === true) ? '<pre>' : '') . '<code>';
+        return (($preformatedText === true) ? $this->getStartPreTag() : '') . $this->getStartCodeTag();
     }
 
     /**
@@ -37,7 +69,7 @@ class BlockInlineCode extends AbstractBlock
      */
     public function getEndTag($preformatedText = false)
     {
-        return '</code>' . (($preformatedText === true) ? '</pre>' : '');
+        return $this->getEndCodeTag() . (($preformatedText === true) ? $this->getEndPreTag() : '');
     }
 
     /**
