@@ -152,6 +152,10 @@ class BlockTable extends AbstractBlockNoParse
     protected function createTableRow(BlockInterface $block, $isHeader = false)
     {
         $lineContent = trim($block->getContent(), '|');
+        if (empty($lineContent)) {
+            return '';
+        }
+
         $tableRow = explode('|', $lineContent);
 
         if (strpos($lineContent, '---') !== false) {
