@@ -54,18 +54,32 @@ class BlockTable extends AbstractBlockNoParse
      */
     protected function getTableColumnStartTag($rowIndex, $isTableHeader = false)
     {
-        $rowMetaData = '';
-        if (!empty($this->tableMetaData[$rowIndex])) {
-            foreach ($this->tableMetaData[$rowIndex] as $attributeName => $attributeValue) {
-                $rowMetaData .= sprintf(' %s="%s"', $attributeName, $attributeValue);
-            }
-        }
+        $rowMetaData = $this->getCompiledRowMetaData($rowIndex);
 
         if ($isTableHeader === true) {
             return '<th' . $rowMetaData . '>';
         }
 
         return '<td' . $rowMetaData . '>';
+    }
+
+    /**
+     * @param int $rowIndex
+     *
+     * @return string
+     */
+    protected function getCompiledRowMetaData($rowIndex)
+    {
+        $rowMetaData = '';
+        if (empty($this->tableMetaData[$rowIndex])) {
+            return $rowMetaData;
+        }
+
+        foreach ($this->tableMetaData[$rowIndex] as $attributeName => $attributeValue) {
+            $rowMetaData .= sprintf(' %s="%s"', $attributeName, $attributeValue);
+        }
+
+        return $rowMetaData;
     }
 
     /**

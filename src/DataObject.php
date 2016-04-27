@@ -17,7 +17,7 @@ class DataObject implements DataObjectInterface
     protected $availableBlocks = [];
 
     /**
-     * @param $markdownContent
+     * @param string $markdownContent
      */
     public function __construct($markdownContent)
     {

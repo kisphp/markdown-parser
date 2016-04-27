@@ -6,6 +6,9 @@ use Kisphp\AbstractBlock;
 
 class BlockStrong extends AbstractBlock
 {
+    const DOUBLE_ASTERISKS = '**';
+    const DOUBLE_UNDERSCORES = '__';
+
     /**
      * @return string
      */
@@ -26,7 +29,7 @@ class BlockStrong extends AbstractBlock
     {
         return preg_replace_callback('/([\*]{2})(\S+)(.*|)(\S+)([\*]{2})/U', function ($found) {
 
-            return $this->getStartTag() . str_replace('**', '', $found[0]) . $this->getEndTag();
+            return $this->getStartTag() . str_replace(static::DOUBLE_ASTERISKS, '', $found[0]) . $this->getEndTag();
         }, $lineContent);
     }
 
@@ -39,7 +42,7 @@ class BlockStrong extends AbstractBlock
     {
         return preg_replace_callback('/([\_]{2})(\S+)(.*)(\S+)([\_]{2})/U', function ($found) {
 
-            return $this->getStartTag() . str_replace('__', '', $found[0]) . $this->getEndTag();
+            return $this->getStartTag() . str_replace(static::DOUBLE_UNDERSCORES, '', $found[0]) . $this->getEndTag();
         }, $lineContent);
     }
 

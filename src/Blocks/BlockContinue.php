@@ -17,6 +17,11 @@ class BlockContinue extends AbstractBlockNoParse
             return false;
         }
 
-        return (bool) preg_match('/^([\s]{1,}|[\t]+)\s/', $this->factory->getDataObject()->getLine($lineNumber));
+        $lineContent = $this->factory
+            ->getDataObject()
+            ->getLine($lineNumber)
+        ;
+
+        return (bool) preg_match('/^([\s]{1,}|[\t]+)\s/', $lineContent);
     }
 }

@@ -4,10 +4,11 @@ namespace Kisphp\Blocks;
 
 use Kisphp\AbstractBlockNoParse;
 use Kisphp\DataObjectInterface;
+use Kisphp\Exceptions\CodeTemplateNameNotProvided;
 
-class BlockContentBlocks extends AbstractBlockNoParse
+class BlockContentTemplate extends AbstractBlockNoParse
 {
-    const BLOCK_CHARACTERS = ':::';
+    const BLOCK_MARKUP = ':::';
 
     /**
      * @var string
@@ -78,11 +79,10 @@ class BlockContentBlocks extends AbstractBlockNoParse
             return $this;
         }
 
-        $key = str_replace(self::BLOCK_CHARACTERS, '', $lineContent);
+        $key = str_replace(self::BLOCK_MARKUP, '', $lineContent);
 
         if (empty(trim($key))) {
-            // @todo change this exception name
-            throw new \Exception('No type provided in delimiter');
+            throw new CodeTemplateNameNotProvided('No type provided in delimiter');
         }
 
         $this->contentBlockKey = trim($key);
@@ -97,6 +97,6 @@ class BlockContentBlocks extends AbstractBlockNoParse
      */
     protected function isBlockDelimiterLine($lineContent)
     {
-        return (strpos($lineContent, self::BLOCK_CHARACTERS) === 0);
+        return (strpos($lineContent, self::BLOCK_MARKUP) === 0);
     }
 }

@@ -9,6 +9,7 @@ use Kisphp\DataObjectInterface;
 class BlockCode extends AbstractBlockNoParse
 {
     const BACKTICK_CODE = '96';
+    const BLOCK_MARKUP = '```';
 
     /**
      * @param string $lineContent
@@ -17,7 +18,7 @@ class BlockCode extends AbstractBlockNoParse
      */
     protected function getCodeType($lineContent)
     {
-        $lineContent = str_replace('```', '', $lineContent);
+        $lineContent = str_replace(static::BLOCK_MARKUP, '', $lineContent);
 
         if (!empty($lineContent)) {
             return $lineContent;
@@ -63,7 +64,7 @@ class BlockCode extends AbstractBlockNoParse
         for ($i = $this->lineNumber; $i < $max; $i++) {
             $lineObject = $dataObject->getLine($i);
             $lineContent = $lineObject->getContent();
-            if (strpos($lineContent, '```') === 0 && $isStart === false) {
+            if (strpos($lineContent, static::BLOCK_MARKUP) === 0 && $isStart === false) {
                 $isStart = true;
 
                 $codeClass = $this->getCodeType($lineContent);
@@ -77,11 +78,11 @@ class BlockCode extends AbstractBlockNoParse
                 continue;
             }
 
-            if (strpos($lineContent, '```') === false) {
+            if (strpos($lineContent, static::BLOCK_MARKUP) === false) {
                 $blockContent[] = $this->encodeContent($lineContent);
             }
 
-            if ($i >= ($max - 1) || (strpos($lineContent, '```') === 0 && $isStart === true)) {
+            if ($i >= ($max - 1) || (strpos($lineContent, static::BLOCK_MARKUP) === 0 && $isStart === true)) {
                 $newObject = $this->factory->create(BlockTypes::BLOCK_SKIP)
                     ->setContent('')
                     ->setLineNumber($i)
@@ -128,7 +129,7 @@ class BlockCode extends AbstractBlockNoParse
         $dataObject = $this->factory->getDataObject();
         $lineContent = $dataObject->getLine($lineNumber);
         $counter = count_chars($lineContent, 1);
-        if (!isset($counter[self::BACKTICK_CODE]) || $counter[self::BACKTICK_CODE] !== 3) {
+        if (!isset($counter[static::BACKTICK_CODE]) || $counter[static::BACKTICK_CODE] !== 3) {
             return false;
         }
 

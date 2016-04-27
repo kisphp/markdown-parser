@@ -32,7 +32,7 @@ interface BlockInterface
     public function setLineNumber($lineNumber);
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getContent();
 

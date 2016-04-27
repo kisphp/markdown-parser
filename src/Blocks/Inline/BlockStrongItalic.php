@@ -6,6 +6,9 @@ use Kisphp\AbstractBlock;
 
 class BlockStrongItalic extends AbstractBlock
 {
+    const TRIPLE_ASTERISKS = '***';
+    const TRIPLE_UNDERSCORES = '___';
+
     /**
      * @return string
      */
@@ -42,7 +45,7 @@ class BlockStrongItalic extends AbstractBlock
     {
         return preg_replace_callback('/([\*]{3})(\S+)(.*|)(\S+)([\*]{3})/U', function ($found) {
 
-            return $this->getStartTag() . str_replace('***', '', $found[0]) . $this->getEndTag();
+            return $this->getStartTag() . str_replace(static::TRIPLE_ASTERISKS, '', $found[0]) . $this->getEndTag();
         }, $lineContent);
     }
 
@@ -55,7 +58,7 @@ class BlockStrongItalic extends AbstractBlock
     {
         return preg_replace_callback('/([\_]{3})(\S+)(.*)(\S+)([\_]{3})/U', function ($found) {
 
-            return $this->getStartTag() . str_replace('___', '', $found[0]) . $this->getEndTag();
+            return $this->getStartTag() . str_replace(static::TRIPLE_UNDERSCORES, '', $found[0]) . $this->getEndTag();
         }, $lineContent);
     }
 }

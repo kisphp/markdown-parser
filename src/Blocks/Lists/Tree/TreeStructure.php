@@ -49,10 +49,12 @@ class TreeStructure implements TreeStructureInterface
             /** @var ItemInterface $firstChild */
             $firstChild = $this->getFirstChild();
             $html .= $this->builder->createListStartTag($firstChild);
+
             /** @var ItemInterface $item */
             foreach ($this->items as $item) {
                 $html .= $item->parse();
             }
+
             $html .= $this->builder->createListEndTag($firstChild);
         }
 
