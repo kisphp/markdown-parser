@@ -15,6 +15,54 @@ class BlockTable extends AbstractBlockNoParse
     protected $tableMetaData = [];
 
     /**
+     * @param DataObjectInterface $dataObject
+     */
+    public function changeLineType(DataObjectInterface $dataObject)
+    {
+        $max = $dataObject->count();
+        $changeNextLine = true;
+        $firstLineCompiled = false;
+
+        $htmlTable = '';
+
+        for ($i = $this->lineNumber; $i < $max; $i++) {
+            $currentLine = $dataObject->getLine($i);
+
+            $htmlTable .= $this->createTableRow($currentLine);
+
+            if ($firstLineCompiled === false) {
+                $firstLineCompiled = true;
+                $previousLineIndex = $i - 1;
+                $previousLine = $dataObject->getLine($previousLineIndex);
+                $htmlTable = $this->createTableRow($previousLine, true) . $htmlTable;
+                $this->createSkipLine($dataObject, $previousLineIndex);
+                unset($previousLineIndex);
+            }
+
+            $this->createSkipLine($dataObject, $i);
+
+            /** @var BlockInterface $nextLineObject */
+            $nextLineObject = $dataObject->getLine($i + 1);
+            if (!$this->isTableLineType($nextLineObject)) {
+                $changeNextLine = false;
+            }
+
+            if ($changeNextLine === false) {
+                break;
+            }
+        }
+
+        $htmlTable = $this->parseInlineMarkup($htmlTable);
+
+        $listContent = $this->factory->create(BlockTypes::BLOCK_UNCHANGE)
+            ->setContent($this->getStartTableTag() . $htmlTable . $this->getEndTableTag())
+            ->setLineNumber($this->lineNumber)
+        ;
+
+        $dataObject->updateLine($this->lineNumber, $listContent);
+    }
+
+    /**
      * @return string
      */
     public function getStartTableTag()
@@ -64,6 +112,20 @@ class BlockTable extends AbstractBlockNoParse
     }
 
     /**
+     * @param bool|false $isTableHeader
+     *
+     * @return string
+     */
+    protected function getTableColumnEndTag($isTableHeader = false)
+    {
+        if ($isTableHeader === true) {
+            return '</th>' . "\n";
+        }
+
+        return '</td>' . "\n";
+    }
+
+    /**
      * @param int $rowIndex
      *
      * @return string
@@ -80,68 +142,6 @@ class BlockTable extends AbstractBlockNoParse
         }
 
         return $rowMetaData;
-    }
-
-    /**
-     * @param bool|false $isTableHeader
-     *
-     * @return string
-     */
-    protected function getTableColumnEndTag($isTableHeader = false)
-    {
-        if ($isTableHeader === true) {
-            return '</th>' . "\n";
-        }
-
-        return '</td>' . "\n";
-    }
-
-    /**
-     * @param DataObjectInterface $dataObject
-     */
-    public function changeLineType(DataObjectInterface $dataObject)
-    {
-        $max = $dataObject->count();
-        $changeNextLine = true;
-        $firstLineCompiled = false;
-
-        $htmlTable = '';
-
-        for ($i = $this->lineNumber; $i < $max; $i++) {
-            $currentLine = $dataObject->getLine($i);
-
-            $htmlTable .= $this->createTableRow($currentLine);
-
-            if ($firstLineCompiled === false) {
-                $firstLineCompiled = true;
-                $previousLineIndex = $i - 1;
-                $previousLine = $dataObject->getLine($previousLineIndex);
-                $htmlTable = $this->createTableRow($previousLine, true) . $htmlTable;
-                $this->createSkipLine($dataObject, $previousLineIndex);
-                unset($previousLineIndex);
-            }
-
-            $this->createSkipLine($dataObject, $i);
-
-            /** @var BlockInterface $nextLineObject */
-            $nextLineObject = $dataObject->getLine($i + 1);
-            if (!$this->isTableLineType($nextLineObject)) {
-                $changeNextLine = false;
-            }
-
-            if ($changeNextLine === false) {
-                break;
-            }
-        }
-
-        $htmlTable = $this->parseInlineMarkup($htmlTable);
-
-        $listContent = $this->factory->create(BlockTypes::BLOCK_UNCHANGE)
-            ->setContent($this->getStartTableTag() . $htmlTable . $this->getEndTableTag())
-            ->setLineNumber($this->lineNumber)
-        ;
-
-        $dataObject->updateLine($this->lineNumber, $listContent);
     }
 
     /**

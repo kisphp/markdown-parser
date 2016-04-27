@@ -39,7 +39,7 @@ class BlockCode extends AbstractBlockNoParse
             $tagClass = ' class="language-' . $class . '"';
         }
 
-        return '<pre' . $tagClass . '><code>';
+        return '<pre><code' . $tagClass . '>';
     }
 
     /**
