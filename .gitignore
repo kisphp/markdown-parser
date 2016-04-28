@@ -1,5 +1,4 @@
 .idea/
 vendor/
 *.svg
-composer.lock
 coverage/
