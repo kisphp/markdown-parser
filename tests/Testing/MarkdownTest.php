@@ -55,4 +55,23 @@ class MarkdownTest extends PHPUnit_Framework_TestCase
 
         return $data;
     }
+
+    /**
+     * @expectedException Kisphp\Exceptions\CodeTemplateNameNotProvided
+     */
+    public function testMissingCodeTemplateName()
+    {
+        $md = \Kisphp\MarkdownFactory::createMarkdown();
+
+        $content = <<<EOF
+:::
+no template name
+:::
+
+hello world
+
+EOF;
+
+        $md->parse($content);
+    }
 }
