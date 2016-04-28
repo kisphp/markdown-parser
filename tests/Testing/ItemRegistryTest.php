@@ -2,7 +2,6 @@
 
 namespace Kisphp\Testing;
 
-use Kisphp\Blocks\Lists\Tree\ItemInterface;
 use Kisphp\Blocks\Lists\Tree\ItemsRegistry;
 use Kisphp\Testing\Dummy\DummyItem;
 
