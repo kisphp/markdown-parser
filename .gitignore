@@ -2,3 +2,4 @@
 vendor/
 *.svg
 coverage/
+build/
