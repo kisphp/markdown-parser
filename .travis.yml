@@ -11,6 +11,5 @@ install:
 script:
   - phpunit --coverage-clover=coverage.xml
   - vendor/bin/php-cs-fixer fix --dry-run
-  - php vendor/bin/phpunit -c phpunit.xml.dist
 after_success:
   - bash <(curl -s https://codecov.io/bash)
