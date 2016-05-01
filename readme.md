@@ -23,6 +23,6 @@ Features:
 
 [Please read documentation here](https://github.com/kisphp/markdown-parser/wiki)
 
-- [Installation &amp; Usage](/kisphp/markdown-parser/wiki)
-- [Templates usage](/kisphp/markdown-parser/wiki/Template-blocks)
-- [How to extend blocks](/kisphp/markdown-parser/wiki/Blocks-Extension-Points)
+- [Installation &amp; Usage](https://github.com/kisphp/markdown-parser/wiki)
+- [Templates usage](https://github.com/kisphp/markdown-parser/wiki/Template-blocks)
+- [How to extend blocks](https://github.com/kisphp/markdown-parser/wiki/Blocks-Extension-Points)
