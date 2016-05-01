@@ -93,6 +93,9 @@ class DataObject implements DataObjectInterface
         return implode('', $html);
     }
 
+    /**
+     * @return null
+     */
     public function notReachedMethod()
     {
         return null;
