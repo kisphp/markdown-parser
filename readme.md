@@ -22,3 +22,7 @@ Features:
 - code templates to be inserted in other code blocks structures
 
 [Please read documentation here](https://github.com/kisphp/markdown-parser/wiki)
+
+- [Installation &amp; Usage](/kisphp/markdown-parser/wiki)
+- [Templates usage](/kisphp/markdown-parser/wiki/Template-blocks)
+- [How to extend blocks](/kisphp/markdown-parser/wiki/Blocks-Extension-Points)
