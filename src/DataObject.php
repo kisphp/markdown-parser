@@ -84,13 +84,18 @@ class DataObject implements DataObjectInterface
      */
     public function parseEachLine()
     {
-        $html = '';
+        $html = [];
         /** @var BlockInterface $line */
         foreach ($this->lines as $line) {
-            $html .= $line->parse();
+            $html[] = $line->parse();
         }
 
-        return $html;
+        return implode('', $html);
+    }
+
+    public function notReachedMethod()
+    {
+        return null;
     }
 
     /**
