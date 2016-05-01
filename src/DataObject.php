@@ -94,16 +94,6 @@ class DataObject implements DataObjectInterface
     }
 
     /**
-     * @return null
-     */
-    public function notReachedMethod()
-    {
-        $alfa = 'testing';
-
-        return null;
-    }
-
-    /**
      * @param int $lineNumber
      *
      * @return bool
