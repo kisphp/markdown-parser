@@ -100,7 +100,6 @@ class DataObject implements DataObjectInterface
     {
         $alfa = 'testing';
 
-        
         return null;
     }
 
