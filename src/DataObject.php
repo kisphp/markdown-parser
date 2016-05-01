@@ -98,6 +98,9 @@ class DataObject implements DataObjectInterface
      */
     public function notReachedMethod()
     {
+        $alfa = 'testing';
+
+        
         return null;
     }
 
