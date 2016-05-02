@@ -132,6 +132,7 @@ class Markdown implements MarkdownInterface
 
     /**
      * @param string $text
+     *
      * @return $this
      */
     protected function setupDependencies($text)
