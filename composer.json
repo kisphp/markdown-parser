@@ -1,6 +1,6 @@
 {
   "name": "kisphp/markdown-parser",
-  "description": "Kisphp Markdown parser. Highly extendable and customizable markdown parser",
+  "description": "Kisphp Markdown parser. Highly extensible and customizable markdown parser",
   "keywords": ["markdown", "parser", "kisphp"],
   "homepage": "http://www.kisphp.com",
   "type": "library",

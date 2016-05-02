@@ -201,10 +201,6 @@ class Markdown implements MarkdownInterface
      */
     protected function getAvailableTypesByContent($lineContent)
     {
-        if (empty($lineContent)) {
-            return false;
-        }
-
         return array_search($lineContent[0], array_keys($this->factory->getBlockPlugins()));
     }
 }
