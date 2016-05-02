@@ -139,28 +139,41 @@ class Markdown implements MarkdownInterface
 
     /**
      * @param string $text
+     * @return $this
      */
     protected function setupDependencies($text)
     {
         $this->dataObject = $this->factory->createDataObject($text);
 
-        $this->factory->setDataObject($this->dataObject);
+        $this->injectDataObjectIntoFactory();
+
+        return $this;
     }
 
     /**
-     * @param int $lineNumber
+     * @return $this
+     */
+    protected function injectDataObjectIntoFactory()
+    {
+        $this->factory->setDataObject($this->dataObject);
+
+        return $this;
+    }
+
+    /**
+     * @param string $lineContent
      *
      * @throws Exceptions\BlockNotFoundException
      *
      * @return BlockInterface
      */
-    public function createRowObjectByLineContent($lineNumber)
+    protected function createRowObjectByLineContent($lineContent)
     {
-        $objectType = $this->getObjectTypeByLine($lineNumber);
+        $objectType = $this->getObjectTypeByLine($lineContent);
 
         return $this->factory->create($objectType)
-            ->setContent($this->dataObject->getLine($lineNumber))
-            ->setLineNumber($lineNumber)
+            ->setContent($this->dataObject->getLine($lineContent))
+            ->setLineNumber($lineContent)
         ;
     }
 
