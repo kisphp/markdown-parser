@@ -120,21 +120,14 @@ class Markdown implements MarkdownInterface
     {
         $max = $this->dataObject->count();
 
-        for ($i = 0; $i < $max; $i++) {
-            $this->dataObject->updateLine($i, $this->createLineObject($i));
+        for ($lineNumber = 0; $lineNumber < $max; $lineNumber++) {
+            $this->dataObject->updateLine(
+                $lineNumber,
+                $this->createRowObjectByLineNumber($lineNumber)
+            );
         }
 
         return $this;
-    }
-
-    /**
-     * @param int $lineNumber
-     *
-     * @return BlockInterface
-     */
-    protected function createLineObject($lineNumber)
-    {
-        return $this->createRowObjectByLineContent($lineNumber);
     }
 
     /**
@@ -161,19 +154,20 @@ class Markdown implements MarkdownInterface
     }
 
     /**
-     * @param string $lineContent
+     * @param int $lineNumber
      *
      * @throws Exceptions\BlockNotFoundException
      *
      * @return BlockInterface
      */
-    protected function createRowObjectByLineContent($lineContent)
+    protected function createRowObjectByLineNumber($lineNumber)
     {
-        $objectType = $this->getObjectTypeByLine($lineContent);
+        $objectType = $this->getObjectTypeByLine($lineNumber);
+        $content = $this->dataObject->getLine($lineNumber);
 
         return $this->factory->create($objectType)
-            ->setContent($this->dataObject->getLine($lineContent))
-            ->setLineNumber($lineContent)
+            ->setContent($content)
+            ->setLineNumber($lineNumber)
         ;
     }
 
