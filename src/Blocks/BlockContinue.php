@@ -22,6 +22,7 @@ class BlockContinue extends AbstractBlockNoParse
             ->getDataObject()
             ->getLine($lineNumber - 1)
         ;
+
         if ($this->lineIsObjectOf($previousLineObject, BlockTypes::BLOCK_EMPTY)) {
             return false;
         }

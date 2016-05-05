@@ -50,7 +50,7 @@ class BlockImage extends AbstractBlock
     {
         $dictionary = [
             '{alt}' => htmlentities($foundMatches[1]),
-            '{src}' => urlencode($foundMatches[2]),
+            '{src}' => $foundMatches[2],
         ];
 
         return $dictionary;
