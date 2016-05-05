@@ -7,6 +7,10 @@ Emphasis with **type _asterisks_**.
 
 and _ this should not be _ emphasized
 
+and \_this should not be\_ emphasized
+
+and \*this should not be\* emphasized
+
 and * this should not be * emphasized
 
 and ** another one ** here

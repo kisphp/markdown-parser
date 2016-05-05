@@ -79,8 +79,9 @@ class Markdown implements MarkdownInterface
             ->addBlockPlugin('`', BlockTypes::BLOCK_CODE)
             ->addBlockPlugins(' ', [
                 BlockTypes::BLOCK_LIST,
+                BlockTypes::BLOCK_SPACES_CODE,
                 BlockTypes::BLOCK_CONTINUE,
-                BlockTypes::BLOCK_INLINE_CODE,
+                BlockTypes::BLOCK_EMPTY,
             ])
             ->addBlockPlugin('+', BlockTypes::BLOCK_LIST)
             ->addBlockPlugin('1', BlockTypes::BLOCK_LIST)

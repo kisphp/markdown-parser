@@ -14,6 +14,7 @@ abstract class BlockTypes
     const BLOCK_HORIZONTAL_RULE = 'BlockHorizontalRule';
     const BLOCK_QUOTE = 'BlockQuote';
     const BLOCK_CODE = 'BlockCode';
+    const BLOCK_SPACES_CODE = 'BlockSpacesCode';
     const BLOCK_LIST = 'BlockList';
     const BLOCK_IMAGE = 'BlockImage';
     const BLOCK_URLS = 'BlockUrls';

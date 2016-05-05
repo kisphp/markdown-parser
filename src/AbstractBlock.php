@@ -218,12 +218,13 @@ abstract class AbstractBlock implements BlockInterface
     }
 
     /**
-     * @param BlockInterface $block
+     * @param BlockInterface|null $block
      * @param string $objectType
+     * @param bool|false $forceStrict
      *
      * @return bool
      */
-    protected function lineIsObjectOf(BlockInterface $block = null, $objectType)
+    protected function lineIsObjectOf(BlockInterface $block = null, $objectType, $forceStrict = false)
     {
         if ($block === null) {
             return false;
@@ -232,9 +233,15 @@ abstract class AbstractBlock implements BlockInterface
         $requiredTypeNamespace = $this->getFullClassNamespace($objectType);
         $blockContinueType = $this->getFullClassNamespace(BlockTypes::BLOCK_CONTINUE);
 
-        return (bool) (
-            ($block instanceof $requiredTypeNamespace) || ($block instanceof $blockContinueType)
-        );
+        if ($block instanceof $requiredTypeNamespace) {
+            return true;
+        }
+
+        if ($block instanceof $blockContinueType && $forceStrict === false) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

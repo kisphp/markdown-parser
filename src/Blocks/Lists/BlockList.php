@@ -16,7 +16,6 @@ class BlockList extends AbstractBlockNoParse
     public function changeLineType(DataObjectInterface $dataObject)
     {
         $max = $dataObject->count();
-        $changeNextLine = true;
 
         $builder = $this->createBuilder();
         for ($i = $this->lineNumber; $i < $max; $i++) {
@@ -24,16 +23,12 @@ class BlockList extends AbstractBlockNoParse
 
             $builder->addItem($currentLineObject);
 
-            /** @var BlockInterface $nextLineObject */
-            $nextLineObject = $dataObject->getLine($i + 1);
-            if (!$this->lineIsObjectOf($nextLineObject, static::class)) {
-                $changeNextLine = false;
-            }
-
             $changedContent = $this->factory->create(BlockTypes::BLOCK_SKIP);
             $dataObject->updateLine($i, $changedContent);
 
-            if ($changeNextLine === false) {
+            /** @var BlockInterface $nextLineObject */
+            $nextLineObject = $dataObject->getLine($i + 1);
+            if (!$this->lineIsObjectOf($nextLineObject, static::class, true)) {
                 break;
             }
         }

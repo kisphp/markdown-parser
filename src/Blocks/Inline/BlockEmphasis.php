@@ -44,6 +44,10 @@ class BlockEmphasis extends AbstractBlock
     protected function convertStars($lineContent)
     {
         return preg_replace_callback('/([\*]{1})(\S+)(.*)(\S+)([\*]{1})/', function ($found) {
+            if (strpos($found[0], '\\*')) {
+                return $found[0];
+            }
+
             if (strpos($found[0], static::DOUBLE_ASTERISKS) !== false) {
                 return $found[0];
             }
@@ -60,6 +64,10 @@ class BlockEmphasis extends AbstractBlock
     protected function convertUnderscores($lineContent)
     {
         return preg_replace_callback('/([\_]{1})(\S+)(.*)(\S+)([\_]{1})/', function ($found) {
+            if (strpos($found[0], '\\_')) {
+                return $found[0];
+            }
+
             if (strpos($found[0], static::DOUBLE_UNDERSCORES) !== false) {
                 return $found[0];
             }

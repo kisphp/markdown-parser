@@ -128,8 +128,9 @@ class BlockCode extends AbstractBlockNoParse
     {
         $dataObject = $this->factory->getDataObject();
         $lineContent = $dataObject->getLine($lineNumber);
-        $counter = count_chars($lineContent, 1);
-        if (!isset($counter[static::BACKTICK_CODE]) || $counter[static::BACKTICK_CODE] !== 3) {
+
+        $charactersCounter = count_chars($lineContent, 1);
+        if (!isset($charactersCounter[static::BACKTICK_CODE]) || $charactersCounter[static::BACKTICK_CODE] !== 3) {
             return false;
         }
 

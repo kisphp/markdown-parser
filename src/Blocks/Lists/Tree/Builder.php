@@ -119,12 +119,9 @@ class Builder implements BuilderInterface
     protected function getLevelByContent($lineContent)
     {
         $levelDelimiter = str_repeat(static::SPACE_CHARACTER, static::SPACES_AS_TAB);
-
         $lineContent = str_replace(static::TAB_CHARACTER, $levelDelimiter, $lineContent);
 
-        preg_match("/\S/", $lineContent, $spacesFound, PREG_OFFSET_CAPTURE);
-
-        $length = max(1, $spacesFound[0][1]);
+        $length = $this->getLength($lineContent);
         $foundLevel = substr_count($lineContent, $levelDelimiter, 0, $length);
 
         return $foundLevel;
@@ -157,5 +154,18 @@ class Builder implements BuilderInterface
         }
 
         $this->getTreeStructure()->addItem($item);
+    }
+
+    /**
+     * @param string $lineContent
+     *
+     * @return int
+     */
+    protected function getLength($lineContent)
+    {
+        preg_match("/\S/", $lineContent, $spacesFound, PREG_OFFSET_CAPTURE);
+        $length = max(1, $spacesFound[0][1]);
+
+        return $length;
     }
 }
