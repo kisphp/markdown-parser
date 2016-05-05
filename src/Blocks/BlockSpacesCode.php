@@ -2,7 +2,6 @@
 
 namespace Kisphp\Blocks;
 
-use Kisphp\AbstractBlockNoParse;
 use Kisphp\BlockInterface;
 use Kisphp\BlockTypes;
 use Kisphp\DataObjectInterface;
