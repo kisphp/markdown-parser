@@ -27,6 +27,22 @@ class BlockInlineCode extends AbstractBlock
     /**
      * @return string
      */
+    public function getStartTag($preformatedText = false)
+    {
+        return (($preformatedText === true) ? $this->getStartPreTag() : '') . $this->getStartCodeTag();
+    }
+
+    /**
+     * @return string
+     */
+    public function getEndTag($preformatedText = false)
+    {
+        return $this->getEndCodeTag() . (($preformatedText === true) ? $this->getEndPreTag() : '');
+    }
+
+    /**
+     * @return string
+     */
     protected function getStartPreTag()
     {
         return '<pre>';
@@ -54,37 +70,5 @@ class BlockInlineCode extends AbstractBlock
     protected function getEndCodeTag()
     {
         return '</code>';
-    }
-
-    /**
-     * @return string
-     */
-    public function getStartTag($preformatedText = false)
-    {
-        return (($preformatedText === true) ? $this->getStartPreTag() : '') . $this->getStartCodeTag();
-    }
-
-    /**
-     * @return string
-     */
-    public function getEndTag($preformatedText = false)
-    {
-        return $this->getEndCodeTag() . (($preformatedText === true) ? $this->getEndPreTag() : '');
-    }
-
-    /**
-     * @param int $lineNumber
-     *
-     * @return bool
-     */
-    public function validateLineType($lineNumber)
-    {
-        $dataObject = $this->factory->getDataObject();
-        $lineContent = $dataObject->getLine($lineNumber);
-        if (preg_match('/([\s]{4,}|[\t]{1,})/', $lineContent)) {
-            return true;
-        }
-
-        return false;
     }
 }
