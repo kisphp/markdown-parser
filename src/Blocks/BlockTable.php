@@ -34,6 +34,9 @@ class BlockTable extends AbstractBlockNoParse
                 $firstLineCompiled = true;
                 $previousLineIndex = $i - 1;
                 $previousLine = $dataObject->getLine($previousLineIndex);
+                if ($previousLine === null) {
+                    continue;
+                }
                 $htmlTable = $this->createTableRow($previousLine, true) . $htmlTable;
                 $this->createSkipLine($dataObject, $previousLineIndex);
                 unset($previousLineIndex);
