@@ -52,10 +52,6 @@ class DataObject implements DataObjectInterface
      */
     public function getBlockByKey($blockKey)
     {
-        if (!isset($this->availableBlocks[$blockKey])) {
-            return '';
-        }
-
         return $this->availableBlocks[$blockKey];
     }
 
