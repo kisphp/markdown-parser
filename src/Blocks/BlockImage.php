@@ -30,7 +30,7 @@ class BlockImage extends AbstractBlock
      */
     public function getStartTag()
     {
-        return '<img src="{src}" alt="{alt}"';
+        return '<img src="{src}" alt="{alt}"{extra}';
     }
 
     /**
@@ -51,7 +51,15 @@ class BlockImage extends AbstractBlock
         $dictionary = [
             '{alt}' => htmlentities($foundMatches[1]),
             '{src}' => $foundMatches[2],
+            '{extra}' => '',
         ];
+
+        preg_match("/\"(.*)\"/", $foundMatches[2], $found);
+
+        if (!empty($found)) {
+            $dictionary['{src}'] = trim(str_replace($found[0], '', $foundMatches[2]));
+            $dictionary['{extra}'] = ' title="' . $found[1] . '"';
+        }
 
         return $dictionary;
     }
