@@ -27,7 +27,7 @@ class BlockStrong extends AbstractBlock
      */
     protected function convertStars($lineContent)
     {
-        return preg_replace_callback('/([\*]{2})(\S+)(.*|)(\S+)([\*]{2})/U', function ($found) {
+        return preg_replace_callback('/([\*]{2}\S)(.*)(\S?[\*]{2})/U', function ($found) {
 
             return $this->getStartTag() . str_replace(static::DOUBLE_ASTERISKS, '', $found[0]) . $this->getEndTag();
         }, $lineContent);
@@ -40,7 +40,7 @@ class BlockStrong extends AbstractBlock
      */
     protected function convertUnderscores($lineContent)
     {
-        return preg_replace_callback('/([\_]{2})(\S+)(.*)(\S+)([\_]{2})/U', function ($found) {
+        return preg_replace_callback('/([\_]{2}\S)(.*)(\S?[\_]{2})/UU', function ($found) {
 
             return $this->getStartTag() . str_replace(static::DOUBLE_UNDERSCORES, '', $found[0]) . $this->getEndTag();
         }, $lineContent);
