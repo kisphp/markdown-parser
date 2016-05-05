@@ -54,7 +54,7 @@ class BlockImage extends AbstractBlock
             '{extra}' => '',
         ];
 
-        preg_match("/\"(.*)\"/", $foundMatches[2], $found);
+        preg_match('/"(.*)"/', $foundMatches[2], $found);
 
         if (!empty($found)) {
             $dictionary['{src}'] = trim(str_replace($found[0], '', $foundMatches[2]));
