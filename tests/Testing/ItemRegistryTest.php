@@ -10,7 +10,6 @@ class ItemRegistryTest extends \PHPUnit_Framework_TestCase
 {
     public function testItems()
     {
-
         $item = new DummyItem(new Builder());
         $registy = new ItemsRegistry();
         $registy->addItem($item);

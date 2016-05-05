@@ -6,5 +6,4 @@ use Kisphp\Blocks\Lists\Tree\Item;
 
 class DummyItem extends Item
 {
-
 }
