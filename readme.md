@@ -8,20 +8,18 @@
 [![License](https://poser.pugx.org/kisphp/markdown-parser/license)](https://packagist.org/packages/kisphp/markdown-parser)
 [![Monthly Downloads](https://poser.pugx.org/kisphp/markdown-parser/d/monthly)](https://packagist.org/packages/kisphp/markdown-parser)
 
-Features:
-- headers
-- strong
-- emphasis
-- inline code
-- strkethrough
-- blockquotes on multiple levels
-- subtree parsing
-- code line if content starts with space or tab
-- tables
-- lists on multiple level
-- code templates to be inserted in other code blocks structures
+## What is this ?
 
-[Please read documentation here](https://github.com/kisphp/markdown-parser/wiki)
+A highly extensible and customizable PHP Markdown Parser that converts makrdown format to HTML format.
+Parsing Markdown to HTML is as simple as calling a single method `$markdown->parse($markdownContent)` (see [Usage](https://github.com/kisphp/markdown-parser/wiki)).
+To extend the Markdown class to parse custom blocks or format, is as simple as creating new classes that implements `BlockInterface` and include them in the system.
+For this, please see [How to extend blocks](https://github.com/kisphp/markdown-parser/wiki/Blocks-Extension-Points).
+
+## What has different from other markdown parsers ?
+- code templates to be inserted in other code blocks structures
+- generate tables without headers
+
+## Useful wiki pages
 
 - [Installation &amp; Usage](https://github.com/kisphp/markdown-parser/wiki)
 - [Templates usage](https://github.com/kisphp/markdown-parser/wiki/Template-blocks)
