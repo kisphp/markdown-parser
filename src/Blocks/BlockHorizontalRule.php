@@ -40,11 +40,16 @@ class BlockHorizontalRule extends AbstractBlock
         $dataObject = $this->factory->getDataObject();
         $lineContent = $dataObject->getLine($lineNumber);
 
+        $lineContentNoSpaces = str_replace(' ', '', $lineContent);
+
         $contentTrimmed = str_replace(['*', '-', '_'], '', $lineContent);
-        if (!empty($contentTrimmed)) {
+        if (!empty(trim($contentTrimmed))) {
             return false;
         }
 
-        return (bool) preg_match('/^([\*|\*\s|\-|\-\s|\_|\_\s]{3,})/', $lineContent);
+        return (
+            (bool) preg_match('/^([\*|\*\s|\-|\-\s|\_|\_\s]{3,})/', $lineContent)
+            || (bool) preg_match('/^([\*|\*\s|\-|\-\s|\_|\_\s]{3,})/', $lineContentNoSpaces)
+        );
     }
 }
