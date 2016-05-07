@@ -296,4 +296,21 @@ abstract class AbstractBlock implements BlockInterface
 
         return $markdown->parse($markdownContent);
     }
+
+    protected function lineUseContinueType($lineNumber)
+    {
+        $lineObject = $this->factory->getDataObject()->getLine($lineNumber);
+
+        $acceptingContinueTypes = [
+            BlockTypes::BLOCK_LIST,
+        ];
+
+        foreach ($acceptingContinueTypes as $type) {
+            if ($this->lineIsObjectOf($lineObject, $type, true)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

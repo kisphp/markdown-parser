@@ -68,7 +68,7 @@ class BlockSpacesCode extends BlockCode
             return false;
         }
 
-        if (preg_match('/([\s]{4,}|[\t]{1,})/', $lineContent)) {
+        if (preg_match('/([\s]{4,}|[\t]{1,})/', $lineContent) && $this->lineUseContinueType($lineNumber - 1)) {
             return true;
         }
 

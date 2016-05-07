@@ -98,6 +98,8 @@ class Builder implements BuilderInterface
     {
         $lineContent = $block->getContent();
 
+//        dump($lineContent);
+
         $item = $this->createItem();
         $item->setContent($lineContent);
         $item->setId($block->getLineNumber());
