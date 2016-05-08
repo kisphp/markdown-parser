@@ -17,6 +17,32 @@ class DataObject implements DataObjectInterface
     protected $availableBlocks = [];
 
     /**
+     * @var array
+     */
+    protected $references = [];
+
+    /**
+     * @param string $key
+     * @param array $dataMapping
+     *
+     * @return $this
+     */
+    public function addReference($key, array $dataMapping)
+    {
+        $this->references[$key] = $dataMapping;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getReferences()
+    {
+        return $this->references;
+    }
+
+    /**
      * @param string $markdownContent
      */
     public function __construct($markdownContent)
