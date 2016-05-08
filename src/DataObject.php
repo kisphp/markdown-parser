@@ -22,7 +22,7 @@ class DataObject implements DataObjectInterface
     protected $references = [];
 
     /**
-     * @param string $key
+     * @param string|int $key
      * @param array $dataMapping
      *
      * @return $this
@@ -40,6 +40,16 @@ class DataObject implements DataObjectInterface
     public function getReferences()
     {
         return $this->references;
+    }
+
+    /**
+     * @param string|int $key
+     *
+     * @return array
+     */
+    public function getReferenceByKey($key)
+    {
+        return $this->references[$key];
     }
 
     /**
@@ -112,7 +122,27 @@ class DataObject implements DataObjectInterface
             $html .= $line->parse();
         }
 
+        $html = preg_replace_callback('/\[(.*)\]\s?\[(.*)\]/U', function($found){
+
+            $key = trim($found[2]);
+            $label = trim($found[1]);
+
+            $reference = $this->getReferenceByKey($key);
+
+            return $this->convertReference($reference, $label);
+
+        }, $html);
+
         return $html;
+    }
+
+    protected function convertReference(array $dataMapping, $label)
+    {
+        if ($dataMapping['type'] === 'url') {
+            return '<a href="' . $dataMapping['url'] . '" title="' . $dataMapping['title'] . '">' . $label . '</a>';
+        }
+
+        return '';
     }
 
     /**

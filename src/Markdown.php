@@ -185,15 +185,30 @@ class Markdown implements MarkdownInterface
         $content = $this->dataObject->getLine($lineNumber);
 
         // grab urls with title
-        $content = preg_replace_callback('/\[(.*)\]:\s?(.*)\s?("(.*)")/U', function($found) {
+        $content = preg_replace_callback('/\[(.*)\]:\s?(.*)\s?"(.*)"/U', function($found) {
 
             $key = trim($found[1]);
             $url = trim($found[2]);
-            $title = trim($found[4]);
+            $title = trim($found[3]);
 
             $this->dataObject->addReference($key, [
                 'url' => $url,
                 'title' => $title,
+                'type' => 'url',
+            ]);
+
+            return '';
+        }, $content);
+
+        // grab urls without title
+        $content = preg_replace_callback('/\[(.*)\]:\s?(.*)/', function($found) {
+
+            $key = trim($found[1]);
+            $url = trim($found[2]);
+
+            $this->dataObject->addReference($key, [
+                'url' => $url,
+                'title' => '',
                 'type' => 'url',
             ]);
 
