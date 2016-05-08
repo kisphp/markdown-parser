@@ -318,6 +318,11 @@ abstract class AbstractBlock implements BlockInterface
         return $markdown->parse($markdownContent);
     }
 
+    /**
+     * @param int $lineNumber
+     *
+     * @return bool
+     */
     protected function lineUseContinueType($lineNumber)
     {
         $lineObject = $this->factory->getDataObject()->getLine($lineNumber);

@@ -62,9 +62,4 @@ interface DataObjectInterface
      * @return $this
      */
     public function addReference($key, array $dataMapping);
-
-    /**
-     * @return array
-     */
-    public function getReferences();
 }

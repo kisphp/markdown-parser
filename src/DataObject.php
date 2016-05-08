@@ -35,14 +35,6 @@ class DataObject implements DataObjectInterface
     }
 
     /**
-     * @return array
-     */
-    public function getReferences()
-    {
-        return $this->references;
-    }
-
-    /**
      * @param string|int $key
      *
      * @return array
@@ -156,11 +148,7 @@ class DataObject implements DataObjectInterface
      */
     protected function convertReference(array $dataMapping, $label)
     {
-        if ($dataMapping['type'] === 'url') {
-            return '<a href="' . $dataMapping['url'] . '" title="' . $dataMapping['title'] . '">' . $label . '</a>';
-        }
-
-        return '';
+        return '<a href="' . $dataMapping['url'] . '" title="' . $dataMapping['title'] . '">' . $label . '</a>';
     }
 
     /**

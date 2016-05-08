@@ -22,3 +22,9 @@ ordered nested list
     - item 2 child 1
     - item 2 child 2
 3. item 3
+
+---
+
+*   new list
+    continue line
+    continue second line
