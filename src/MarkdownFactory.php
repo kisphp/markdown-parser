@@ -126,6 +126,25 @@ class MarkdownFactory implements MarkdownFactoryInterface
      */
     public function getClassNamespace($type)
     {
+        $mapping = [
+            'BlockParagraph' => __NAMESPACE__ . '\\Blocks\\BlockParagraph',
+            'BlockEmpty' => __NAMESPACE__ . '\\Blocks\\BlockEmpty',
+            'BlockContinue' => __NAMESPACE__ . '\\Blocks\\BlockContinue',
+            'BlockSkip' => __NAMESPACE__ . '\\Blocks\\BlockSkip',
+            'BlockEmphasis' => __NAMESPACE__ . '\\Blocks\\Inline\\BlockEmphasis',
+            'BlockStrongItalic' => __NAMESPACE__ . '\\Blocks\\Inline\\BlockStrongItalic',
+            'BlockItalic' => __NAMESPACE__ . '\\Blocks\\Inline\\BlockItalic',
+            'BlockStrong' => __NAMESPACE__ . '\\Blocks\\Inline\\BlockStrong',
+            'BlockStrikethrough' => __NAMESPACE__ . '\\Blocks\\Inline\\BlockStrikethrough',
+            'BlockImage' => __NAMESPACE__ . '\\Blocks\\BlockImage',
+            'BlockUrls' => __NAMESPACE__ . '\\Blocks\\BlockUrls',
+            'BlockCodeInjector' => __NAMESPACE__ . '\\Blocks\\Inline\\BlockCodeInjector',
+        ];
+
+        if (isset($mapping[$type])) {
+            return $mapping[$type];
+        }
+
         $classNamespaces = $this->getAvailableNamespaces();
 
         foreach ($classNamespaces as $namespace) {

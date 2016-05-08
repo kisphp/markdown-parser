@@ -64,6 +64,11 @@ class BlockSpacesCode extends BlockCode
 
         $trimmedLineContent = trim($lineContent);
 
+        $previousLineObject = $dataObject->getLine($lineNumber - 1);
+        if ($this->lineIsObjectOf($previousLineObject, BlockTypes::BLOCK_CONTINUE)) {
+            return false;
+        }
+
         if (empty($trimmedLineContent)) {
             return false;
         }

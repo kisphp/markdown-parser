@@ -18,20 +18,25 @@ class BlockContinue extends AbstractBlockNoParse
             return false;
         }
 
-        $previousLineObject = $this->factory
-            ->getDataObject()
-            ->getLine($lineNumber - 1)
-        ;
-
-        if ($this->lineIsObjectOf($previousLineObject, BlockTypes::BLOCK_EMPTY)) {
-            return false;
-        }
-
         $lineContent = $this->factory
             ->getDataObject()
             ->getLine($lineNumber)
         ;
 
-        return (bool) preg_match('/^([\s]{1,}|[\t]+)\s/', $lineContent);
+        $previousLineObject = $this->factory
+            ->getDataObject()
+            ->getLine($lineNumber - 1)
+        ;
+
+        if ($this->lineIsObjectOf($previousLineObject, BlockTypes::BLOCK_CONTINUE)) {
+            return true;
+        }
+
+        if ($this->lineIsObjectOf($previousLineObject, BlockTypes::BLOCK_EMPTY)) {
+            return false;
+        }
+
+
+        return (bool) preg_match('/^([\s]{1,}|[\t]+)\S/', $lineContent);
     }
 }

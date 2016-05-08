@@ -103,6 +103,18 @@ class Item implements ItemInterface
     }
 
     /**
+     * @param string $content
+     *
+     * @return $this
+     */
+    public function appendContent($content)
+    {
+        $this->content .= $content;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     protected function setListTypeByContent()
