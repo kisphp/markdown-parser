@@ -18,6 +18,7 @@ For this, please see [How to extend blocks](https://github.com/kisphp/markdown-p
 ## What has different from other markdown parsers ?
 - code templates to be inserted in other code blocks structures
 - generate tables without headers
+- very easy to extend
 
 ## Useful wiki pages
 
