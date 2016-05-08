@@ -26,7 +26,7 @@ class BlockSpacesCode extends BlockCode
 
             /** @var BlockInterface $nextLineObject */
             $nextLineObject = $dataObject->getLine($i + 1);
-            /** @var BlockInterface $nextLineObject */
+            /* @var BlockInterface $nextLineObject */
             $secondLineObject = $dataObject->getLine($i + 2);
             if (!$this->lineIsObjectOf($nextLineObject, BlockTypes::BLOCK_SPACES_CODE) && !$this->lineIsObjectOf($secondLineObject, BlockTypes::BLOCK_SPACES_CODE)) {
                 break;

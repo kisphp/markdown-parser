@@ -31,7 +31,7 @@ class BlockList extends AbstractBlockNoParse
 
             /** @var BlockInterface $nextLineObject */
             $nextLineObject = $dataObject->getLine($i + 1);
-            /** @var BlockInterface $nextLineObject */
+            /* @var BlockInterface $nextLineObject */
             $secondLineObject = $dataObject->getLine($i + 2);
 
             if ($this->lineIsObjectOf($currentLineObject, BlockTypes::BLOCK_CONTINUE)) {
@@ -40,7 +40,7 @@ class BlockList extends AbstractBlockNoParse
                 $lastItem = $builder->addItem($currentLineObject);
             }
 
-            if (!$this->lineIsObjectOf($nextLineObject, static::class) && !$this->lineIsObjectOf($secondLineObject, static::class) ) {
+            if (!$this->lineIsObjectOf($nextLineObject, static::class) && !$this->lineIsObjectOf($secondLineObject, static::class)) {
                 break;
             }
         }

@@ -126,7 +126,6 @@ class DataObject implements DataObjectInterface
         return $html;
     }
 
-
     /**
      * @param string $html
      *
@@ -134,7 +133,7 @@ class DataObject implements DataObjectInterface
      */
     protected function replaceReferenceUrls($html)
     {
-        return preg_replace_callback('/\[(.*)\]\s?\[(.*)\]/U', function($found){
+        return preg_replace_callback('/\[(.*)\]\s?\[(.*)\]/U', function ($found) {
 
             $key = trim($found[2]);
             $label = trim($found[1]);
@@ -152,6 +151,7 @@ class DataObject implements DataObjectInterface
     /**
      * @param array $dataMapping
      * @param string $label
+     *
      * @return string
      */
     protected function convertReference(array $dataMapping, $label)

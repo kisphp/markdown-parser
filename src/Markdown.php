@@ -184,7 +184,7 @@ class Markdown implements MarkdownInterface
         $content = $this->dataObject->getLine($lineNumber);
 
         // grab urls with title
-        $content = preg_replace_callback('/\[(.*)\]:\s?(.*)\s?"(.*)"/U', function($found) {
+        $content = preg_replace_callback('/\[(.*)\]:\s?(.*)\s?"(.*)"/U', function ($found) {
 
             $key = trim($found[1]);
             $url = trim($found[2]);
@@ -200,7 +200,7 @@ class Markdown implements MarkdownInterface
         }, $content);
 
         // grab urls without title
-        $content = preg_replace_callback('/\[(.*)\]:\s?(.*)/', function($found) {
+        $content = preg_replace_callback('/\[(.*)\]:\s?(.*)/', function ($found) {
 
             $key = trim($found[1]);
             $url = trim($found[2]);

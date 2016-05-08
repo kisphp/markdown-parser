@@ -93,6 +93,7 @@ class Builder implements BuilderInterface
 
     /**
      * @param BlockInterface $block
+     *
      * @return ItemInterface
      */
     public function addItem(BlockInterface $block)

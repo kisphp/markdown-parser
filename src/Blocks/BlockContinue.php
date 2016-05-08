@@ -36,7 +36,6 @@ class BlockContinue extends AbstractBlockNoParse
             return false;
         }
 
-
         return (bool) preg_match('/^([\s]{1,}|[\t]+)\S/', $lineContent);
     }
 }
