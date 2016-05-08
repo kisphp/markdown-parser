@@ -165,8 +165,8 @@ class Markdown implements MarkdownInterface
      */
     protected function createRowObjectByLineNumber($lineNumber)
     {
-        $objectType = $this->getObjectTypeByLine($lineNumber);
-        $content = $this->dataObject->getLine($lineNumber);
+        $content = $this->grabReferences($lineNumber);
+        $objectType = $this->getObjectTypeByContent($content, $lineNumber);
 
         return $this->factory->create($objectType)
             ->setContent($content)
@@ -177,13 +177,54 @@ class Markdown implements MarkdownInterface
     /**
      * @param int $lineNumber
      *
+     * @return BlockInterface|mixed|null|string
+     */
+    protected function grabReferences($lineNumber)
+    {
+        $content = $this->dataObject->getLine($lineNumber);
+
+        // grab urls with title
+        $content = preg_replace_callback('/\[(.*)\]:\s?(.*)\s?"(.*)"/U', function ($found) {
+
+            $key = trim($found[1]);
+            $url = trim($found[2]);
+            $title = trim($found[3]);
+
+            $this->dataObject->addReference($key, [
+                'url' => $url,
+                'title' => $title,
+                'type' => 'url',
+            ]);
+
+            return '';
+        }, $content);
+
+        // grab urls without title
+        $content = preg_replace_callback('/\[(.*)\]:\s?(.*)/', function ($found) {
+
+            $key = trim($found[1]);
+            $url = trim($found[2]);
+
+            $this->dataObject->addReference($key, [
+                'url' => $url,
+                'title' => '',
+                'type' => 'url',
+            ]);
+
+            return '';
+        }, $content);
+
+        return $content;
+    }
+
+    /**
+     * @param string $lineContent
+     *
      * @return string
      */
-    protected function getObjectTypeByLine($lineNumber)
+    protected function getObjectTypeByContent($lineContent, $lineNumber)
     {
-        $lineContent = $this->dataObject->getLine($lineNumber);
-
-        if (empty($lineContent)) {
+        if (empty($lineContent) || trim($lineContent) === '') {
             return BlockTypes::BLOCK_EMPTY;
         }
 

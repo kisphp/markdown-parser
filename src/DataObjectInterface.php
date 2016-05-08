@@ -54,4 +54,12 @@ interface DataObjectInterface
      * @return string
      */
     public function getBlockByKey($blockKey);
+
+    /**
+     * @param string $key
+     * @param array $dataMapping
+     *
+     * @return $this
+     */
+    public function addReference($key, array $dataMapping);
 }

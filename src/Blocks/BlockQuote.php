@@ -68,6 +68,7 @@ class BlockQuote extends AbstractBlock
 
             $nextLineObject = $dataObject->getLine($i + 1);
             $nextSecondLineObject = $dataObject->getLine($i + 2);
+
             if (!$this->lineIsObjectOf($nextLineObject, static::class) && !$this->lineIsObjectOf($nextSecondLineObject, static::class)) {
                 $changeNextLine = false;
             }
@@ -110,7 +111,7 @@ class BlockQuote extends AbstractBlock
     {
         $lineContent = preg_replace('/^\>\s?/', '', $lineContent);
 
-        return trim($lineContent);
+        return $lineContent;
     }
 
     /**

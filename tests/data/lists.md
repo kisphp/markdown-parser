@@ -1,6 +1,8 @@
 1. ordered line 1
+
 2. ordered line 2
 3. ordered line 3
+
 
 + unordered list
 - unordered list
@@ -21,3 +23,9 @@ ordered nested list
     - item 2 child 1
     - item 2 child 2
 3. item 3
+
+---
+
+*   new list
+    continue line
+    continue second line

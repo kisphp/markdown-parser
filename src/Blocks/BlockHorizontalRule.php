@@ -41,7 +41,7 @@ class BlockHorizontalRule extends AbstractBlock
         $lineContent = $dataObject->getLine($lineNumber);
 
         $contentTrimmed = str_replace(['*', '-', '_'], '', $lineContent);
-        if (!empty($contentTrimmed)) {
+        if (!empty(trim($contentTrimmed))) {
             return false;
         }
 

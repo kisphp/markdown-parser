@@ -17,6 +17,34 @@ class DataObject implements DataObjectInterface
     protected $availableBlocks = [];
 
     /**
+     * @var array
+     */
+    protected $references = [];
+
+    /**
+     * @param string|int $key
+     * @param array $dataMapping
+     *
+     * @return $this
+     */
+    public function addReference($key, array $dataMapping)
+    {
+        $this->references[$key] = $dataMapping;
+
+        return $this;
+    }
+
+    /**
+     * @param string|int $key
+     *
+     * @return array
+     */
+    public function getReferenceByKey($key)
+    {
+        return $this->references[$key];
+    }
+
+    /**
      * @param string $markdownContent
      */
     public function __construct($markdownContent)
@@ -85,8 +113,42 @@ class DataObject implements DataObjectInterface
         foreach ($this->lines as $line) {
             $html .= $line->parse();
         }
+        $html = $this->replaceReferenceUrls($html);
 
         return $html;
+    }
+
+    /**
+     * @param string $html
+     *
+     * @return string
+     */
+    protected function replaceReferenceUrls($html)
+    {
+        return preg_replace_callback('/\[(.*)\]\s?\[(.*)\]/U', function ($found) {
+
+            $key = trim($found[2]);
+            $label = trim($found[1]);
+
+            if (empty($key)) {
+                $key = $label;
+            }
+            $reference = $this->getReferenceByKey($key);
+
+            return $this->convertReference($reference, $label);
+
+        }, $html);
+    }
+
+    /**
+     * @param array $dataMapping
+     * @param string $label
+     *
+     * @return string
+     */
+    protected function convertReference(array $dataMapping, $label)
+    {
+        return '<a href="' . $dataMapping['url'] . '" title="' . $dataMapping['title'] . '">' . $label . '</a>';
     }
 
     /**

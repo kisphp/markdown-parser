@@ -18,22 +18,36 @@ class BlockList extends AbstractBlockNoParse
         $max = $dataObject->count();
 
         $builder = $this->createBuilder();
+        $lastItem = null;
         for ($i = $this->lineNumber; $i < $max; $i++) {
             $currentLineObject = $dataObject->getLine($i);
 
-            $builder->addItem($currentLineObject);
+            if ($this->lineIsObjectOf($currentLineObject, BlockTypes::BLOCK_EMPTY, true)) {
+                continue;
+            }
 
             $changedContent = $this->factory->create(BlockTypes::BLOCK_SKIP);
             $dataObject->updateLine($i, $changedContent);
 
             /** @var BlockInterface $nextLineObject */
             $nextLineObject = $dataObject->getLine($i + 1);
-            if (!$this->lineIsObjectOf($nextLineObject, static::class, true)) {
+            /* @var BlockInterface $nextLineObject */
+            $secondLineObject = $dataObject->getLine($i + 2);
+
+            if ($this->lineIsObjectOf($currentLineObject, BlockTypes::BLOCK_CONTINUE)) {
+                $lastItem->appendContent($currentLineObject->getContent());
+            } else {
+                $lastItem = $builder->addItem($currentLineObject);
+            }
+
+            if (!$this->lineIsObjectOf($nextLineObject, static::class) && !$this->lineIsObjectOf($secondLineObject, static::class)) {
                 break;
             }
         }
+        unset($lastItem);
 
         $listHtmlContent = $this->parseInlineMarkup($builder->getTreeStructure()->parse());
+
         $listContent = $this->factory->create(BlockTypes::BLOCK_UNCHANGE)
             ->setContent($listHtmlContent)
             ->setLineNumber($this->lineNumber)

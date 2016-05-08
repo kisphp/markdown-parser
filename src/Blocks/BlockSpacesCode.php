@@ -26,7 +26,9 @@ class BlockSpacesCode extends BlockCode
 
             /** @var BlockInterface $nextLineObject */
             $nextLineObject = $dataObject->getLine($i + 1);
-            if (!$this->lineIsObjectOf($nextLineObject, BlockTypes::BLOCK_SPACES_CODE)) {
+            /* @var BlockInterface $nextLineObject */
+            $secondLineObject = $dataObject->getLine($i + 2);
+            if (!$this->lineIsObjectOf($nextLineObject, BlockTypes::BLOCK_SPACES_CODE) && !$this->lineIsObjectOf($secondLineObject, BlockTypes::BLOCK_SPACES_CODE)) {
                 break;
             }
         }
@@ -62,13 +64,12 @@ class BlockSpacesCode extends BlockCode
         $dataObject = $this->factory->getDataObject();
         $lineContent = $dataObject->getLine($lineNumber);
 
-        $trimmedLineContent = trim($lineContent);
-
-        if (empty($trimmedLineContent)) {
+        $previousLineObject = $dataObject->getLine($lineNumber - 1);
+        if ($this->lineIsObjectOf($previousLineObject, BlockTypes::BLOCK_CONTINUE)) {
             return false;
         }
 
-        if (preg_match('/([\s]{4,}|[\t]{1,})/', $lineContent)) {
+        if (preg_match('/([\s]{4,}|[\t]{1,})/', $lineContent) && $this->lineUseContinueType($lineNumber - 1)) {
             return true;
         }
 

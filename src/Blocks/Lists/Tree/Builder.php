@@ -93,6 +93,8 @@ class Builder implements BuilderInterface
 
     /**
      * @param BlockInterface $block
+     *
+     * @return ItemInterface
      */
     public function addItem(BlockInterface $block)
     {
@@ -106,9 +108,11 @@ class Builder implements BuilderInterface
 
         $this->itemsRegistry->addItem($item);
 
-        $this->addToTreeSTructure($item, $level);
+        $this->addToTreeStructure($item, $level);
 
         $this->levelLastItem[$level] = $item->getId();
+
+        return $item;
     }
 
     /**
@@ -139,7 +143,7 @@ class Builder implements BuilderInterface
      * @param ItemInterface $item
      * @param int $level
      */
-    protected function addToTreeSTructure(ItemInterface $item, $level)
+    protected function addToTreeStructure(ItemInterface $item, $level)
     {
         if ($level > 0) {
             $previousItemId = $this->levelLastItem[$level - 1];
