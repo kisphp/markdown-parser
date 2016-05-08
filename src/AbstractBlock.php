@@ -131,8 +131,29 @@ abstract class AbstractBlock implements BlockInterface
         $lineContent = $this->parseInlineImages($lineContent);
         $lineContent = $this->parseInlineUrls($lineContent);
         $lineContent = $this->parseInlineBlockTemplates($lineContent);
+        $lineContent = $this->replaceInlineUrls($lineContent);
 
         return $lineContent;
+    }
+
+    /**
+     * @param string $html
+     *
+     * @return string
+     */
+    protected function replaceInlineUrls($html)
+    {
+        return preg_replace_callback('/\<(.*)\>/U', function($found){
+            if (strpos($found[1], 'http') === 0 || strpos($found[1], 'ftp') === 0) {
+                return '<a href="'.$found[1].'">'.$found[1].'</a>';
+            }
+
+            if (filter_var($found[1], FILTER_VALIDATE_EMAIL)) {
+                return '<a href="mailto:' . htmlspecialchars($found[1]) . '">' . $found[1] . '</a>';
+            }
+
+            return $found[0];
+        }, $html);
     }
 
     /**

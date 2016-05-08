@@ -121,21 +121,39 @@ class DataObject implements DataObjectInterface
         foreach ($this->lines as $line) {
             $html .= $line->parse();
         }
+        $html = $this->replaceReferenceUrls($html);
 
-        $html = preg_replace_callback('/\[(.*)\]\s?\[(.*)\]/U', function($found){
+        return $html;
+    }
+
+
+    /**
+     * @param string $html
+     *
+     * @return string
+     */
+    protected function replaceReferenceUrls($html)
+    {
+        return preg_replace_callback('/\[(.*)\]\s?\[(.*)\]/U', function($found){
 
             $key = trim($found[2]);
             $label = trim($found[1]);
 
+            if (empty($key)) {
+                $key = $label;
+            }
             $reference = $this->getReferenceByKey($key);
 
             return $this->convertReference($reference, $label);
 
         }, $html);
-
-        return $html;
     }
 
+    /**
+     * @param array $dataMapping
+     * @param string $label
+     * @return string
+     */
     protected function convertReference(array $dataMapping, $label)
     {
         if ($dataMapping['type'] === 'url') {

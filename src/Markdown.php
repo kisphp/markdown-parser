@@ -166,7 +166,6 @@ class Markdown implements MarkdownInterface
     protected function createRowObjectByLineNumber($lineNumber)
     {
         $content = $this->grabReferences($lineNumber);
-
         $objectType = $this->getObjectTypeByContent($content, $lineNumber);
 
         return $this->factory->create($objectType)
@@ -225,7 +224,7 @@ class Markdown implements MarkdownInterface
      */
     protected function getObjectTypeByContent($lineContent, $lineNumber)
     {
-        if (empty($lineContent)) {
+        if (empty($lineContent) || trim($lineContent) === '') {
             return BlockTypes::BLOCK_EMPTY;
         }
 
