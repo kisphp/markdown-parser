@@ -16,3 +16,7 @@ and * this should not be * emphasized
 and ** another one ** here
 
 and __ another one __ here
+
+have this _italic_ text and _this one_ on the same *line*.
+
+have this *italic* text and *this one* on the same _line_.
