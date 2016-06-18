@@ -16,9 +16,10 @@ To extend the Markdown class to parse custom blocks or format, is as simple as c
 For this, please see [How to extend blocks](https://github.com/kisphp/markdown-parser/wiki/Blocks-Extension-Points).
 
 ## What has different from other markdown parsers ?
+
 - code templates to be inserted in other code blocks structures
 - generate tables without headers
-- very easy to extend
+- very easy mode to extend
 
 ## Useful wiki pages
 
