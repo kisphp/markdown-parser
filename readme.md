@@ -8,6 +8,9 @@
 [![License](https://poser.pugx.org/kisphp/markdown-parser/license)](https://packagist.org/packages/kisphp/markdown-parser)
 [![Monthly Downloads](https://poser.pugx.org/kisphp/markdown-parser/d/monthly)](https://packagist.org/packages/kisphp/markdown-parser)
 
+![Coverage Map](https://codecov.io/gh/kisphp/markdown-parser/branch/master/graphs/sunburst.svg)
+
+
 ## What is this ?
 
 A highly extensible and customizable PHP Markdown Parser that converts makrdown format to HTML format.
@@ -26,3 +29,4 @@ For this, please see [How to extend blocks](https://github.com/kisphp/markdown-p
 - [Installation &amp; Usage](https://github.com/kisphp/markdown-parser/wiki)
 - [Templates usage](https://github.com/kisphp/markdown-parser/wiki/Template-blocks)
 - [How to extend blocks](https://github.com/kisphp/markdown-parser/wiki/Blocks-Extension-Points)
+
