@@ -27,6 +27,7 @@ abstract class BlockTypes
     const BLOCK_EMPHASIS = 'BlockEmphasis';
     const BLOCK_INLINE_CODE = 'BlockInlineCode';
     const BLOCK_CODE_INJECTOR = 'BlockCodeInjector';
+    const BLOCK_NEW_LINES = 'BlockNewLines';
 
     const BLOCK_SKIP = 'BlockSkip';
     const BLOCK_UNCHANGE = 'BlockUnchange';

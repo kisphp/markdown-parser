@@ -123,6 +123,7 @@ abstract class AbstractBlock implements BlockInterface
         $lineContent = $this->factory
             ->parseCustomInlineMarkup($lineContent)
         ;
+        $lineContent = $this->parseInlineNewLines($lineContent);
         $lineContent = $this->parseInlineStrongItalic($lineContent);
         $lineContent = $this->parseInlineCode($lineContent);
         $lineContent = $this->parseInlineStrong($lineContent);
@@ -168,6 +169,19 @@ abstract class AbstractBlock implements BlockInterface
         }
 
         return $this->factory->create(BlockTypes::BLOCK_INLINE_CODE)
+            ->setContent($lineContent)
+            ->parse()
+        ;
+    }
+
+    /**
+     * @param string $lineContent
+     *
+     * @return string
+     */
+    protected function parseInlineNewLines($lineContent)
+    {
+        return $this->factory->create(BlockTypes::BLOCK_NEW_LINES)
             ->setContent($lineContent)
             ->parse()
         ;
