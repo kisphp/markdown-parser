@@ -173,7 +173,7 @@ class BlockTable extends AbstractBlockNoParse
 
         foreach ($tableRow as $rowIndex => $row) {
             $rowHtml .= $this->getTableColumnStartTag($rowIndex, $isHeader);
-            $rowHtml .= trim($row);
+            $rowHtml .= $this->parseInlineMarkup(trim($row));
             $rowHtml .= $this->getTableColumnEndTag($isHeader);
         }
 
