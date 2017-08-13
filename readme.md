@@ -26,3 +26,7 @@ For this, please see [How to extend blocks](https://github.com/kisphp/markdown-p
 - [Installation &amp; Usage](https://github.com/kisphp/markdown-parser/wiki)
 - [Templates usage](https://github.com/kisphp/markdown-parser/wiki/Template-blocks)
 - [How to extend blocks](https://github.com/kisphp/markdown-parser/wiki/Blocks-Extension-Points)
+
+## Coverage Map
+
+![Coverage Map](https://codecov.io/gh/kisphp/markdown-parser/branch/master/graphs/sunburst.svg)
