@@ -133,6 +133,11 @@ class DataObject implements DataObjectInterface
             if (empty($key)) {
                 $key = $label;
             }
+
+            if (isset($this->references[$key]) === false) {
+                return $found[0];
+            }
+
             $reference = $this->getReferenceByKey($key);
 
             return $this->convertReference($reference, $label);
