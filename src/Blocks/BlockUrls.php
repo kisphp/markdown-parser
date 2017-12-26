@@ -12,17 +12,35 @@ class BlockUrls extends AbstractBlock
     public function parse()
     {
         return preg_replace_callback('/\[(.*)\]\((.*)\)/U', function ($found) {
-            $dictionary = $this->getDictionary($found);
-
-            $isTargetBlank = $this->isTargetBlank($found[0]);
-            $content = $this->getStartTag($isTargetBlank) . $this->getEndTag();
-
-            return str_replace(
-                array_keys($dictionary),
-                $dictionary,
-                $content
-            );
+            return $this->parseLine($found);
         }, $this->content);
+    }
+
+    /**
+     * @param array $found
+     *
+     * @return string
+     */
+    protected function parseLine(array $found)
+    {
+        $dictionary = $this->getDictionary($found);
+
+        $char = strpos($found[1], '[');
+        if ($char !== false) {
+            $text = substr($found[0], 0, $char);
+            $this->content = substr($found[0], $char);
+
+            return $text . $this->parse();
+        }
+
+        $isTargetBlank = $this->isTargetBlank($found[0]);
+        $content = $this->getStartTag($isTargetBlank) . $this->getEndTag();
+
+        return str_replace(
+            array_keys($dictionary),
+            $dictionary,
+            $content
+        );
     }
 
     /**
