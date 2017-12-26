@@ -125,7 +125,7 @@ class DataObject implements DataObjectInterface
      */
     protected function replaceReferenceUrls($html)
     {
-        return preg_replace_callback('/\[(.*)\]\s?\[(.*)\]/U', function ($found) {
+        return preg_replace_callback('/\[(.*)\]\[(.*)\]/U', function ($found) {
 
             $key = trim($found[2]);
             $label = trim($found[1]);
@@ -133,6 +133,11 @@ class DataObject implements DataObjectInterface
             if (empty($key)) {
                 $key = $label;
             }
+
+            if (isset($this->references[$key]) === false) {
+                return $found[0];
+            }
+
             $reference = $this->getReferenceByKey($key);
 
             return $this->convertReference($reference, $label);
