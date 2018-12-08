@@ -36,6 +36,7 @@ class BlockContentTemplate extends AbstractBlockNoParse
             if ($this->isBlockDelimiterLine($lineContent)) {
                 $this->setContentBlockKeyByContent($lineContent);
                 $delimiterFound++;
+
                 continue;
             }
 
@@ -97,6 +98,6 @@ class BlockContentTemplate extends AbstractBlockNoParse
      */
     protected function isBlockDelimiterLine($lineContent)
     {
-        return (strpos($lineContent, self::BLOCK_MARKUP) === 0);
+        return strpos($lineContent, self::BLOCK_MARKUP) === 0;
     }
 }

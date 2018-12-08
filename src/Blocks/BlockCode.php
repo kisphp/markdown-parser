@@ -12,23 +12,7 @@ class BlockCode extends AbstractBlockNoParse
     const BLOCK_MARKUP = '```';
 
     /**
-     * @param string $lineContent
-     *
-     * @return string
-     */
-    protected function getCodeType($lineContent)
-    {
-        $lineContent = str_replace(static::BLOCK_MARKUP, '', $lineContent);
-
-        if (!empty($lineContent)) {
-            return $lineContent;
-        }
-
-        return '';
-    }
-
-    /**
-     * @param string|null $class
+     * @param null|string $class
      *
      * @return string
      */
@@ -110,16 +94,6 @@ class BlockCode extends AbstractBlockNoParse
     }
 
     /**
-     * @param string $lineContent
-     *
-     * @return string
-     */
-    protected function encodeContent($lineContent)
-    {
-        return htmlentities($lineContent) . "\n";
-    }
-
-    /**
      * @param int $lineNumber
      *
      * @return bool
@@ -135,5 +109,31 @@ class BlockCode extends AbstractBlockNoParse
         }
 
         return (bool) preg_match('/^([\`]{3})/', $lineContent);
+    }
+
+    /**
+     * @param string $lineContent
+     *
+     * @return string
+     */
+    protected function getCodeType($lineContent)
+    {
+        $lineContent = str_replace(static::BLOCK_MARKUP, '', $lineContent);
+
+        if (!empty($lineContent)) {
+            return $lineContent;
+        }
+
+        return '';
+    }
+
+    /**
+     * @param string $lineContent
+     *
+     * @return string
+     */
+    protected function encodeContent($lineContent)
+    {
+        return htmlentities($lineContent) . "\n";
     }
 }

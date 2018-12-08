@@ -44,7 +44,6 @@ class BlockStrongItalic extends AbstractBlock
     protected function convertStars($lineContent)
     {
         return preg_replace_callback('/([\*]{3})(\S+)(.*|)(\S+)([\*]{3})/U', function ($found) {
-
             return $this->getStartTag() . str_replace(static::TRIPLE_ASTERISKS, '', $found[0]) . $this->getEndTag();
         }, $lineContent);
     }
@@ -57,7 +56,6 @@ class BlockStrongItalic extends AbstractBlock
     protected function convertUnderscores($lineContent)
     {
         return preg_replace_callback('/([\_]{3})(\S+)(.*)(\S+)([\_]{3})/U', function ($found) {
-
             return $this->getStartTag() . str_replace(static::TRIPLE_UNDERSCORES, '', $found[0]) . $this->getEndTag();
         }, $lineContent);
     }

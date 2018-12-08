@@ -31,14 +31,6 @@ class TreeStructure implements TreeStructureInterface
     }
 
     /**
-     * @return ItemInterface
-     */
-    protected function getFirstChild()
-    {
-        return reset($this->items);
-    }
-
-    /**
      * @return string
      */
     public function parse()
@@ -59,5 +51,13 @@ class TreeStructure implements TreeStructureInterface
         }
 
         return $html;
+    }
+
+    /**
+     * @return ItemInterface
+     */
+    protected function getFirstChild()
+    {
+        return reset($this->items);
     }
 }

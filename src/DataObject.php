@@ -22,7 +22,17 @@ class DataObject implements DataObjectInterface
     protected $references = [];
 
     /**
-     * @param string|int $key
+     * @param string $markdownContent
+     */
+    public function __construct($markdownContent)
+    {
+        $markdownContent = $this->cleanupContent($markdownContent);
+
+        $this->lines = explode("\n", $markdownContent);
+    }
+
+    /**
+     * @param int|string $key
      * @param array $dataMapping
      *
      * @return $this
@@ -35,23 +45,13 @@ class DataObject implements DataObjectInterface
     }
 
     /**
-     * @param string|int $key
+     * @param int|string $key
      *
      * @return array
      */
     public function getReferenceByKey($key)
     {
         return $this->references[$key];
-    }
-
-    /**
-     * @param string $markdownContent
-     */
-    public function __construct($markdownContent)
-    {
-        $markdownContent = $this->cleanupContent($markdownContent);
-
-        $this->lines = explode("\n", $markdownContent);
     }
 
     /**
@@ -92,18 +92,6 @@ class DataObject implements DataObjectInterface
     }
 
     /**
-     * @param $markdownText
-     *
-     * @return string
-     */
-    protected function cleanupContent($markdownText)
-    {
-        $markdownText = str_replace(["\r\n", "\r"], "\n", $markdownText);
-
-        return trim($markdownText, "\n");
-    }
-
-    /**
      * @return string
      */
     public function parseEachLine()
@@ -119,44 +107,6 @@ class DataObject implements DataObjectInterface
     }
 
     /**
-     * @param string $html
-     *
-     * @return string
-     */
-    protected function replaceReferenceUrls($html)
-    {
-        return preg_replace_callback('/\[(.*)\]\[(.*)\]/U', function ($found) {
-
-            $key = trim($found[2]);
-            $label = trim($found[1]);
-
-            if (empty($key)) {
-                $key = $label;
-            }
-
-            if (isset($this->references[$key]) === false) {
-                return $found[0];
-            }
-
-            $reference = $this->getReferenceByKey($key);
-
-            return $this->convertReference($reference, $label);
-
-        }, $html);
-    }
-
-    /**
-     * @param array $dataMapping
-     * @param string $label
-     *
-     * @return string
-     */
-    protected function convertReference(array $dataMapping, $label)
-    {
-        return '<a href="' . $dataMapping['url'] . '" title="' . $dataMapping['title'] . '">' . $label . '</a>';
-    }
-
-    /**
      * @param int $lineNumber
      *
      * @return bool
@@ -169,7 +119,7 @@ class DataObject implements DataObjectInterface
     /**
      * @param int $lineNumber
      *
-     * @return BlockInterface|string|null
+     * @return null|BlockInterface|string
      */
     public function getLine($lineNumber)
     {
@@ -191,5 +141,53 @@ class DataObject implements DataObjectInterface
         $this->lines[$key] = $value;
 
         return $this;
+    }
+
+    /**
+     * @param $markdownText
+     *
+     * @return string
+     */
+    protected function cleanupContent($markdownText)
+    {
+        $markdownText = str_replace(["\r\n", "\r"], "\n", $markdownText);
+
+        return trim($markdownText, "\n");
+    }
+
+    /**
+     * @param string $html
+     *
+     * @return string
+     */
+    protected function replaceReferenceUrls($html)
+    {
+        return preg_replace_callback('/\[(.*)\]\[(.*)\]/U', function ($found) {
+            $key = trim($found[2]);
+            $label = trim($found[1]);
+
+            if (empty($key)) {
+                $key = $label;
+            }
+
+            if (isset($this->references[$key]) === false) {
+                return $found[0];
+            }
+
+            $reference = $this->getReferenceByKey($key);
+
+            return $this->convertReference($reference, $label);
+        }, $html);
+    }
+
+    /**
+     * @param array $dataMapping
+     * @param string $label
+     *
+     * @return string
+     */
+    protected function convertReference(array $dataMapping, $label)
+    {
+        return '<a href="' . $dataMapping['url'] . '" title="' . $dataMapping['title'] . '">' . $label . '</a>';
     }
 }

@@ -12,17 +12,11 @@ abstract class AbstractBlockNoParse extends AbstractBlock
         return $this->getStartTag() . $this->getEndTag();
     }
 
-    /**
-     * @return null
-     */
     public function getStartTag()
     {
         return null;
     }
 
-    /**
-     * @return null
-     */
     public function getEndTag()
     {
         return null;

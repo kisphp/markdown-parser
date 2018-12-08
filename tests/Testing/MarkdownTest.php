@@ -1,7 +1,9 @@
 <?php
 
 
-class MarkdownTest extends PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class MarkdownTest extends TestCase
 {
     const DIRECTORY = '/../data/';
 

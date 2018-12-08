@@ -5,8 +5,9 @@ namespace Kisphp\Testing;
 use Kisphp\Blocks\Lists\Tree\Builder;
 use Kisphp\Blocks\Lists\Tree\ItemsRegistry;
 use Kisphp\Testing\Dummy\DummyItem;
+use PHPUnit\Framework\TestCase;
 
-class ItemRegistryTest extends \PHPUnit_Framework_TestCase
+class ItemRegistryTest extends TestCase
 {
     public function testItems()
     {

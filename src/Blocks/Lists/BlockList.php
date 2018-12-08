@@ -67,10 +67,10 @@ class BlockList extends AbstractBlockNoParse
         $lineContent = $dataObject->getLine($lineNumber);
         $lineContent = trim($lineContent);
 
-        return (
+        return
             $this->isBlockOrderedListByContent($lineContent)
             || $this->isBlockUnorderedListByContent($lineContent)
-        );
+        ;
     }
 
     /**

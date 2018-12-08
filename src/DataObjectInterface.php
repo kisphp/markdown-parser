@@ -26,7 +26,7 @@ interface DataObjectInterface
     /**
      * @param int $lineNumber
      *
-     * @return BlockInterface|string|null
+     * @return null|BlockInterface|string
      */
     public function getLine($lineNumber);
 

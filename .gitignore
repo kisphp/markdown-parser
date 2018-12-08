@@ -3,3 +3,4 @@ vendor/
 *.svg
 coverage/
 build/
+tests/_coverage

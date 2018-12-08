@@ -73,7 +73,7 @@ class MarkdownFactory implements MarkdownFactoryInterface
             throw new ParameterNotAllowedException('$blockName should be type of string');
         }
 
-        if (!isset($this->blockPlugins[$firstLetter]) || !in_array($blockName, $this->blockPlugins[$firstLetter])) {
+        if (!isset($this->blockPlugins[$firstLetter]) || !in_array($blockName, $this->blockPlugins[$firstLetter], true)) {
             $this->blockPlugins[$firstLetter][] = $blockName;
         }
 
@@ -102,19 +102,6 @@ class MarkdownFactory implements MarkdownFactoryInterface
         $this->blockPlugins[$firstLetter] = $blockNameCollection;
 
         return $this;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getAvailableNamespaces()
-    {
-        return [
-            __NAMESPACE__ . '\\Blocks\\',
-            __NAMESPACE__ . '\\Blocks\\Headers\\',
-            __NAMESPACE__ . '\\Blocks\\Inline\\',
-            __NAMESPACE__ . '\\Blocks\\Lists\\',
-        ];
     }
 
     /**
@@ -171,5 +158,18 @@ class MarkdownFactory implements MarkdownFactoryInterface
     public function parseCustomInlineMarkup($lineContent)
     {
         return $lineContent;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getAvailableNamespaces()
+    {
+        return [
+            __NAMESPACE__ . '\\Blocks\\',
+            __NAMESPACE__ . '\\Blocks\\Headers\\',
+            __NAMESPACE__ . '\\Blocks\\Inline\\',
+            __NAMESPACE__ . '\\Blocks\\Lists\\',
+        ];
     }
 }

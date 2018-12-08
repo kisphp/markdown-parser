@@ -12,7 +12,6 @@ class BlockImage extends AbstractBlock
     public function parse()
     {
         return preg_replace_callback('/\!\[(.*)\]\((.*)\)/U', function ($found) {
-
             $dictionary = $this->getDictionary($found);
 
             $content = $this->getStartTag() . $this->getEndTag();

@@ -12,7 +12,7 @@ class BlockHeader extends AbstractBlock
     public function parse()
     {
         $text = '';
-        for ($i=1; $i>0; $i--) {
+        for ($i = 1; $i > 0; $i--) {
             $text = preg_replace_callback('/^([\#]{' . $i . ',})\s(.*)/', function ($found) {
                 $number = strlen($found[1]);
 

@@ -239,7 +239,7 @@ abstract class AbstractBlock implements BlockInterface
     }
 
     /**
-     * @param BlockInterface|null $block
+     * @param null|BlockInterface $block
      * @param string $objectType
      * @param bool|false $forceStrict
      *

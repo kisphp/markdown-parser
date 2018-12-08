@@ -2,8 +2,9 @@
 
 use Kisphp\BlockTypes;
 use Kisphp\MarkdownFactory;
+use PHPUnit\Framework\TestCase;
 
-class BlockFactoryTest extends PHPUnit_Framework_TestCase
+class BlockFactoryTest extends TestCase
 {
     /**
      * @expectedException \Kisphp\Exceptions\BlockNotFoundException

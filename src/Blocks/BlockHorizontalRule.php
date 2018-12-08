@@ -14,9 +14,6 @@ class BlockHorizontalRule extends AbstractBlock
         return $this->getStartTag() . $this->getEndTag();
     }
 
-    /**
-     * @return null
-     */
     public function getStartTag()
     {
         return null;
