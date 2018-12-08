@@ -1,7 +1,6 @@
 # Kisphp Markdown Parser
 
 [![Build Status](https://travis-ci.org/kisphp/markdown-parser.svg?branch=master)](https://travis-ci.org/kisphp/markdown-parser)
-[![codecov.io](https://codecov.io/github/kisphp/markdown-parser/coverage.svg?branch=master)](https://codecov.io/github/kisphp/markdown-parser?branch=master)
 
 [![Latest Stable Version](https://poser.pugx.org/kisphp/markdown-parser/v/stable)](https://packagist.org/packages/kisphp/markdown-parser)
 [![Total Downloads](https://poser.pugx.org/kisphp/markdown-parser/downloads)](https://packagist.org/packages/kisphp/markdown-parser)
@@ -26,7 +25,3 @@ For this, please see [How to extend blocks](https://github.com/kisphp/markdown-p
 - [Installation &amp; Usage](https://github.com/kisphp/markdown-parser/wiki)
 - [Templates usage](https://github.com/kisphp/markdown-parser/wiki/Template-blocks)
 - [How to extend blocks](https://github.com/kisphp/markdown-parser/wiki/Blocks-Extension-Points)
-
-## Coverage Map
-
-![Coverage Map](https://codecov.io/gh/kisphp/markdown-parser/branch/master/graphs/sunburst.svg)

@@ -3,8 +3,9 @@
 namespace Kisphp\Testing;
 
 use Kisphp\MarkdownFactory;
+use PHPUnit\Framework\TestCase;
 
-class DataObjectTest extends \PHPUnit_Framework_TestCase
+class DataObjectTest extends TestCase
 {
     /**
      * @expectedException \Kisphp\Exceptions\DataObjectBlockAlreadyExists

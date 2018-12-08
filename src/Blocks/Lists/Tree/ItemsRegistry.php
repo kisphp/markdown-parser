@@ -20,7 +20,7 @@ class ItemsRegistry
     /**
      * @param int $id
      *
-     * @return ItemInterface|null
+     * @return null|ItemInterface
      */
     public function getItemById($id)
     {

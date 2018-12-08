@@ -12,9 +12,7 @@ class BlockInlineCode extends AbstractBlock
     public function parse()
     {
         return preg_replace_callback('/(`+)[\s]*(.+?)[\s]*(?<!`)\1(?!`)/s', function ($found) {
-
             return $this->getStartTag() . htmlentities($found[2]) . $this->getEndTag();
-
         }, $this->content);
     }
 

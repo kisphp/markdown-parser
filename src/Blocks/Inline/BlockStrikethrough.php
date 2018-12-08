@@ -12,9 +12,7 @@ class BlockStrikethrough extends AbstractBlock
     public function parse()
     {
         return preg_replace_callback('/([\~]{2})(.*)([\~]{2})/', function ($found) {
-
             return $this->getStartTag() . $found[2] . $this->getEndTag();
-
         }, $this->content);
     }
 

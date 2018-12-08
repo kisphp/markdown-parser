@@ -177,7 +177,7 @@ class Markdown implements MarkdownInterface
     /**
      * @param int $lineNumber
      *
-     * @return BlockInterface|mixed|null|string
+     * @return null|BlockInterface|mixed|string
      */
     protected function grabReferences($lineNumber)
     {
@@ -185,7 +185,6 @@ class Markdown implements MarkdownInterface
 
         // grab urls with title
         $content = preg_replace_callback('/\[(.*)\]:\s?(.*)\s?"(.*)"/U', function ($found) {
-
             $key = trim($found[1]);
             $url = trim($found[2]);
             $title = trim($found[3]);
@@ -201,7 +200,6 @@ class Markdown implements MarkdownInterface
 
         // grab urls without title
         $content = preg_replace_callback('/\[(.*)\]:\s?(.*)/', function ($found) {
-
             $key = trim($found[1]);
             $url = trim($found[2]);
 
@@ -219,6 +217,7 @@ class Markdown implements MarkdownInterface
 
     /**
      * @param string $lineContent
+     * @param mixed $lineNumber
      *
      * @return string
      */
@@ -248,7 +247,7 @@ class Markdown implements MarkdownInterface
     /**
      * @param string $lineContent
      *
-     * @return int|string|bool
+     * @return bool|int|string
      */
     protected function getAvailableTypesByContent($lineContent)
     {

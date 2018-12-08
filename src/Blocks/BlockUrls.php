@@ -17,6 +17,30 @@ class BlockUrls extends AbstractBlock
     }
 
     /**
+     * @return string
+     *
+     * @param mixed $targetBlank
+     */
+    public function getStartTag($targetBlank = false)
+    {
+        $htmlUrl = '<a href="{url}" title="{title}"';
+        if ($targetBlank === true) {
+            $htmlUrl .= ' target="_blank"';
+        }
+        $htmlUrl .= '>{text}';
+
+        return $htmlUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEndTag()
+    {
+        return '</a>';
+    }
+
+    /**
      * @param array $found
      *
      * @return string
@@ -41,28 +65,6 @@ class BlockUrls extends AbstractBlock
             $dictionary,
             $content
         );
-    }
-
-    /**
-     * @return string
-     */
-    public function getStartTag($targetBlank = false)
-    {
-        $htmlUrl = '<a href="{url}" title="{title}"';
-        if ($targetBlank === true) {
-            $htmlUrl .= ' target="_blank"';
-        }
-        $htmlUrl .= '>{text}';
-
-        return $htmlUrl;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEndTag()
-    {
-        return '</a>';
     }
 
     /**

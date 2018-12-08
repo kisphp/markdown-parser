@@ -32,30 +32,6 @@ class Builder implements BuilderInterface
     }
 
     /**
-     * @return TreeStructure
-     */
-    protected function createTreeStructure()
-    {
-        return new TreeStructure($this);
-    }
-
-    /**
-     * @return ItemsRegistry
-     */
-    protected function createItemsRegistry()
-    {
-        return new ItemsRegistry();
-    }
-
-    /**
-     * @return ItemInterface
-     */
-    protected function createItem()
-    {
-        return new Item($this);
-    }
-
-    /**
      * @param ItemInterface $item
      *
      * @return string
@@ -116,6 +92,38 @@ class Builder implements BuilderInterface
     }
 
     /**
+     * @return TreeStructure
+     */
+    public function getTreeStructure()
+    {
+        return $this->treeStructure;
+    }
+
+    /**
+     * @return TreeStructure
+     */
+    protected function createTreeStructure()
+    {
+        return new TreeStructure($this);
+    }
+
+    /**
+     * @return ItemsRegistry
+     */
+    protected function createItemsRegistry()
+    {
+        return new ItemsRegistry();
+    }
+
+    /**
+     * @return ItemInterface
+     */
+    protected function createItem()
+    {
+        return new Item($this);
+    }
+
+    /**
      * @param string $lineContent
      *
      * @return int
@@ -129,14 +137,6 @@ class Builder implements BuilderInterface
         $foundLevel = substr_count($lineContent, $levelDelimiter, 0, $length);
 
         return $foundLevel;
-    }
-
-    /**
-     * @return TreeStructure
-     */
-    public function getTreeStructure()
-    {
-        return $this->treeStructure;
     }
 
     /**
@@ -167,7 +167,7 @@ class Builder implements BuilderInterface
      */
     protected function getLength($lineContent)
     {
-        preg_match("/\S/", $lineContent, $spacesFound, PREG_OFFSET_CAPTURE);
+        preg_match('/\\S/', $lineContent, $spacesFound, PREG_OFFSET_CAPTURE);
         $length = max(1, $spacesFound[0][1]);
 
         return $length;

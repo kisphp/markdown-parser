@@ -85,6 +85,16 @@ class BlockQuote extends AbstractBlock
     }
 
     /**
+     * @param int $lineNumber
+     *
+     * @return bool
+     */
+    public function validateLineType($lineNumber)
+    {
+        return (bool) preg_match('/^\>\s?/', $this->factory->getDataObject()->getLine($lineNumber));
+    }
+
+    /**
      * @param DataObjectInterface $dataObject
      * @param array $updatedLines
      */
@@ -112,15 +122,5 @@ class BlockQuote extends AbstractBlock
         $lineContent = preg_replace('/^\>\s?/', '', $lineContent);
 
         return $lineContent;
-    }
-
-    /**
-     * @param int $lineNumber
-     *
-     * @return bool
-     */
-    public function validateLineType($lineNumber)
-    {
-        return (bool) preg_match('/^\>\s?/', $this->factory->getDataObject()->getLine($lineNumber));
     }
 }

@@ -3,13 +3,15 @@
         backupGlobals="true"
         backupStaticAttributes="false"
         bootstrap="tests/bootstrap.php"
+        beStrictAboutCoversAnnotation="true"
+        beStrictAboutOutputDuringTests="true"
+        beStrictAboutTodoAnnotatedTests="true"
         cacheTokens="false"
         colors="true"
-        convertErrorsToExceptions="true"
-        convertNoticesToExceptions="true"
-        convertWarningsToExceptions="true"
+        convertErrorsToExceptions="false"
+        convertNoticesToExceptions="false"
+        convertWarningsToExceptions="false"
         forceCoversAnnotation="false"
-        mapTestClassNameToCoveredClassName="false"
         processIsolation="false"
         stopOnError="false"
         stopOnFailure="false"
@@ -27,12 +29,11 @@
     </testsuites>
     <filter>
         <whitelist>
-            <directory suffix=".php">./src/</directory>
-            <exclude suffix=".php">./vendor</exclude>
+            <directory>./src/</directory>
         </whitelist>
     </filter>
     <logging>
-        <log type="coverage-html" target="./coverage" lowUpperBound="35" highLowerBound="70" />
-        <log type="coverage-clover" target="./coverage/coverage.xml"/>
+        <log type="coverage-html" target="./tests/_coverage" lowUpperBound="35" highLowerBound="70" />
+        <log type="coverage-clover" target="./tests/_coverage/coverage.xml"/>
     </logging>
 </phpunit>

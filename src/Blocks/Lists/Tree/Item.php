@@ -117,6 +117,19 @@ class Item implements ItemInterface
     /**
      * @return string
      */
+    public function parse()
+    {
+        $html = $this->builder->createListItemStartTag();
+        $html .= $this->getCleanedConent();
+        $html .= $this->parseChildren();
+        $html .= $this->builder->createListItemEndTag();
+
+        return $html;
+    }
+
+    /**
+     * @return string
+     */
     protected function setListTypeByContent()
     {
         $content = trim($this->content);
@@ -130,19 +143,6 @@ class Item implements ItemInterface
         $this->listType = static::LIST_TYPE_UNORDERED;
 
         return $this->listType;
-    }
-
-    /**
-     * @return string
-     */
-    public function parse()
-    {
-        $html = $this->builder->createListItemStartTag();
-        $html .= $this->getCleanedConent();
-        $html .= $this->parseChildren();
-        $html .= $this->builder->createListItemEndTag();
-
-        return $html;
     }
 
     /**

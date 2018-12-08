@@ -43,18 +43,6 @@ class BlockSpacesCode extends BlockCode
     }
 
     /**
-     * @param string $lineContent
-     *
-     * @return string
-     */
-    protected function encodeContent($lineContent)
-    {
-        $lineContent = preg_replace('/^([\s]{4})/', '', $lineContent);
-
-        return parent::encodeContent($lineContent);
-    }
-
-    /**
      * @param int $lineNumber
      *
      * @return bool
@@ -74,5 +62,17 @@ class BlockSpacesCode extends BlockCode
         }
 
         return false;
+    }
+
+    /**
+     * @param string $lineContent
+     *
+     * @return string
+     */
+    protected function encodeContent($lineContent)
+    {
+        $lineContent = preg_replace('/^([\s]{4})/', '', $lineContent);
+
+        return parent::encodeContent($lineContent);
     }
 }
