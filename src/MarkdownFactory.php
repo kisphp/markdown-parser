@@ -69,7 +69,7 @@ class MarkdownFactory implements MarkdownFactoryInterface
      */
     public function addBlockPlugin($firstLetter, $blockName)
     {
-        if (!is_string($blockName)) {
+        if (!\is_string($blockName)) {
             throw new ParameterNotAllowedException('$blockName should be type of string');
         }
 

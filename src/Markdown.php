@@ -28,6 +28,7 @@ class Markdown implements MarkdownInterface
      * @param string $text
      *
      * @return string
+     * @throws \Kisphp\Exceptions\BlockNotFoundException
      */
     public function parse($text)
     {
@@ -117,6 +118,8 @@ class Markdown implements MarkdownInterface
 
     /**
      * @return $this
+     *
+     * @throws \Kisphp\Exceptions\BlockNotFoundException
      */
     protected function convertLines()
     {
@@ -217,9 +220,10 @@ class Markdown implements MarkdownInterface
 
     /**
      * @param string $lineContent
-     * @param mixed $lineNumber
+     * @param int $lineNumber
      *
      * @return string
+     * @throws \Kisphp\Exceptions\BlockNotFoundException
      */
     protected function getObjectTypeByContent($lineContent, $lineNumber)
     {
@@ -251,6 +255,6 @@ class Markdown implements MarkdownInterface
      */
     protected function getAvailableTypesByContent($lineContent)
     {
-        return array_search($lineContent[0], array_keys($this->factory->getBlockPlugins()));
+        return array_search($lineContent[0], array_keys($this->factory->getBlockPlugins()), false);
     }
 }
