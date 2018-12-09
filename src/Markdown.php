@@ -28,6 +28,7 @@ class Markdown implements MarkdownInterface
      * @param string $text
      *
      * @return string
+     *
      * @throws \Kisphp\Exceptions\BlockNotFoundException
      */
     public function parse($text)
@@ -223,6 +224,7 @@ class Markdown implements MarkdownInterface
      * @param int $lineNumber
      *
      * @return string
+     *
      * @throws \Kisphp\Exceptions\BlockNotFoundException
      */
     protected function getObjectTypeByContent($lineContent, $lineNumber)
