@@ -15,7 +15,7 @@ pipeline {
             steps {
                 step([
                     $class: 'CloverPublisher',
-                    cloverReportDir: '',
+                    cloverReportDir: "`pwd`/",
                     cloverReportFileName: 'clover.xml',
                     healthyTarget: [methodCoverage: 70, conditionalCoverage: 80, statementCoverage: 80], // optional, default is: method=70, conditional=80, statement=80
                     unhealthyTarget: [methodCoverage: 50, conditionalCoverage: 50, statementCoverage: 50], // optional, default is none
