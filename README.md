@@ -9,7 +9,7 @@
 
 ## What is this ?
 
-A highly extensible and customizable PHP Markdown Parser that converts makrdown format to HTML format.
+A highly extensible and customizable PHP Markdown Parser that converts makrdown format into HTML format.
 Parsing Markdown to HTML is as simple as calling a single method `$markdown->parse($markdownContent)` (see [Usage](https://github.com/kisphp/markdown-parser/wiki)).
 To extend the Markdown class to parse custom blocks or format, is as simple as creating new classes that implements `BlockInterface` and include them in the system.
 For this, please see [How to extend blocks](https://github.com/kisphp/markdown-parser/wiki/Blocks-Extension-Points).
