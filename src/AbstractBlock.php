@@ -132,8 +132,24 @@ abstract class AbstractBlock implements BlockInterface
         $lineContent = $this->parseInlineUrls($lineContent);
         $lineContent = $this->parseInlineBlockTemplates($lineContent);
         $lineContent = $this->replaceInlineUrls($lineContent);
+        $lineContent = $this->cleanSkippers($lineContent);
 
         return $lineContent;
+    }
+
+    /**
+     * @param string $html
+     * @return string
+     */
+    protected function cleanSkippers($html)
+    {
+        $html = str_replace(
+            ['\_', '\*', '\`'],
+            ['_', '*', '`'],
+            $html
+        );
+
+        return $html;
     }
 
     /**

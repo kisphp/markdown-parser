@@ -5,13 +5,13 @@ Combined emphasis with **asterisks and _underscores_**.
 Emphasis with __type *underscores*__.
 Emphasis with **type _asterisks_**.
 
-and _ this should not be _ emphasized
+and _ this should not be _ emphasized 1
 
-and \_this should not be\_ emphasized
+and \_this should not be\_ emphasized 2
 
-and \*this should not be\* emphasized
+and \*this should not be\* emphasized 3
 
-and * this should not be * emphasized
+and * this should not be * emphasized 4
 
 and ** another one ** here
 
